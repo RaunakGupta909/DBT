@@ -24,6 +24,25 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(-
 .navbar-btn{background:var(--accent);color:white;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:0.95rem;font-weight:600}
 .navbar-btn:hover{background:#1554a0}
 .navbar-btn:focus{outline:2px solid #0b3b66;outline-offset:2px}
+
+/* Third strap (main navigation) */
+.third-strap{display:flex;align-items:center;padding:8px 20px;background:#ffffff;border-bottom:1px solid #e6eef6}
+.third-strap .menu{list-style:none;display:flex;gap:24px;margin:0;padding:0;justify-content:space-between;align-items:center;max-width:1000px;width:100%;margin-left:auto;margin-right:auto}
+.third-strap .menu li a{color:var(--text);text-decoration:none;padding:8px 10px;border-radius:6px}
+.third-strap .menu li a:hover{background:#f0f8ff}
+.third-strap .hamburger{display:none;background:transparent;border:none;font-size:1.4rem;cursor:pointer;margin-right:12px}
+
+/* Mobile styles: show hamburger, hide menu until opened */
+@media (max-width:800px){
+  .third-strap{padding:8px 12px;position:relative}
+  /* Centered dropdown panel with max-width on mobile to avoid edge-to-edge stretching */
+  .third-strap .menu{display:none;flex-direction:column;background:var(--card);position:absolute;left:50%;top:56px;transform:translateX(-50%);max-width:360px;width:calc(100% - 48px);border-radius:8px;box-shadow:0 6px 18px rgba(11,59,102,0.12);padding:8px 0;z-index:120}
+  .third-strap .menu.open{display:flex}
+  .third-strap .hamburger{display:inline-block}
+  .third-strap .menu li{width:100%;}
+  .third-strap .menu li a{display:block;padding:12px 16px}
+  .third-strap .menu li + li a{border-top:1px solid #eef4fb}
+}
 .gov-navbar .brand{font-weight:700;color:var(--accent)}
 .gov-navbar nav{display:flex;gap:14px}
 .gov-navbar a{color:var(--text);text-decoration:none}

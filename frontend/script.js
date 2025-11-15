@@ -74,6 +74,26 @@ if(findBankBtn){
   });
 }
 
+// -------------------------
+// Third strap mobile menu (hamburger)
+// -------------------------
+const hamburger = document.getElementById('hamburger');
+const mainMenu = document.getElementById('main-menu');
+if(hamburger && mainMenu){
+  hamburger.addEventListener('click', (ev)=>{
+    ev.stopPropagation();
+    mainMenu.classList.toggle('open');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', ()=>{
+    mainMenu.classList.remove('open');
+  });
+
+  // Stop clicks inside menu from bubbling to document
+  mainMenu.addEventListener('click', (ev)=> ev.stopPropagation());
+}
+
 // Font increaser removed from navbar.
 
 // Sample function to update counters from backend (dummy)
