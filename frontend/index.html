@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DBT Portal - Government Services</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Top utility strap -->
+  <div class="top-strap">
+    <div class="strap-controls">
+      <button id="dark-toggle" title="Toggle Dark Mode">🌙</button>
+      <div class="lang-switcher" id="lang-switcher">EN</div>
+    </div>
+  </div>
+
+  <header class="gov-navbar">
+    <div class="navbar-left">
+      <span class="gov-logo">🏛️</span>
+      <span class="gov-logo">🏛️</span>
+    </div>
+    <div class="navbar-center">DIRECT BENEFIT TRANSFER</div>
+    <button id="find-bank-btn" class="navbar-btn">📍 Find Nearby Bank</button>
+  </header>
+
+  <!-- Campaign Carousel -->
+  <section id="campaigns" class="campaigns">
+    <div class="carousel" id="campaign-carousel">
+      <!-- slides injected by JS -->
+    </div>
+  </section>
+
+  <!-- Counters -->
+  <section class="counters">
+    <div class="card counter">
+      <h3 id="total-students">0</h3>
+      <p>Total Students</p>
+    </div>
+    <div class="card counter">
+      <h3 id="dbt-enabled">0</h3>
+      <p>DBT Enabled</p>
+    </div>
+    <div class="card counter">
+      <h3 id="total-volunteers">0</h3>
+      <p>Total Volunteers</p>
+    </div>
+    <div class="card counter">
+      <h3 id="annual-amount">₹0</h3>
+      <p>Annual DBT Amount Distributed</p>
+    </div>
+  </section>
+
+  <!-- Background video how-to -->
+  <section class="howto">
+    <div class="video-card">
+      <video id="howto-video" muted loop playsinline>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+      </video>
+      <div class="overlay">
+        <h2>How to check DBT Status using this portal</h2>
+        <p>Quick guide: login &gt; enter Aadhaar &gt; check status</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick login cards for roles -->
+  <section class="role-cards">
+    <a class="card role" href="#student-login">Student Login</a>
+    <a class="card role" href="#parent-login">Parent Login</a>
+    <a class="card role" href="#teacher-login">Teacher Login</a>
+    <a class="card role" href="#volunteer-login">Volunteer Login</a>
+    <a class="card role" href="#admin-login">Admin Login</a>
+  </section>
+
+  <!-- Placeholder dashboards links -->
+  <section class="dashlinks">
+    <div class="card">
+      <h3>Student Dashboard</h3>
+      <p>Login with mobile + password</p>
+      <a class="btn" href="#student-login">Open</a>
+    </div>
+    <div class="card">
+      <h3>Parent Dashboard</h3>
+      <p>Manage your children</p>
+      <a class="btn" href="#parent-login">Open</a>
+    </div>
+    <div class="card">
+      <h3>Teacher Dashboard</h3>
+      <p>Verify students and submit reports</p>
+      <a class="btn" href="#teacher-login">Open</a>
+    </div>
+  </section>
+
+  <!-- Testimonials (single-comment carousel) & FAQ -->
+  <section class="testimonials">
+    <h2>What citizens say</h2>
+    <div class="testimonial-wrapper card" id="testimonial-wrapper">
+      <!-- viewport hides scrollbars; track will slide left -->
+      <div class="testimonial-viewport">
+        <div class="testimonial-track" id="testimonial-track" aria-live="polite">
+          <!-- items injected by JS; include a fallback single item -->
+          <div class="testimonial" role="region">
+            <p>“This portal made it easy to check our DBT status. Very helpful!”</p>
+            <div class="author">— S. Kumar, Pune</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- auto-scrolling testimonials; controls removed -->
+  </section>
+
+  <section id="faq" class="faq">
+    <h2>FAQ</h2>
+    <div class="faq-list">
+      <div class="faq-item card">
+        <button class="faq-question">How do I register on the portal?</button>
+        <div class="faq-answer">You can register using your mobile number and Aadhaar details from the Student or Parent registration page. Follow on-screen steps to verify OTP.</div>
+      </div>
+
+      <div class="faq-item card">
+        <button class="faq-question">How can I check DBT status for my child?</button>
+        <div class="faq-answer">Login as Parent or Student and enter the child's Aadhaar number in the 'Check DBT Status' section. The portal will show whether the Aadhaar is linked and whether DBT is enabled.</div>
+      </div>
+
+      <div class="faq-item card">
+        <button class="faq-question">What should a volunteer do to earn credits?</button>
+        <div class="faq-answer">Volunteers can check Aadhaar status for citizens using their volunteer account. Each successful unique check awards ₹20 credit to the volunteer. Re-checking the same Aadhaar by the same volunteer is prevented.</div>
+      </div>
+
+      <div class="faq-item card">
+        <button class="faq-question">I forgot my password — how do I reset it?</button>
+        <div class="faq-answer">Use the 'Forgot Password' link on the login screen. A temporary password or OTP will be sent via SMS (demo uses a dummy SMS endpoint).</div>
+      </div>
+
+      <div class="faq-item card">
+        <button class="faq-question">How are campaigns managed?</button>
+        <div class="faq-answer">School admins can add, edit, or delete campaigns from the Admin dashboard. Campaigns appear in the campaign slider on the homepage for citizens to view.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="gov-footer">
+    <p>DBT Portal — Government Services Demo</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
