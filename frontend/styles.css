@@ -81,6 +81,255 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(-
 .faq-answer{max-height:0;overflow:hidden;transition:max-height .32s ease;padding-top:0;color:var(--muted)}
 .faq-item.open .faq-answer{max-height:240px;padding-top:8px}
 
+/* Select Role grid */
+.select-role {
+  padding: 48px 16px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.select-role .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.section-sub {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Grid: 3 columns on desktop, wraps naturally */
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-bottom: 20px;
+}
+
+/* Row 1: Student, Parent, Teacher (3 items) */
+.role-card:nth-child(1),
+.role-card:nth-child(2),
+.role-card:nth-child(3) {
+  /* First row automatically spans columns 1-3 */
+}
+
+/* Row 2: Volunteer, BEO, DEO (3 items) */
+.role-card:nth-child(4),
+.role-card:nth-child(5),
+.role-card:nth-child(6) {
+  /* Second row automatically spans columns 1-3 */
+}
+
+/* Row 3: State DBT Cell, Ministry (2 items - centered) */
+.role-card:nth-child(7),
+.role-card:nth-child(8) {
+  /* Third row with 2 items */
+}
+
+/* Center the last row (2 items) */
+@supports (display: grid) {
+  .role-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .role-card:nth-child(7),
+  .role-card:nth-child(8) {
+    grid-column: auto / span 1;
+  }
+  
+  .role-card:nth-child(7) {
+    grid-column: 1 / 2;
+  }
+  
+  .role-card:nth-child(8) {
+    grid-column: 2 / 3;
+  }
+}
+
+/* Individual card styling */
+.role-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 28px 20px 60px;
+  box-shadow: 0 8px 20px rgba(11, 59, 102, 0.06);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.role-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(11, 59, 102, 0.12);
+}
+
+/* Badge circle */
+.role-badge {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 18px rgba(11, 59, 102, 0.08);
+}
+
+.role-card h3 {
+  margin: 6px 0 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.role-card p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 20px;
+  flex: 1 0 auto;
+  line-height: 1.5;
+}
+
+/* Proceed button as colored bottom strip */
+.proceed-btn {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  text-decoration: none;
+  padding: 14px 18px;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 0 0 8px 8px;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.proceed-btn:hover {
+  opacity: 0.9;
+}
+
+/* Role-specific colors */
+.role-card.student .role-badge {
+  background: #e6f0ff;
+  color: #1e63e8;
+}
+.role-card.student .proceed-btn {
+  background: #2f6fe6;
+}
+
+.role-card.parent .role-badge {
+  background: #e9f9ee;
+  color: #16a34a;
+}
+.role-card.parent .proceed-btn {
+  background: #10b981;
+}
+
+.role-card.teacher .role-badge {
+  background: #faf0ff;
+  color: #8b5cf6;
+}
+.role-card.teacher .proceed-btn {
+  background: #8b5cf6;
+}
+
+.role-card.volunteer .role-badge {
+  background: #fff7ed;
+  color: #f59e0b;
+}
+.role-card.volunteer .proceed-btn {
+  background: #f59e0b;
+}
+
+.role-card.beo .role-badge {
+  background: #fff2f6;
+  color: #ef4444;
+}
+.role-card.beo .proceed-btn {
+  background: #ef4444;
+}
+
+.role-card.deo .role-badge {
+  background: #ecfeff;
+  color: #06b6d4;
+}
+.role-card.deo .proceed-btn {
+  background: #06b6d4;
+}
+
+.role-card.state .role-badge {
+  background: #fef2f2;
+  color: #dc2626;
+}
+.role-card.state .proceed-btn {
+  background: #dc2626;
+}
+
+.role-card.ministry .role-badge {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+.role-card.ministry .proceed-btn {
+  background: #4f46e5;
+}
+
+/* Responsive: 2 columns on tablet */
+@media (max-width: 992px) {
+  .role-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Row 1: 2 cards */
+  .role-card:nth-child(7),
+  .role-card:nth-child(8) {
+    grid-column: auto / span 1;
+  }
+}
+
+/* Responsive: 1 column on mobile */
+@media (max-width: 520px) {
+  .role-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .role-badge {
+    width: 64px;
+    height: 64px;
+    font-size: 28px;
+  }
+  
+  .role-card h3 {
+    font-size: 16px;
+  }
+  
+  .role-card p {
+    font-size: 12px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+  }
+}
+
 /* Dark mode */
 body.dark{background:#0b1220;color:#e6f0fb}
 body.dark .top-strap{background:#071426;border-bottom-color:#071426}
