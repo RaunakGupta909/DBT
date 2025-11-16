@@ -236,9 +236,59 @@
     .back-btn:hover {
       background: #764ba2;
     }
+
+    /* Role Card Styles */
+    .role-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      text-align: center;
+      margin: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .role-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .role-badge {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    .proceed-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 700;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .proceed-btn:hover {
+      background: #764ba2;
+      transform: translateY(-2px);
+    }
+
+    .proceed-btn:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
+  <!-- Student Role Card -->
+  <article class="role-card student">
+    <div class="role-badge">🎓</div>
+    <h3>Student</h3>
+    <p>Check your status, play quizzes, and earn badges.</p>
+    <a class="proceed-btn" href="student-login.html">Proceed →</a>
+  </article>
+
   <div class="student-login-container">
     <div class="login-card">
       <h2>🎓 Student Login</h2>
