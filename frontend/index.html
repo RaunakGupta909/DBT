@@ -17,8 +17,8 @@
 
   <header class="gov-navbar">
     <div class="navbar-left">
-      <span class="gov-logo">🏛️</span>
-      <span class="gov-logo">🏛️</span>
+      <span class="gov-logo"><img src="images/image copy.png" height="50px" width="140px" alt="Government Logo"></span>
+      <span class="gov-logo"><img src="images/image.png" height="50px" width="175px" alt="DBT Logo"></span>
     </div>
     <div class="navbar-center">DIRECT BENEFIT TRANSFER</div>
     <button id="find-bank-btn" class="navbar-btn">📍 Find Nearby Bank</button>
@@ -43,23 +43,81 @@
     </div>
   </section>
 
-  <!-- Counters -->
-  <section class="counters">
-    <div class="card counter">
-      <h3 id="total-students">1200</h3>
-      <p>Total Students</p>
-    </div>
-    <div class="card counter">
-      <h3 id="dbt-enabled">842</h3>
-      <p>DBT Enabled</p>
-    </div>
-    <div class="card counter">
-      <h3 id="total-volunteers">56</h3>
-      <p>Total Volunteers</p>
-    </div>
-    <div class="card counter">
-      <h3 id="annual-amount">₹12,40,000</h3>
-      <p>Annual DBT Amount Distributed</p>
+  <!-- Enhanced Statistics Dashboard -->
+  <section class="stats-dashboard">
+    <div class="container">
+      <h2 class="section-title">DBT Impact Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-card primary">
+          <div class="stat-icon">🎓</div>
+          <div class="stat-content">
+            <h3 id="total-students">2,547,892</h3>
+            <p>Total Students Enrolled</p>
+            <span class="stat-change positive">+12.5% this year</span>
+          </div>
+        </div>
+        <div class="stat-card success">
+          <div class="stat-icon">✅</div>
+          <div class="stat-content">
+            <h3 id="dbt-enabled">1,892,456</h3>
+            <p>DBT Enabled Students</p>
+            <span class="stat-change positive">74.2% coverage</span>
+          </div>
+        </div>
+        <div class="stat-card info">
+          <div class="stat-icon">🤝</div>
+          <div class="stat-content">
+            <h3 id="total-volunteers">45,678</h3>
+            <p>Active Volunteers</p>
+            <span class="stat-change positive">+8.3% growth</span>
+          </div>
+        </div>
+        <div class="stat-card warning">
+          <div class="stat-icon">💰</div>
+          <div class="stat-content">
+            <h3 id="annual-amount">₹1,247.5Cr</h3>
+            <p>Annual DBT Amount</p>
+            <span class="stat-change positive">+15.2% increase</span>
+          </div>
+        </div>
+
+
+        <div class="stat-card info">
+          <div class="stat-icon">🏫</div>
+          <div class="stat-content">
+            <h3 id="schools-connected">1,456,789</h3>
+            <p>Schools Connected</p>
+            <span class="stat-change positive">+23.1% this year</span>
+          </div>
+        </div>
+        <div class="stat-card warning">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-content">
+            <h3 id="transactions-processed">89.2M</h3>
+            <p>Transactions Processed</p>
+            <span class="stat-change positive">+31.7% growth</span>
+          </div>
+        </div>
+        <div class="stat-card primary">
+          <div class="stat-icon">👥</div>
+          <div class="stat-content">
+            <h3 id="beneficiaries-served">45.6M</h3>
+            <p>Total Beneficiaries</p>
+            <span class="stat-change positive">+18.9% increase</span>
+          </div>
+        </div>
+        <div class="stat-card success">
+          <div class="stat-icon">🛡️</div>
+          <div class="stat-content">
+            <h3 id="fraud-prevented">₹2,847Cr</h3>
+            <p>Fraud Prevented</p>
+            <span class="stat-change positive">₹847Cr saved</span>
+          </div>
+        </div>
+
+      </div>
+
+
     </div>
   </section>
 
