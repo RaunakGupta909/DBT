@@ -1,17 +1,38 @@
 // Frontend interactions: carousel, language switcher, dark mode, accessibility
 // Sample campaigns data (in real app this would be fetched)
 const campaigns = [
-  {title: 'Free Health Camp - Current', desc: 'Join at local school', status: 'current'},
-  {title: 'Scholarship Drive - Upcoming', desc: 'Apply before Dec 15', status: 'upcoming'},
-  {title: 'Awareness Rally - Past', desc: 'Thank you for participating', status: 'past'}
+  {
+    title: '', 
+    desc: '', 
+    status: '',
+    image: 'images/image copy 2.png'
+  },
+  {
+    title: '', 
+    desc: '', 
+    status: '',
+    image: 'images/image copy 3.png'
+  },
+  {
+    title: '', 
+    desc: '', 
+    status: '',
+    image: 'images/image copy 4.png'
+  }
 ];
 
-// Inject carousel slides
+// Inject carousel slides with images
 const carousel = document.getElementById('campaign-carousel');
 campaigns.forEach(c => {
   const slide = document.createElement('div');
-  slide.className = 'slide card';
-  slide.innerHTML = `<div><h3>${c.title}</h3><p>${c.desc}</p></div><div><strong>${c.status.toUpperCase()}</strong></div>`;
+  slide.className = 'slide';
+  slide.style.backgroundImage = `url('${c.image}')`;
+  slide.innerHTML = `
+    <div class="campaign-overlay">
+      <h3>${c.title}</h3>
+      <p>${c.desc}</p>
+    </div>
+  `;
   carousel.appendChild(slide);
 });
 
@@ -76,17 +97,42 @@ if(findBankBtn){
 
 // Font increaser removed from navbar.
 
-// Sample function to update counters from backend (dummy)
+// Sample function to update counters from backend (enhanced with realistic DBT data)
 async function updateCounters(){
   try{
     // Example fetch - replace URL with actual backend endpoint
     // const res = await fetch('/api/stats');
     // const stats = await res.json();
-    const stats = {totalStudents:1200, dbtEnabled:842, volunteers:56, annualAmount:'₹12,40,000'};
+    const stats = {
+      totalStudents: '2,547,892',
+      dbtEnabled: '1,892,456',
+      volunteers: '45,678',
+      annualAmount: '₹1,247.5Cr',
+      schoolsConnected: '1,456,789',
+      transactionsProcessed: '89.2M',
+      beneficiariesServed: '45.6M',
+      fraudPrevented: '₹2,847Cr',
+      heroStudents: '2.5M+',
+      heroAmount: '₹1,250Cr+',
+      heroStates: '28'
+    };
     document.getElementById('total-students').textContent = stats.totalStudents;
     document.getElementById('dbt-enabled').textContent = stats.dbtEnabled;
     document.getElementById('total-volunteers').textContent = stats.volunteers;
     document.getElementById('annual-amount').textContent = stats.annualAmount;
+    document.getElementById('schools-connected').textContent = stats.schoolsConnected;
+    document.getElementById('transactions-processed').textContent = stats.transactionsProcessed;
+    document.getElementById('beneficiaries-served').textContent = stats.beneficiariesServed;
+    document.getElementById('fraud-prevented').textContent = stats.fraudPrevented;
+
+    // Update hero stats if elements exist
+    const heroStudents = document.getElementById('hero-students');
+    const heroAmount = document.getElementById('hero-amount');
+    const heroStates = document.getElementById('hero-states');
+
+    if(heroStudents) heroStudents.textContent = stats.heroStudents;
+    if(heroAmount) heroAmount.textContent = stats.heroAmount;
+    if(heroStates) heroStates.textContent = stats.heroStates;
   }catch(e){console.warn('Failed to load counters',e)}
 }
 
@@ -111,10 +157,26 @@ async function demoLogin(role, payload){
 // Testimonials sliding carousel (auto-advance left every 3s)
 // -------------------------
 const testimonials = [
-  {text: 'This portal made it easy to check our DBT status. Very helpful!', author: 'S. Kumar, Pune'},
-  {text: 'Quick and informative — the staff at the school helped me register.', author: 'R. Desai, Mumbai'},
-  {text: 'Volunteer support was excellent and the process is transparent.', author: 'A. Singh, Delhi'},
-  {text: 'I could see the DBT enablement for my child within minutes.', author: 'M. Patil, Nashik'}
+  {
+    text: 'This portal made it easy to check our DBT status. Very helpful!',
+    author: 'S. Kumar, Pune',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face'
+  },
+  {
+    text: 'Quick and informative — the staff at the school helped me register.',
+    author: 'R. Desai, Mumbai',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face'
+  },
+  {
+    text: 'Volunteer support was excellent and the process is transparent.',
+    author: 'A. Singh, Delhi',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face'
+  },
+  {
+    text: 'I could see the DBT enablement for my child within minutes.',
+    author: 'M. Patil, Nashik',
+    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face'
+  }
 ];
 
 let tIndex = 0;
@@ -127,7 +189,15 @@ function buildTestimonialTrack(){
   testimonials.forEach(t => {
     const item = document.createElement('div');
     item.className = 'testimonial';
-    item.innerHTML = `<p>“${t.text}”</p><div class="author">— ${t.author}</div>`;
+    item.innerHTML = `
+      <div class="testimonial-content">
+        <img src="${t.image}" alt="${t.author}" class="testimonial-avatar">
+        <div class="testimonial-text">
+          <p>"${t.text}"</p>
+          <div class="author">— ${t.author}</div>
+        </div>
+      </div>
+    `;
     track.appendChild(item);
   });
 }
