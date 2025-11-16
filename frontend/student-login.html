@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Login - DBT Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .student-login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 400px;
+      width: 100%;
+      padding: 40px;
+    }
+
+    .login-card h2 {
+      text-align: center;
+      color: #0b3b66;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #0b3b66;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Success State */
+    .success-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .success-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .success-message {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      max-width: 500px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .success-message h3 {
+      color: #10b981;
+      font-size: 28px;
+      margin-bottom: 15px;
+      animation: slideDown 0.6s ease;
+    }
+
+    .success-message p {
+      color: #6b7280;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .error-message {
+      color: #ef4444;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .coins-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .coin {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+      animation: coinFloat 0.8s ease-out forwards;
+    }
+
+    .balloon {
+      width: 40px;
+      height: 50px;
+      border-radius: 50% 50% 50% 0;
+      position: absolute;
+      animation: balloonFloat 1.2s ease-out forwards;
+      font-size: 24px;
+    }
+
+    .balloon-red {
+      background: #ef4444;
+      transform: rotate(-45deg);
+    }
+
+    .balloon-blue {
+      background: #3b82f6;
+      transform: rotate(45deg);
+    }
+
+    .balloon-green {
+      background: #10b981;
+      transform: rotate(-45deg);
+    }
+
+    .balloon-yellow {
+      background: #fbbf24;
+      transform: rotate(45deg);
+    }
+
+    .balloon-pink {
+      background: #ec4899;
+      transform: rotate(-45deg);
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes coinFloat {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-300px) scale(0.5);
+      }
+    }
+
+    @keyframes balloonFloat {
+      0% {
+        opacity: 1;
+        transform: translateY(0) translateX(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-400px) translateX(var(--tx, 0));
+      }
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #667eea;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #764ba2;
+    }
+  </style>
+</head>
+<body>
+  <div class="student-login-container">
+    <div class="login-card">
+      <h2>🎓 Student Login</h2>
+      
+      <form id="studentLoginForm">
+        <div class="form-group">
+          <label for="college-id">College / School ID</label>
+          <input 
+            type="text" 
+            id="college-id" 
+            placeholder="e.g., 2408410100057" 
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            placeholder="Enter your password" 
+            required
+          />
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="back-btn">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Overlay -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-message" id="successMessage">
+      <h3 id="statusText"></h3>
+      <p id="statusDescription"></p>
+      <div class="coins-container" id="coinsContainer"></div>
+    </div>
+  </div>
+
+  <!-- Balloons Container -->
+  <div id="balloonsContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999;"></div>
+
+  <script>
+    // Hardcoded credentials
+    const VALID_ID = "2408410100057";
+    const VALID_PASSWORD = "Shivam@123";
+    const DBT_ENABLED = true; // Set to true for DBT enabled, false for disabled
+
+    document.getElementById("studentLoginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const collegeId = document.getElementById("college-id").value;
+      const password = document.getElementById("password").value;
+
+      // Validate credentials
+      if (collegeId === VALID_ID && password === VALID_PASSWORD) {
+        // Show success overlay
+        showSuccessOverlay();
+      } else {
+        alert("❌ Invalid College ID or Password. Please try again.");
+      }
+    });
+
+    function showSuccessOverlay() {
+      const overlay = document.getElementById("successOverlay");
+      const statusText = document.getElementById("statusText");
+      const statusDescription = document.getElementById("statusDescription");
+      const coinsContainer = document.getElementById("coinsContainer");
+
+      overlay.classList.add("show");
+
+      if (DBT_ENABLED) {
+        // DBT Enabled
+        statusText.innerHTML = "✅ DBT Enabled";
+        statusText.style.color = "#10b981";
+        statusDescription.textContent = "Congratulations! Your DBT status is enabled.";
+
+        // Create 5 coins
+        coinsContainer.innerHTML = "";
+        for (let i = 0; i < 5; i++) {
+          const coin = document.createElement("div");
+          coin.className = "coin";
+          coin.textContent = "💰";
+          coin.style.animationDelay = `${i * 0.15}s`;
+          coinsContainer.appendChild(coin);
+        }
+
+        // Create 10 balloons
+        createBalloons(10);
+      } else {
+        // DBT Not Enabled
+        statusText.innerHTML = "Sorry, your DBT is not enabled";
+        statusText.style.color = "#ef4444";
+        statusDescription.textContent = "Please contact your school administration or DBT coordinator for assistance.";
+        coinsContainer.innerHTML = "";
+      }
+
+      // Auto close after 5 seconds
+      setTimeout(() => {
+        overlay.classList.remove("show");
+        document.getElementById("studentLoginForm").reset();
+      }, 5000);
+    }
+
+    function createBalloons(count) {
+      const container = document.getElementById("balloonsContainer");
+      container.innerHTML = "";
+      const colors = ["balloon-red", "balloon-blue", "balloon-green", "balloon-yellow", "balloon-pink"];
+
+      for (let i = 0; i < count; i++) {
+        const balloon = document.createElement("div");
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        balloon.className = `balloon ${randomColor}`;
+        balloon.style.left = `${Math.random() * 100}%`;
+        balloon.style.top = "100%";
+        balloon.style.setProperty("--tx", `${(Math.random() - 0.5) * 200}px`);
+        balloon.style.animationDelay = `${i * 0.1}s`;
+        balloon.textContent = "🎈";
+        container.appendChild(balloon);
+
+        // Remove balloon after animation
+        setTimeout(() => balloon.remove(), 1300 + i * 100);
+      }
+    }
+  </script>
+</body>
+</html>

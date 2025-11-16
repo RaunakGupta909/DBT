@@ -1,4 +1,4 @@
- itingeedo thd:root{
+itingeedo thd:root{
   --bg:#f6f9fc;
   --card:#ffffff;
   --text:#0b3b66;
@@ -336,59 +336,37 @@ body.dark .faq-answer{color:#cbd5e1}
 
 /* Select Role grid */
 .select-role {
-  padding: 60px 20px;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 48px 16px;
+  background: var(--bg);
   color: var(--text);
-  position: relative;
-  overflow: hidden;
-}
-
-.select-role::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 20% 80%, rgba(30, 111, 184, 0.03) 0%, transparent 50%),
-              radial-gradient(circle at 80% 20%, rgba(22, 163, 74, 0.03) 0%, transparent 50%);
-  pointer-events: none;
 }
 
 .select-role .container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  position: relative;
-  z-index: 1;
 }
 
 .section-title {
   text-align: center;
-  font-size: 36px;
-  margin-bottom: 8px;
+  font-size: 28px;
+  margin-bottom: 6px;
   color: var(--text);
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 700;
 }
 
 .section-sub {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   color: var(--muted);
-  font-size: 16px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.6;
+  font-size: 14px;
 }
 
 /* Grid: 3 columns on desktop, wraps naturally */
 .role-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  margin-bottom: 30px;
+  gap: 22px;
+  margin-bottom: 20px;
 }
 
 /* Row 1: Student, Parent, Teacher (3 items) */
@@ -416,99 +394,68 @@ body.dark .faq-answer{color:#cbd5e1}
   .role-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-
+  
   .role-card:nth-child(7),
   .role-card:nth-child(8) {
     grid-column: auto / span 1;
   }
-
+  
   .role-card:nth-child(7) {
     grid-column: 1 / 2;
   }
-
+  
   .role-card:nth-child(8) {
     grid-column: 2 / 3;
   }
 }
 
-/* Individual card styling - Professional Dashboard Style */
+/* Individual card styling */
 .role-card {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-  border-radius: 10px;
-  padding: 20px 16px 40px;
-  box-shadow: 0 6px 20px rgba(11, 59, 102, 0.05), 0 2px 6px rgba(11, 59, 102, 0.03);
+  background: #fff;
+  border-radius: 8px;
+  padding: 28px 20px 60px;
+  box-shadow: 0 8px 20px rgba(11, 59, 102, 0.06);
   position: relative;
   overflow: hidden;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-}
-
-.role-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent), var(--success));
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .role-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 20px 48px rgba(11, 59, 102, 0.15), 0 8px 24px rgba(11, 59, 102, 0.08);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(11, 59, 102, 0.12);
 }
 
-.role-card:hover::before {
-  opacity: 1;
-}
-
-.role-card:hover .role-badge {
-  transform: scale(1.1);
-  box-shadow: 0 8px 24px rgba(11, 59, 102, 0.15);
-}
-
-/* Badge circle - Smaller size for professional dashboard */
+/* Badge circle */
 .role-badge {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  background: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
-  margin-bottom: 16px;
-  box-shadow: 0 6px 20px rgba(11, 59, 102, 0.08);
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 2;
+  font-size: 36px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 18px rgba(11, 59, 102, 0.08);
 }
 
 .role-card h3 {
-  margin: 8px 0 12px;
-  font-size: 20px;
+  margin: 6px 0 10px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--text);
-  letter-spacing: -0.3px;
-  z-index: 2;
 }
 
 .role-card p {
   color: var(--muted);
-  font-size: 14px;
-  margin: 0 0 24px;
+  font-size: 13px;
+  margin: 0 0 20px;
   flex: 1 0 auto;
-  line-height: 1.6;
-  z-index: 2;
+  line-height: 1.5;
 }
 
 /* Proceed button as colored bottom strip */
@@ -519,29 +466,26 @@ body.dark .faq-answer{color:#cbd5e1}
   bottom: 0;
   display: block;
   text-decoration: none;
-  padding: 16px 20px;
+  padding: 14px 18px;
   color: #fff;
   font-weight: 700;
-  font-size: 14px;
   text-align: center;
-  border-radius: 0 0 16px 16px;
-  transition: all 0.3s ease;
+  border-radius: 0 0 8px 8px;
+  transition: opacity 0.3s ease;
   cursor: pointer;
-  z-index: 2;
 }
 
 .proceed-btn:hover {
-  opacity: 0.95;
-  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
-/* Role-specific colors - Same blue gradient for all proceed buttons */
+/* Role-specific colors */
 .role-card.student .role-badge {
   background: #e6f0ff;
   color: #1e63e8;
 }
 .role-card.student .proceed-btn {
-  background: linear-gradient(90deg, #1e6fb8, #1554a0);
+  background: #2f6fe6;
 }
 
 .role-card.parent .role-badge {
@@ -549,7 +493,7 @@ body.dark .faq-answer{color:#cbd5e1}
   color: #16a34a;
 }
 .role-card.parent .proceed-btn {
-  background: linear-gradient(90deg, #1e6fb8, #1554a0);
+  background: #10b981;
 }
 
 .role-card.teacher .role-badge {
@@ -557,7 +501,7 @@ body.dark .faq-answer{color:#cbd5e1}
   color: #8b5cf6;
 }
 .role-card.teacher .proceed-btn {
-  background: linear-gradient(90deg, #1e6fb8, #1554a0);
+  background: #8b5cf6;
 }
 
 .role-card.volunteer .role-badge {
@@ -565,7 +509,7 @@ body.dark .faq-answer{color:#cbd5e1}
   color: #f59e0b;
 }
 .role-card.volunteer .proceed-btn {
-  background: linear-gradient(90deg, #1e6fb8, #1554a0);
+  background: #f59e0b;
 }
 
 .role-card.beo .role-badge {
@@ -573,7 +517,7 @@ body.dark .faq-answer{color:#cbd5e1}
   color: #ef4444;
 }
 .role-card.beo .proceed-btn {
-  background: linear-gradient(90deg, #1e6fb8, #1554a0);
+  background: #ef4444;
 }
 
 .role-card.deo .role-badge {
@@ -581,7 +525,7 @@ body.dark .faq-answer{color:#cbd5e1}
   color: #06b6d4;
 }
 .role-card.deo .proceed-btn {
-  background: linear-gradient(90deg, #1e6fb8, #1554a0);
+  background: #06b6d4;
 }
 
 .role-card.state .role-badge {
@@ -589,7 +533,7 @@ body.dark .faq-answer{color:#cbd5e1}
   color: #dc2626;
 }
 .role-card.state .proceed-btn {
-  background: linear-gradient(90deg, #1e6fb8, #1554a0);
+  background: #dc2626;
 }
 
 .role-card.ministry .role-badge {
@@ -597,7 +541,7 @@ body.dark .faq-answer{color:#cbd5e1}
   color: #4f46e5;
 }
 .role-card.ministry .proceed-btn {
-  background: linear-gradient(90deg, #1e6fb8, #1554a0);
+  background: #4f46e5;
 }
 
 /* Responsive: 2 columns on tablet */
@@ -615,46 +559,27 @@ body.dark .faq-answer{color:#cbd5e1}
 
 /* Responsive: 1 column on mobile */
 @media (max-width: 520px) {
-  .select-role {
-    padding: 40px 16px;
-  }
-
-  .section-title {
-    font-size: 28px;
-  }
-
-  .section-sub {
-    font-size: 14px;
-    margin-bottom: 30px;
-  }
-
   .role-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
   }
-
-  .role-card {
-    padding: 24px 20px 60px;
-    border-radius: 12px;
-  }
-
+  
   .role-badge {
-    width: 70px;
-    height: 70px;
-    font-size: 32px;
+    width: 64px;
+    height: 64px;
+    font-size: 28px;
   }
-
+  
   .role-card h3 {
-    font-size: 18px;
+    font-size: 16px;
   }
-
+  
   .role-card p {
-    font-size: 13px;
+    font-size: 12px;
   }
-
-  .proceed-btn {
-    padding: 14px 18px;
-    font-size: 13px;
+  
+  .section-title {
+    font-size: 24px;
   }
 }
 
