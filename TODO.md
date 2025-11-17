@@ -1,0 +1,6 @@
+- [x] Update index.html: Change Student role link to student-login.html
+- [x] Update student-login.html: Add redirect to student_dashboard.html after login success
+- [x] Test the navigation flow (server started, but browser tool disabled; manual testing recommended)
+- [x] Create landing.html: Initial page asking users to login or register
+- [x] Add comment section to footer in index.html
+- [x] Add JavaScript for comment form submission
