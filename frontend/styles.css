@@ -646,52 +646,12 @@ body.dark .faq-answer{color:#cbd5e1}
   font-size: 14px;
 }
 
-/* Grid: 3 columns on desktop, wraps naturally */
+/* Grid: 4 columns on desktop, 2 rows for 8 roles */
 .role-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 22px;
   margin-bottom: 20px;
-}
-
-/* Row 1: Student, Parent, Teacher (3 items) */
-.role-card:nth-child(1),
-.role-card:nth-child(2),
-.role-card:nth-child(3) {
-  /* First row automatically spans columns 1-3 */
-}
-
-/* Row 2: Volunteer, BEO, DEO (3 items) */
-.role-card:nth-child(4),
-.role-card:nth-child(5),
-.role-card:nth-child(6) {
-  /* Second row automatically spans columns 1-3 */
-}
-
-/* Row 3: State DBT Cell, Ministry (2 items - centered) */
-.role-card:nth-child(7),
-.role-card:nth-child(8) {
-  /* Third row with 2 items */
-}
-
-/* Center the last row (2 items) */
-@supports (display: grid) {
-  .role-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  .role-card:nth-child(7),
-  .role-card:nth-child(8) {
-    grid-column: auto / span 1;
-  }
-  
-  .role-card:nth-child(7) {
-    grid-column: 1 / 2;
-  }
-  
-  .role-card:nth-child(8) {
-    grid-column: 2 / 3;
-  }
 }
 
 /* Individual card styling */
@@ -758,6 +718,7 @@ body.dark .faq-answer{color:#cbd5e1}
   border-radius: 0 0 8px 8px;
   transition: opacity 0.3s ease;
   cursor: pointer;
+  background: linear-gradient(90deg,#1e6fb8,#1554a0);
 }
 
 .proceed-btn:hover {
@@ -769,64 +730,40 @@ body.dark .faq-answer{color:#cbd5e1}
   background: #e6f0ff;
   color: #1e63e8;
 }
-.role-card.student .proceed-btn {
-  background: #2f6fe6;
-}
 
 .role-card.parent .role-badge {
   background: #e9f9ee;
   color: #16a34a;
-}
-.role-card.parent .proceed-btn {
-  background: #10b981;
 }
 
 .role-card.teacher .role-badge {
   background: #faf0ff;
   color: #8b5cf6;
 }
-.role-card.teacher .proceed-btn {
-  background: #8b5cf6;
-}
 
 .role-card.volunteer .role-badge {
   background: #fff7ed;
   color: #f59e0b;
-}
-.role-card.volunteer .proceed-btn {
-  background: #f59e0b;
 }
 
 .role-card.beo .role-badge {
   background: #fff2f6;
   color: #ef4444;
 }
-.role-card.beo .proceed-btn {
-  background: #ef4444;
-}
 
 .role-card.deo .role-badge {
   background: #ecfeff;
   color: #06b6d4;
-}
-.role-card.deo .proceed-btn {
-  background: #06b6d4;
 }
 
 .role-card.state .role-badge {
   background: #fef2f2;
   color: #dc2626;
 }
-.role-card.state .proceed-btn {
-  background: #dc2626;
-}
 
 .role-card.ministry .role-badge {
   background: #eef2ff;
   color: #4f46e5;
-}
-.role-card.ministry .proceed-btn {
-  background: #4f46e5;
 }
 
 /* Responsive: 2 columns on tablet */

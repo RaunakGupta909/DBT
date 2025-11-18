@@ -1,4 +1,4 @@
-- [ ] Update .info-card background to light grey
-- [ ] Change .info-card h3 color to white and remove background gradient
-- [ o] Change .info-card p color to white
-- [ ] Verify changes in browser
+- [ ] Change .role-grid to 4 columns on desktop
+- [ ] Remove centering rules for last row
+- [ ] Adjust responsive breakpoints: 2 columns on tablet, 1 on mobile
+- [ ] Test the layout
