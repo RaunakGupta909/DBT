@@ -1,6 +1,5 @@
-- [x] Update index.html: Change Student role link to student-login.html
-- [x] Update student-login.html: Add redirect to student_dashboard.html after login success
-- [x] Test the navigation flow (server started, but browser tool disabled; manual testing recommended)
-- [x] Create landing.html: Initial page asking users to login or register
-- [x] Add comment section to footer in index.html
-- [x] Add JavaScript for comment form submission
+# TODO: Add Hero Section Carousel
+
+- [x] Add hero section HTML in frontend/index.html between main-nav and select-role
+- [x] Uncomment and modify carousel code in frontend/script.js to use the three images
+- [x] Test the carousel functionality and image loading (server running on port 8000)

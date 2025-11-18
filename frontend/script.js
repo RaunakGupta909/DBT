@@ -1,55 +1,128 @@
 // Frontend interactions: carousel, language switcher, dark mode, accessibility
 // Sample campaigns data (in real app this would be fetched)
-const campaigns = [
-  {
-    title: '', 
-    desc: '', 
-    status: '',
-    image: 'images/image copy 2.png'
-  },
-  {
-    title: '', 
-    desc: '', 
-    status: '',
-    image: 'images/image copy 3.png'
-  },
-  {
-    title: '', 
-    desc: '', 
-    status: '',
-    image: 'images/image copy 4.png'
-  }
-];
+// const campaigns = [
+//   {
+//     title: '',
+//     desc: '',
+//     status: '',
+//     image: 'images/image copy 2.png'
+//   },
+//   {
+//     title: '',
+//     desc: '',
+//     status: '',
+//     image: 'images/image copy 3.png'
+//   },
+//   {
+//     title: '',
+//     desc: '',
+//     status: '',
+//     image: 'images/image copy 4.png'
+//   }
+// ];
 
-// Inject carousel slides with images
-const carousel = document.getElementById('campaign-carousel');
-campaigns.forEach(c => {
-  const slide = document.createElement('div');
-  slide.className = 'slide';
-  slide.style.backgroundImage = `url('${c.image}')`;
-  slide.innerHTML = `
-    <div class="campaign-overlay">
-      <h3>${c.title}</h3>
-      <p>${c.desc}</p>
-    </div>
-  `;
-  carousel.appendChild(slide);
+// // Carousel
+const sliderLine = document.querySelector(".carousel-track");
+const slides = document.querySelectorAll(".carousel-track img");
+
+let index = 1;
+let width = slides[0].clientWidth;
+
+// Clone first + last slide for infinite loop
+const firstClone = slides[0].cloneNode(true);
+const lastClone = slides[slides.length - 1].cloneNode(true);
+
+sliderLine.appendChild(firstClone);
+sliderLine.insertBefore(lastClone, slides[0]);
+
+// Set initial position
+sliderLine.style.transform = `translateX(${-width * index}px)`;
+
+// Resize update
+window.addEventListener("resize", () => {
+  width = slides[0].clientWidth;
+  sliderLine.style.transform = `translateX(${-width * index}px)`;
 });
 
-// Auto-scroll carousel every 3 seconds
-let currentIndex = 0;
-function showSlide(i){
-  const slides = document.querySelectorAll('#campaign-carousel .slide');
-  if(!slides.length) return;
-  const width = slides[0].clientWidth + 12; // gap
-  carousel.scrollTo({left: i * width, behavior: 'smooth'});
-}
-setInterval(()=>{
-  const slides = document.querySelectorAll('#campaign-carousel .slide');
-  if(!slides.length) return;
-  currentIndex = (currentIndex + 1) % slides.length;
-  showSlide(currentIndex);
-},3000);
+// Next slide
+document.querySelector(".next").addEventListener("click", () => {
+  if (index >= slides.length + 1) return;
+  index++;
+  sliderLine.style.transition = "0.5s ease";
+  sliderLine.style.transform = `translateX(${-width * index}px)`;
+});
+
+// Previous slide
+document.querySelector(".prev").addEventListener("click", () => {
+  if (index <= 0) return;
+  index--;
+  sliderLine.style.transition = "0.5s ease";
+  sliderLine.style.transform = `translateX(${-width * index}px)`;
+});
+
+// Infinite Loop Fix
+sliderLine.addEventListener("transitionend", () => {
+  if (index === slides.length + 1) {
+    sliderLine.style.transition = "none";
+    index = 1;
+    sliderLine.style.transform = `translateX(${-width * index}px)`;
+  }
+
+  if (index === 0) {
+    sliderLine.style.transition = "none";
+    index = slides.length;
+    sliderLine.style.transform = `translateX(${-width * index}px)`;
+  }
+});
+
+// Auto Slide
+setInterval(() => {
+  document.querySelector(".next").click();
+}, 3000);
+
+// Swipe / Drag Support
+let startX = 0;
+
+sliderLine.addEventListener("touchstart", (e) => {
+  startX = e.touches[0].clientX;
+});
+
+sliderLine.addEventListener("touchend", (e) => {
+  let endX = e.changedTouches[0].clientX;
+
+  if (startX > endX + 50) document.querySelector(".next").click();
+  if (startX < endX - 50) document.querySelector(".prev").click();
+});
+
+// // Inject carousel slides with images
+// const carousel = document.getElementById('campaign-carousel');
+// campaigns.forEach(c => {
+//   const slide = document.createElement('div');
+//   slide.className = 'slide';
+//   slide.style.backgroundImage = `url('${c.image}')`;
+//   slide.innerHTML = `
+//     <div class="campaign-overlay">
+//       <h3>${c.title}</h3>
+//       <p>${c.desc}</p>
+//     </div>
+//   `;
+//   carousel.appendChild(slide);
+// });
+
+// // Auto-scroll carousel every 3 seconds
+// let currentIndex = 0;
+// function showSlide(i){
+//   const slides = document.querySelectorAll('#campaign-carousel .slide');
+//   if(!slides.length) return;
+//   const width = slides[0].clientWidth + 12; // gap
+//   carousel.scrollTo({left: i * width, behavior: 'smooth'});
+// }
+// setInterval(()=>{
+//   const slides = document.querySelectorAll('#campaign-carousel .slide');
+//   if(!slides.length) return;
+//   currentIndex = (currentIndex + 1) % slides.length;
+//   showSlide(currentIndex);
+// },3000);
 
 // Dark mode toggle
 const darkToggle = document.getElementById('dark-toggle');
