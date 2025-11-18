@@ -292,7 +292,7 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(-
 .dashlinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;padding:16px}
 
 .testimonials,.faq{padding:16px}
-.gov-footer{padding:16px;text-align:center;color:var(--muted);background:linear-gradient(135deg,#87ceeb 0%,#add8e6 100%)}
+.gov-footer{padding:16px;text-align:center;color:var(--muted);background:#c0c0c0}
 
 /* Testimonial single-item carousel */
 .testimonial-wrapper{display:flex;align-items:center;gap:12px;padding:12px}
@@ -618,6 +618,62 @@ body.dark .faq-answer{color:#cbd5e1}
   color: var(--accent);
   background: rgba(30,111,184,0.06);
   border-color: rgba(30,111,184,0.12);
+}
+
+/* Government Websites Logos Strap */
+.gov-logos-strap {
+  height: 70px;
+  background: transparent;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid #0f4580;
+}
+
+.logos-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  animation: scrollLogos 20s linear infinite;
+  white-space: nowrap;
+}
+
+.logos-container a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 15px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  flex-shrink: 0;
+}
+
+.logos-container a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.logos-container img {
+  height: 50px;
+  width: auto;
+  margin-right: 5px;
+  filter: none;
+}
+
+@keyframes scrollLogos {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause animation on hover */
+.gov-logos-strap:hover .logos-container {
+  animation-play-state: paused;
 }
 
 /* On narrower screens reduce spacing and allow wrapping */
