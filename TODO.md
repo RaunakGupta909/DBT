@@ -1,4 +1,3 @@
-- [ ] Change .role-grid to 4 columns on desktop
-- [ ] Remove centering rules for last row
-- [ ] Adjust responsive breakpoints: 2 columns on tablet, 1 on mobile
-- [ ] Test the layout
+- [ ] Add WhatsApp icon HTML element to index.html
+- [ ] Add CSS styles for the WhatsApp icon in styles.css
+- [ ] Test the WhatsApp icon functionality by launching the page in browser

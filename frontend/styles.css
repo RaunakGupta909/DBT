@@ -766,6 +766,8 @@ body.dark .faq-answer{color:#cbd5e1}
   color: #4f46e5;
 }
 
+
+
 /* Responsive: 2 columns on tablet */
 @media (max-width: 992px) {
   .role-grid {
@@ -778,6 +780,39 @@ body.dark .faq-answer{color:#cbd5e1}
     grid-column: auto / span 1;
   }
 }
+
+/* Whatsapp icon */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 9999;
+  animation: pop 0.3s ease-in-out;
+}
+
+.whatsapp-float img {
+  width: 35px;
+  height: 35px;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Optional hover effect */
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
 
 /* Responsive: 1 column on mobile */
 @media (max-width: 520px) {
@@ -1091,3 +1126,46 @@ body.dark .campaign-overlay{background:linear-gradient(to top,rgba(0,0,0,0.9) 0%
 
 /* Accessibility large font */
 body.large-font{font-size:1.15rem}
+
+/* WhatsApp Support Icon */
+.whatsapp-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.whatsapp-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.whatsapp-icon img {
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 768px) {
+  .whatsapp-icon {
+    bottom: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .whatsapp-icon img {
+    width: 25px;
+    height: 25px;
+  }
+}
