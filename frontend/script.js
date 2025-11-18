@@ -94,6 +94,39 @@ sliderLine.addEventListener("touchend", (e) => {
   if (startX < endX - 50) document.querySelector(".prev").click();
 });
 
+
+const hamburger = document.querySelector('.hamburger');
+const nav = document.getElementById('primary-navigation');
+const mobileMenu = document.getElementById('mobile-menu');
+
+
+function toggleMenu(){
+const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+hamburger.setAttribute('aria-expanded', String(!expanded));
+if(!expanded){
+mobileMenu.style.display = 'block';
+mobileMenu.setAttribute('aria-hidden','false');
+} else {
+mobileMenu.style.display = 'none';
+mobileMenu.setAttribute('aria-hidden','true');
+}
+}
+
+
+hamburger.addEventListener('click', toggleMenu);
+
+
+// close mobile menu on outside click or escape key
+document.addEventListener('click', (e)=>{
+if(window.innerWidth <= 880){
+if(!e.composedPath().includes(mobileMenu) && !e.composedPath().includes(hamburger)){
+mobileMenu.style.display = 'none';
+mobileMenu.setAttribute('aria-hidden','true');
+hamburger.setAttribute('aria-expanded','false');
+}
+}
+});
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ mobileMenu.style.display='none'; mobileMenu.setAttribute('aria-hidden','true'); hamburger.setAttribute('aria-expanded','false'); } })
 // // Inject carousel slides with images
 // const carousel = document.getElementById('campaign-carousel');
 // campaigns.forEach(c => {

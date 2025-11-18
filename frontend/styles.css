@@ -99,6 +99,101 @@ body {
 }
 
 
+:root{
+box-shadow:0 2px 6px rgba(2,6,23,0.12);
+}
+
+
+/* inner container to limit width yet stretch nav items evenly across full strap */
+.strap{
+background:linear-gradient(90deg,#1e6fb8,#1554a0);
+}
+.strap-inner{
+width:100%;
+max-width:var(--max-width);
+display:flex;
+align-items:center;
+gap:var(--gap);
+padding:8px 16px;
+}
+
+
+/* brand / logo area */
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+padding:var(--brand-padding);
+color:var(--text);
+text-decoration:none;
+font-weight:600;
+min-width: 160px; /* keeps brand visible on small screens */
+}
+.brand .logo{width:36px;height:36px;border-radius:6px;background:#ffd166;display:inline-block}
+
+
+/* nav area stretches and uses space-evenly for equal spacing */
+nav{
+flex:1 1 auto;
+display:flex;
+align-items:center;
+justify-content:space-evenly; /* <--- the important bit for even spacing */
+gap:8px;
+}
+
+
+nav a{
+background:linear-gradient(90deg,#1e6fb8,#1554a0);
+color:#ffffff;
+text-decoration:none;
+padding:8px 14px;
+font-weight:600;
+font-size:0.95rem;
+letter-spacing:0.3px;
+border-radius:6px;
+border:none;
+cursor:pointer;
+display:inline-block;
+transition:background 0.3s ease;
+}
+nav a:focus, nav a:hover{
+background:linear-gradient(90deg,#1554a0,#0f4580);
+outline: none;
+}
+
+
+/* small screen: collapse into hamburger */
+.hamburger{display:none;border:0;background:transparent;color:var(--text);font-size:22px;cursor:pointer}
+
+
+/* mobile menu (hidden by default on desktop) */
+.mobile-menu{
+display:none;
+background:var(--strap-bg);
+padding:12px 16px;
+}
+.mobile-menu a{display:block;padding:10px 6px;border-radius:4px}
+
+
+/* utility: right side small area (optional) */
+.right-cta{min-width:90px;display:flex;justify-content:flex-end}
+
+
+/* Responsive rules */
+@media (max-width:880px){
+.strap-inner{padding:0 12px}
+nav{display:none} /* hide horizontal nav */
+.hamburger{display:inline-flex}
+.right-cta{display:none}
+}
+
+
+/* small tweak - make nav items wrap if user shrinks width but still >880px */
+@media (min-width:881px) and (max-width:1100px){
+nav{gap:6px}
+nav a{font-size:14px;padding:7px 8px}
+}
+
 
 /* Enhanced Statistics Dashboard */
 .stats-dashboard {
