@@ -988,6 +988,18 @@ body.dark .faq-answer{color:#cbd5e1}
   .main-nav .nav-btn{ padding: 8px 12px; font-size: 0.92rem; min-width: auto; }
 }
 
+/* Visitor Count Section */
+.visitor-count-section {
+  margin: 40px;
+  text-align: center;
+}
+
+.visitor-count-card {
+  background: transparent;
+  text-align: center;
+  margin: 20px auto;
+}
+
 /* Comment Section */
 .comments-section {
   padding: 60px 20px;

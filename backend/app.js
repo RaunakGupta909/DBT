@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
+const VisitorCount = require('./models/VisitorCount');
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -30,6 +31,24 @@ app.use('/api/admin', require('./routes/admin'));
 app.get('/api/stats', async (req,res)=>{
   // In a real app, compute from DB. Return dummy for demo.
   res.json({totalStudents:1200, dbtEnabled:842, volunteers:56, annualAmount:'₹12,40,000'});
+});
+
+// Visitor count endpoint
+app.get('/api/visitor-count', async (req, res) => {
+  try {
+    let visitorCount = await VisitorCount.findOne();
+    if (!visitorCount) {
+      visitorCount = new VisitorCount();
+      await visitorCount.save();
+    }
+    // Increment count
+    visitorCount.count += 1;
+    await visitorCount.save();
+    res.json({ count: visitorCount.count });
+  } catch (error) {
+    console.error('Error updating visitor count:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 // Fallback to serve index.html for client-side routes

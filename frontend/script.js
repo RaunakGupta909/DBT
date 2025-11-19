@@ -319,6 +319,23 @@ async function demoLogin(role, payload){
   return {ok:true, token:'demo-token'};
 }
 
+// Visitor count fetch and display
+async function updateVisitorCount() {
+  try {
+    const response = await fetch('/api/visitor-count');
+    const data = await response.json();
+    document.getElementById('visitor-count').textContent = data.count;
+  } catch (error) {
+    console.error('Error fetching visitor count:', error);
+    document.getElementById('visitor-count').textContent = 'Error';
+  }
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', () => {
+  updateVisitorCount();
+});
+
 // End of frontend script
 
 // -------------------------
