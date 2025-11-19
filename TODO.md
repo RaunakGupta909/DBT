@@ -1,3 +1,6 @@
-- [ ] Add WhatsApp icon HTML element to index.html
-- [ ] Add CSS styles for the WhatsApp icon in styles.css
-- [ ] Test the WhatsApp icon functionality by launching the page in browser
+# TODO: Fix Carousel Auto-Moving and Button Functionality
+
+- [ ] Update script.js to select '.carousel-track a' instead of 'img' for slides
+- [ ] Modify cloning logic to clone <a> elements
+- [ ] Add CSS rules for .carousel-track a to ensure proper display
+- [ ] Test carousel functionality (auto-slide and buttons)

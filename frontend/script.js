@@ -23,10 +23,10 @@
 
 // // Carousel
 const sliderLine = document.querySelector(".carousel-track");
-const slides = document.querySelectorAll(".carousel-track img");
+const slides = document.querySelectorAll(".carousel-track a");
 
 let index = 1;
-let width = slides[0].clientWidth;
+let width = slides[0].offsetWidth;
 
 // Clone first + last slide for infinite loop
 const firstClone = slides[0].cloneNode(true);
