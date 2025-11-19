@@ -204,24 +204,69 @@ if(findBankBtn){
 // Font increaser removed from navbar.
 
 // Sample function to update counters from backend (enhanced with realistic DBT data)
-async function updateCounters(){
+const statsData = {
+  'fy25-26': {
+    totalStudents: '2,930,375',
+    dbtEnabled: '2,176,324',
+    volunteers: '52,530',
+    annualAmount: '₹1,434.6Cr',
+    schoolsConnected: '1,675,307',
+    transactionsProcessed: '102.6M',
+    beneficiariesServed: '52.4M',
+    fraudPrevented: '₹3,273Cr',
+    changeTotalStudents: '+15.2% this year',
+    changeDbtEnabled: '74.1% coverage',
+    changeVolunteers: '+15.4% growth',
+    changeAnnualAmount: '+15.3% increase',
+    changeSchoolsConnected: '+15.1% this year',
+    changeTransactionsProcessed: '+15.0% growth',
+    changeBeneficiariesServed: '+15.5% increase',
+    changeFraudPrevented: '₹426Cr saved'
+  },
+  'fy24-25': {
+    totalStudents: '2,547,892',
+    dbtEnabled: '1,892,456',
+    volunteers: '45,678',
+    annualAmount: '₹1,247.5Cr',
+    schoolsConnected: '1,456,789',
+    transactionsProcessed: '89.2M',
+    beneficiariesServed: '45.6M',
+    fraudPrevented: '₹2,847Cr',
+    changeTotalStudents: '+12.5% this year',
+    changeDbtEnabled: '74.2% coverage',
+    changeVolunteers: '+8.3% growth',
+    changeAnnualAmount: '+15.2% increase',
+    changeSchoolsConnected: '+23.1% this year',
+    changeTransactionsProcessed: '+31.7% growth',
+    changeBeneficiariesServed: '+18.9% increase',
+    changeFraudPrevented: '₹847Cr saved'
+  },
+  'fy23-24': {
+    totalStudents: '2,123,456',
+    dbtEnabled: '1,567,890',
+    volunteers: '38,912',
+    annualAmount: '₹987.3Cr',
+    schoolsConnected: '1,234,567',
+    transactionsProcessed: '67.8M',
+    beneficiariesServed: '38.9M',
+    fraudPrevented: '₹1,956Cr',
+    changeTotalStudents: '+10.0% this year',
+    changeDbtEnabled: '74.5% coverage',
+    changeVolunteers: '+5.0% growth',
+    changeAnnualAmount: '+12.0% increase',
+    changeSchoolsConnected: '+20.0% this year',
+    changeTransactionsProcessed: '+25.0% growth',
+    changeBeneficiariesServed: '+15.0% increase',
+    changeFraudPrevented: '₹500Cr saved'
+  }
+};
+
+async function updateCounters(year = 'fy25-26'){
   try{
     // Example fetch - replace URL with actual backend endpoint
     // const res = await fetch('/api/stats');
     // const stats = await res.json();
-    const stats = {
-      totalStudents: '2,547,892',
-      dbtEnabled: '1,892,456',
-      volunteers: '45,678',
-      annualAmount: '₹1,247.5Cr',
-      schoolsConnected: '1,456,789',
-      transactionsProcessed: '89.2M',
-      beneficiariesServed: '45.6M',
-      fraudPrevented: '₹2,847Cr',
-      heroStudents: '2.5M+',
-      heroAmount: '₹1,250Cr+',
-      heroStates: '28'
-    };
+    const stats = statsData[year];
     document.getElementById('total-students').textContent = stats.totalStudents;
     document.getElementById('dbt-enabled').textContent = stats.dbtEnabled;
     document.getElementById('total-volunteers').textContent = stats.volunteers;
@@ -230,6 +275,16 @@ async function updateCounters(){
     document.getElementById('transactions-processed').textContent = stats.transactionsProcessed;
     document.getElementById('beneficiaries-served').textContent = stats.beneficiariesServed;
     document.getElementById('fraud-prevented').textContent = stats.fraudPrevented;
+
+    // Update change spans
+    document.getElementById('change-total-students').textContent = stats.changeTotalStudents;
+    document.getElementById('change-dbt-enabled').textContent = stats.changeDbtEnabled;
+    document.getElementById('change-total-volunteers').textContent = stats.changeVolunteers;
+    document.getElementById('change-annual-amount').textContent = stats.changeAnnualAmount;
+    document.getElementById('change-schools-connected').textContent = stats.changeSchoolsConnected;
+    document.getElementById('change-transactions-processed').textContent = stats.changeTransactionsProcessed;
+    document.getElementById('change-beneficiaries-served').textContent = stats.changeBeneficiariesServed;
+    document.getElementById('change-fraud-prevented').textContent = stats.changeFraudPrevented;
 
     // Update hero stats if elements exist
     const heroStudents = document.getElementById('hero-students');
@@ -242,7 +297,14 @@ async function updateCounters(){
   }catch(e){console.warn('Failed to load counters',e)}
 }
 
+// Initialize with default year
 updateCounters();
+
+// Add event listener for year select
+document.getElementById('year-select').addEventListener('change', function() {
+  const selectedYear = this.value;
+  updateCounters(selectedYear);
+});
 
 // Start video autoplay if visible (muted required by some browsers)
 const video = document.getElementById('howto-video');

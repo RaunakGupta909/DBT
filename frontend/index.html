@@ -211,13 +211,21 @@
   <section class="stats-dashboard">
     <div class="container">
       <h2 class="section-title">DBT Impact Statistics</h2>
+      <div class="year-selector-card">
+        <span class="year-label">Financial Year:</span>
+        <select id="year-select" class="year-select">
+          <option value="fy25-26" selected>2025-26</option>
+          <option value="fy24-25">2024-25</option>
+          <option value="fy23-24">2023-24</option>
+        </select>
+      </div>
       <div class="stats-grid">
         <div class="stat-card primary">
           <div class="stat-icon">🎓</div>
           <div class="stat-content">
             <h3 id="total-students">2,547,892</h3>
             <p>Total Students Enrolled</p>
-            <span class="stat-change positive">+12.5% this year</span>
+            <span id="change-total-students" class="stat-change positive">+12.5% this year</span>
           </div>
         </div>
         <div class="stat-card success">
@@ -225,7 +233,7 @@
           <div class="stat-content">
             <h3 id="dbt-enabled">1,892,456</h3>
             <p>DBT Enabled Students</p>
-            <span class="stat-change positive">74.2% coverage</span>
+            <span id="change-dbt-enabled" class="stat-change positive">74.2% coverage</span>
           </div>
         </div>
         <div class="stat-card info">
@@ -233,7 +241,7 @@
           <div class="stat-content">
             <h3 id="total-volunteers">45,678</h3>
             <p>Active Volunteers</p>
-            <span class="stat-change positive">+8.3% growth</span>
+            <span id="change-total-volunteers" class="stat-change positive">+8.3% growth</span>
           </div>
         </div>
         <div class="stat-card warning">
@@ -241,7 +249,7 @@
           <div class="stat-content">
             <h3 id="annual-amount">₹1,247.5Cr</h3>
             <p>Annual DBT Amount</p>
-            <span class="stat-change positive">+15.2% increase</span>
+            <span id="change-annual-amount" class="stat-change positive">+15.2% increase</span>
           </div>
         </div>
 
@@ -251,7 +259,7 @@
           <div class="stat-content">
             <h3 id="schools-connected">1,456,789</h3>
             <p>Schools Connected</p>
-            <span class="stat-change positive">+23.1% this year</span>
+            <span id="change-schools-connected" class="stat-change positive">+23.1% this year</span>
           </div>
         </div>
         <div class="stat-card warning">
@@ -267,7 +275,7 @@
           <div class="stat-content">
             <h3 id="beneficiaries-served">45.6M</h3>
             <p>Total Beneficiaries</p>
-            <span class="stat-change positive">+18.9% increase</span>
+            <span id="change-beneficiaries-served" class="stat-change positive">+18.9% increase</span>
           </div>
         </div>
         <div class="stat-card success">
@@ -275,7 +283,7 @@
           <div class="stat-content">
             <h3 id="fraud-prevented">₹2,847Cr</h3>
             <p>Fraud Prevented</p>
-            <span class="stat-change positive">₹847Cr saved</span>
+            <span id="change-fraud-prevented" class="stat-change positive">₹847Cr saved</span>
           </div>
         </div>
 
