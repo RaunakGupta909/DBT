@@ -998,6 +998,7 @@ body.dark .faq-answer{color:#cbd5e1}
   background: transparent;
   text-align: center;
   margin: 20px auto;
+  max-width: 400px;
 }
 
 /* Comment Section */
