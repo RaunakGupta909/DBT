@@ -577,7 +577,9 @@ nav a{font-size:14px;padding:7px 8px}
 .dashlinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;padding:16px}
 
 .testimonials,.faq{padding:16px}
-.gov-footer{padding:16px;text-align:center;color:var(--muted);background:#c0c0c0}
+.gov-footer{padding:26px;text-align:center;color:var(--muted);background:#c0c0c0}
+.gov-footer p{margin-bottom:20px}
+.footer-links{margin-bottom:20px}
 
 /* Testimonial single-item carousel */
 .testimonial-wrapper{display:flex;align-items:center;gap:12px;padding:12px}
@@ -811,7 +813,7 @@ body.dark .faq-answer{color:#cbd5e1}
 /* Optional hover effect */
 .whatsapp-float:hover {
   transform: scale(1.1);
-}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }
 
 
 /* Responsive: 1 column on mobile */
