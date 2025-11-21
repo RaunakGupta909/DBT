@@ -102,7 +102,7 @@ app.post('/api/chatbot', async (req, res) => {
 });
 
 // Fallback to serve index.html for client-side routes
-app.get('*', (req, res) => {
+app.use((req, res) => {
   // If request is for API route, skip
   if (req.path.startsWith('/api/')) return res.status(404).json({error:'Not found'});
   res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));

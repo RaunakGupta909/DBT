@@ -187,9 +187,8 @@ if(findBankBtn){
       (position)=>{
         const {latitude, longitude} = position.coords;
         console.log(`User location: ${latitude}, ${longitude}`);
-        alert(`Your location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}\n\nIn a real app, this would search for nearby banks.`);
-        findBankBtn.disabled = false;
-        findBankBtn.textContent = '📍 Find Nearby Bank';
+        // Open Google Maps search for nearby banks in the same tab
+        window.location.href = `https://www.google.com/maps/search/banks+near+me/@${latitude},${longitude},15z`;
       },
       (error)=>{
         console.error('Geolocation error:', error);

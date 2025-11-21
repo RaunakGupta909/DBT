@@ -482,22 +482,6 @@
         document.getElementById('commentSuccess').style.display = 'none';
       }, 5000);
     });
-
-document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("find-bank-btn");
-
-    btn.addEventListener("click", () => {
-        const query = "nearby bank";
-        const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-
-        window.open(url, "_blank");
-    });
-});
-
-
-
-
-
   </script>
   <script src="script.js"></script>
 </body>
