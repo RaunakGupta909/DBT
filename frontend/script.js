@@ -457,4 +457,110 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.addEventListener('click', ()=>{
     faqItems.forEach(i=>i.classList.remove('open'));
   });
+
+  // Chatbot functionality
+  const chatbotIcon = document.getElementById('chatbot-icon');
+  const chatbotModal = document.getElementById('chatbot-modal');
+  const chatbotClose = document.getElementById('chatbot-close');
+  const chatbotInput = document.getElementById('chatbot-input');
+  const chatbotSend = document.getElementById('chatbot-send');
+  const chatbotBody = document.getElementById('chatbot-body');
+
+  // Open modal
+  chatbotIcon.addEventListener('click', () => {
+    chatbotModal.style.display = 'flex';
+  });
+
+  // Close modal
+  chatbotClose.addEventListener('click', () => {
+    chatbotModal.style.display = 'none';
+  });
+
+  // Close modal on outside click
+  window.addEventListener('click', (e) => {
+    if (e.target === chatbotModal) {
+      chatbotModal.style.display = 'none';
+    }
+  });
+
+  // Send message
+  chatbotSend.addEventListener('click', sendMessage);
+  chatbotInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  });
+
+  async function sendMessage() {
+    const question = chatbotInput.value.trim();
+    if (!question) return;
+
+    // Add user message
+    const userMsg = document.createElement('p');
+    userMsg.innerHTML = `<strong>You:</strong> ${question}`;
+    chatbotBody.appendChild(userMsg);
+
+    // Clear input
+    chatbotInput.value = '';
+
+    // Scroll to bottom
+    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+
+    // Show loading
+    const loadingMsg = document.createElement('p');
+    loadingMsg.textContent = 'Searching...';
+    chatbotBody.appendChild(loadingMsg);
+    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+
+    try {
+      // Google Custom Search API
+      const apiKey = 'AIzaSyBeKZn0eOHn4-qar3fc_L8K9daPLxczFGM';
+      const cx = 'b4da9edec49f045b8';
+      const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(question)}&num=5`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      // Remove loading
+      chatbotBody.removeChild(loadingMsg);
+
+      if (data.items && data.items.length > 0) {
+        // Add AI response header
+        const aiHeader = document.createElement('p');
+        aiHeader.innerHTML = `<strong>Search Results:</strong>`;
+        chatbotBody.appendChild(aiHeader);
+
+        // Display top 5 results
+        data.items.slice(0, 5).forEach(item => {
+          const resultMsg = document.createElement('div');
+          resultMsg.style.marginBottom = '10px';
+          resultMsg.innerHTML = `
+            <strong><a href="${item.link}" target="_blank">${item.title}</a></strong><br>
+            ${item.snippet}<br>
+            <small>${item.displayLink}</small>
+          `;
+          chatbotBody.appendChild(resultMsg);
+        });
+      } else {
+        // No results
+        const noResultsMsg = document.createElement('p');
+        noResultsMsg.innerHTML = `<strong>No results found.</strong>`;
+        chatbotBody.appendChild(noResultsMsg);
+      }
+
+      // Scroll to bottom
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    } catch (error) {
+      // Remove loading
+      chatbotBody.removeChild(loadingMsg);
+
+      // Add error message
+      const errorMsg = document.createElement('p');
+      errorMsg.innerHTML = `<strong>Error:</strong> Unable to perform search. Please try again.`;
+      chatbotBody.appendChild(errorMsg);
+
+      // Scroll to bottom
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+  }
 });

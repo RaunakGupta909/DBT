@@ -1,11 +1,16 @@
-# DEO Dashboard Creation Task
+# TODO: Add AI Chatbot Icon and Backend Functionality
 
-## Steps to Complete:
-- [x] Create DBT/frontend/deo_dashboard.html based on teacher_dashboard.html structure
-- [x] Update title to "DEO Dashboard"
-- [x] Adjust grid layout for 5 cards (responsive)
-- [x] Add 5 cards: Distinct Snapshot, Interactive Heatmap, Campaign Oversight, Policy Tools, Issue Resolution Board
-- [x] Assign relevant icons and descriptions to each card
-- [x] Include back button linking to index.html
-- [x] Update index.html to change DEO proceed link from "/deo" to "deo_dashboard.html"
-- [x] Verify navigation works correctly
+## Frontend Changes
+- [ ] Add chatbot icon HTML element to frontend/index.html before the WhatsApp link
+- [ ] Add CSS styles for the chatbot floating button in frontend/styles.css (position left of WhatsApp)
+- [ ] Verify chatbot modal and sendMessage function in frontend/script.js works with new backend
+
+## Backend Changes
+- [ ] Add googleapis dependency to backend/package.json
+- [ ] Implement /api/chatbot POST route in backend/app.js using Google Custom Search API
+- [ ] Handle API key and CSE ID securely (use environment variables)
+
+## Testing
+- [ ] Test chatbot functionality by sending questions and verifying responses
+- [ ] Ensure icon is positioned correctly left of WhatsApp
+- [ ] Run backend and frontend to verify integration

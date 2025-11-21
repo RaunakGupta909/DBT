@@ -443,10 +443,32 @@
     </div>
   </footer>
 
+  <!-- AI Chatbot Support Icon -->
+  <a id="chatbot-icon" class="chatbot-float" href="#">
+    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Chatbot" />
+  </a>
+
   <!-- whatsapp support system -->
    <a href="https://wa.me/916386038421" class="whatsapp-float" target="_blank">
   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
 </a>
+
+  <!-- Chatbot Modal -->
+  <div id="chatbot-modal" class="chatbot-modal">
+    <div class="chatbot-modal-content">
+      <div class="chatbot-header">
+        <h3>AI Chatbot</h3>
+        <button id="chatbot-close" class="chatbot-close">&times;</button>
+      </div>
+      <div id="chatbot-body" class="chatbot-body">
+        <p><strong>AI:</strong> Hello! How can I help you with DBT today?</p>
+      </div>
+      <div class="chatbot-input-container">
+        <input type="text" id="chatbot-input" placeholder="Type your question..." />
+        <button id="chatbot-send">Send</button>
+      </div>
+    </div>
+  </div>
 
 
   <script>
