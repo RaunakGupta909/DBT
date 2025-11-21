@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State DBT Officer Dashboard</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 40px;
+    }
+
+    .role-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(280px, 1fr));
+        gap: 25px;
+        justify-content: center;
+        margin-top: 60px;
+    }
+
+    /* #### CARD #### */
+    .role-card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 1px solid #eaeaea;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .role-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+        border-top: 5px solid #005bbb;
+    }
+
+    /* ICON STYLE LIKE IMAGE */
+    .role-badge {
+        font-size: 45px;
+        margin-bottom: 10px;
+        animation: floatIcon 2.5s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0px); }
+    }
+
+    /* TITLE */
+    .role-card h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: #111;
+        animation: fadeSlide 1.2s ease;
+    }
+
+    /* DESCRIPTION */
+    .role-card p {
+        margin-top: 8px;
+        color: #444;
+        font-size: 14px;
+        line-height: 1.4;
+        animation: fadeSlide 1.4s ease;
+    }
+
+    /* BUTTON */
+    .proceed-btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 14px;
+        font-size: 14px;
+        color: white;
+        background: #005bbb;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .proceed-btn:hover {
+        background: #004a99;
+    }
+
+    @keyframes fadeSlide {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0px); }
+    }
+</style>
+
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">← Back to Home</a>
+
+<style>
+.back-btn {
+    position: absolute;
+    top: 20px;     /* upar se distance */
+    left: 20px;    /* left side se distance */
+    padding: 10px 14px;
+    margin: 0;
+    font-size: 14px;
+    color: white;
+    background: #005bbb;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.back-btn:hover {
+    background: #004a99;
+}
+</style>
+
+<div class="role-grid">
+
+  <!-- State Heatmapping Card -->
+  <article class="role-card officer">
+    <div class="role-badge">🌍</div>
+    <h3>State Heatmapping</h3>
+    <p>Visualize DBT distribution and performance across the state.</p>
+    <a class="proceed-btn" href="#">Proceed →</a>
+  </article>
+
+  <!-- Strategic Insights Engine Card -->
+  <article class="role-card officer">
+    <div class="role-badge">🧠</div>
+    <h3>Strategic Insights Engine</h3>
+    <p>Analyze data for strategic decisions and insights on DBT programs.</p>
+    <a class="proceed-btn" href="#">Proceed →</a>
+  </article>
+
+  <!-- Campaign Alerts Card -->
+  <article class="role-card officer">
+    <div class="role-badge">🔔</div>
+    <h3>Campaign Alerts</h3>
+    <p>Monitor and manage alerts for DBT campaigns and initiatives.</p>
+    <a class="proceed-btn" href="#">Proceed →</a>
+  </article>
+
+  <!-- Integration Panel Card -->
+  <article class="role-card officer">
+    <div class="role-badge">🧩</div>
+    <h3>Integration Panel</h3>
+    <p>Integrate and manage external systems and data sources.</p>
+    <a class="proceed-btn" href="#">Proceed →</a>
+  </article>
+
+</div>
+
+</body>
+</html>
