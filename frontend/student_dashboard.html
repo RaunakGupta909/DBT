@@ -15,9 +15,10 @@
 
     .role-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(3, minmax(280px, 1fr));
         gap: 25px;
         justify-content: center;
+        margin-top: 60px;
     }
 
     /* #### CARD #### */
@@ -36,6 +37,7 @@
     .role-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+        border-top: 5px solid #005bbb;
     }
 
     /* ICON STYLE LIKE IMAGE */
@@ -102,9 +104,19 @@
     position: absolute;
     top: 20px;     /* upar se distance */
     left: 20px;    /* left side se distance */
-    text-decoration: blue;
-    font-size: 18px;
-    color: black;
+    padding: 10px 14px;
+    margin: 0;
+    font-size: 14px;
+    color: white;
+    background: #005bbb;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.back-btn:hover {
+    background: #004a99;
 }
 </style>
 
