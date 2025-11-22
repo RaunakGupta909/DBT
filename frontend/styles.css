@@ -1762,6 +1762,38 @@ body.large-font{font-size:1.15rem}
   transform: translateY(0);
 }
 
+/* Back button for pages */
+.back-button {
+  display: inline-block;
+  padding: 10px 15px;
+  background: linear-gradient(90deg, #1e6fb8, #1554a0);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+  background: linear-gradient(90deg, #1554a0, #0f4580);
+  transform: translateY(-2px);
+}
+
+/* Report page main background */
+.report-main {
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* Contact page main background */
+.contact-main {
+  background: linear-gradient(135deg, #f0fff0 0%, #e6ffe6 100%);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
 /* Footer */
 .footer {
   background: #808080;
