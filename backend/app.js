@@ -27,6 +27,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/students', require('./routes/students'));
 app.use('/api/volunteers', require('./routes/volunteers'));
 app.use('/api/admin', require('./routes/admin'));
+// Scam reports route
+app.use('/api/scams', require('./routes/scams'));
 
 // Simple stats endpoint for frontend counters
 app.get('/api/stats', async (req,res)=>{

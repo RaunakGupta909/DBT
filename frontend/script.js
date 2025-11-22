@@ -430,6 +430,31 @@ if(track){
 // -------------------------
 // Add event listeners after DOM content loaded (defensive)
 document.addEventListener('DOMContentLoaded', ()=>{
+  // Set active navigation link based on current page
+  (function setActiveNav(){
+    try{
+      const links = Array.from(document.querySelectorAll('nav a, .mobile-menu a'));
+      const path = window.location.pathname.split('/').pop() || 'index.html';
+      links.forEach(a => {
+        const href = a.getAttribute('href') || '';
+        // handle hash links: mark Home active when on index
+        if(href.startsWith('#')){
+          if((href === '#home' || href === '#') && (path === '' || path === 'index.html')){
+            a.classList.add('active');
+          } else {
+            a.classList.remove('active');
+          }
+          return;
+        }
+        const hrefFile = href.split('/').pop();
+        if(hrefFile === path){
+          a.classList.add('active');
+        } else {
+          a.classList.remove('active');
+        }
+      });
+    }catch(e){/* fail silently */}
+  })();
   const faqItems = Array.from(document.querySelectorAll('.faq-item'));
   if(faqItems.length === 0) return;
 
