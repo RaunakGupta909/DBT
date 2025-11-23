@@ -1372,6 +1372,11 @@ body.dark .role-card p{color:#cbd5e1}
 body.dark .campaigns{background:linear-gradient(135deg,#0b1220 0%,#1e293b 100%)}
 body.dark .campaign-overlay{background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.6) 50%,transparent 100%)}
 
+/* Dark mode for Footer */
+body.dark .gov-footer{background:#1e293b;color:#e6f0fb}
+body.dark .footer-links{color:#94a3b8}
+body.dark .footer-info p{color:#94a3b8}
+
 /* Responsive tweaks */
 @media (max-width:800px){
   .gov-navbar nav{display:none}
