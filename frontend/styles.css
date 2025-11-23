@@ -1235,6 +1235,23 @@ body.dark .main-nav{background:linear-gradient(90deg,#0f5a9f,#0e4d87);border-bot
 body.dark .nav-links .nav-btn{border-right-color:rgba(255,255,255,0.1)}
 body.dark .nav-links .nav-btn:hover{background:rgba(255,255,255,0.1)}
 
+/* Dark mode for full-card (How to use this website frame) */
+body.dark .full-card {
+  background: #0f1724;
+  color: #e6f0fb;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+body.dark .card-header {
+  background: #1e293b;
+  color: #e6f0fb;
+}
+
+body.dark .card-audio {
+  background: #1e293b;
+  color: #e6f0fb;
+}
+
 /* Dark mode for Comments Section */
 body.dark .comments-section{background:linear-gradient(135deg,#0b1220 0%,#1e293b 100%)}
 body.dark .comment-form input,
