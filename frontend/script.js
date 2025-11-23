@@ -191,7 +191,7 @@ initDarkMode();
 
 // Language switcher (floating)
 const lang = document.getElementById('lang-switcher');
-const languages = ['EN','HI','MR','GU'];
+const languages = ['EN','HI'];
 let langIndex = 0;
 lang.addEventListener('click', ()=>{
   langIndex = (langIndex + 1) % languages.length;
