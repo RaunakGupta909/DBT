@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multimedia - DBT Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .multimedia-section {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-bottom: 30px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+
+    .multimedia-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .multimedia-header h1 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .multimedia-header p {
+      font-size: 1.1rem;
+      color: #666;
+    }
+
+    /* Tabs Navigation */
+    .tabs-navigation {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      padding: 12px 30px;
+      font-size: 1rem;
+      border: 2px solid #007bff;
+      background-color: white;
+      color: #007bff;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .tab-button.active {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .tab-button:hover {
+      background-color: #007bff;
+      color: white;
+    }
+
+    /* Tab Content */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Photos Section */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .photo-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .photo-info {
+      padding: 15px;
+    }
+
+    .photo-info h3 {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .photo-info p {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Videos Section */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .video-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-info {
+      padding: 15px;
+    }
+
+    .video-info h3 {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .video-info p {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Press Release Section */
+    .press-releases {
+      margin-top: 30px;
+    }
+
+    .press-release-card {
+      background: white;
+      border-left: 4px solid #007bff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .press-release-card:hover {
+      transform: translateX(5px);
+    }
+
+    .press-release-date {
+      font-size: 0.85rem;
+      color: #007bff;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .press-release-title {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .press-release-title:hover {
+      color: #007bff;
+      text-decoration: underline;
+    }
+
+    .press-release-excerpt {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .read-more-btn {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .read-more-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #007bff;
+      display: inline-block;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .multimedia-header h1 {
+        font-size: 2rem;
+      }
+
+      .tabs-navigation {
+        gap: 10px;
+      }
+
+      .tab-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+
+      .photos-grid,
+      .videos-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="multimedia-section">
+    <a href="index.html" class="back-button">← Back to Home</a>
+
+    <div class="multimedia-header">
+      <h1>Multimedia</h1>
+      <p>Explore Photos, Videos, and Press Releases about DBT Initiative</p>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-navigation">
+      <button class="tab-button active" data-tab="photos">📸 Photos</button>
+      <button class="tab-button" data-tab="videos">🎬 Videos</button>
+      <button class="tab-button" data-tab="press-release">📰 Press Release</button>
+    </div>
+
+    <!-- Photos Section -->
+    <div id="photos" class="tab-content active">
+      <h2 class="section-title">Photo Gallery</h2>
+      <div class="photos-grid">
+        <div class="photo-card">
+          <img src="images/1470999851_0!!!!92!!_1 (1).jpg" alt="DBT Campaign Photo 1" />
+          <div class="photo-info">
+            <h3>DBT Awareness Campaign</h3>
+            <p>Community members participating in DBT awareness drive across multiple districts.</p>
+          </div>
+        </div>
+
+        <div class="photo-card">
+          <img src="images/1474367862_Audience!!longshot.jpg" alt="DBT Training Session" />
+          <div class="photo-info">
+            <h3>Training & Workshop</h3>
+            <p>Educational staff and volunteers being trained on DBT portal usage and benefits.</p>
+          </div>
+        </div>
+
+        <div class="photo-card">
+          <img src="images/1474368556_10.jpg" alt="DBT Event" />
+          <div class="photo-info">
+            <h3>Community Engagement</h3>
+            <p>Citizens and officials coming together to discuss DBT benefits and implementation.</p>
+          </div>
+        </div>
+
+        <div class="photo-card">
+          <img src="images/1474369082_3 (1).jpg" alt="DBT Registration Drive" />
+          <div class="photo-info">
+            <h3>Registration Drive</h3>
+            <p>On-ground registration camps helping citizens link their Aadhaar with DBT benefits.</p>
+          </div>
+        </div>
+
+        <div class="photo-card">
+          <img src="images/1474369115_2 (2).jpg" alt="Success Stories" />
+          <div class="photo-info">
+            <h3>Success Stories</h3>
+            <p>Beneficiaries sharing their positive experiences with the Direct Benefit Transfer system.</p>
+          </div>
+        </div>
+
+        <div class="photo-card">
+          <img src="images/1474369146_1_1.jpg" alt="Official Meeting" />
+          <div class="photo-info">
+            <h3>Administrative Coordination</h3>
+            <p>Government officials coordinating DBT implementation at state and district levels.</p>
+          </div>
+        </div>
+        <div class="photo-card">
+          <img src="1474369905_Lamp!!lighting.jpg" alt="Official Meeting" />
+          <div class="photo-info">
+            <h3>Administrative Coordination</h3>
+            <p>Government officials coordinating DBT implementation at state and district levels.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Videos Section -->
+    <div id="videos" class="tab-content">
+      <h2 class="section-title">Video Library</h2>
+      <div class="videos-grid">
+        <div class="video-card">
+          <div class="video-frame">
+            <iframe src="-" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>What is DBT?</h3>
+            <p>A comprehensive introduction to the Direct Benefit Transfer scheme and its importance.</p>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-frame">
+            <iframe src="-" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>How to Register</h3>
+            <p>Step-by-step guide on how to register on the DBT portal using Aadhaar and mobile number.</p>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-frame">
+            <iframe src="-" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Check Your Status</h3>
+            <p>Tutorial on how to check your DBT eligibility and benefit status on the portal.</p>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-frame">
+            <iframe src="-" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Benefits of DBT</h3>
+            <p>Explore the various benefits and advantages of the Direct Benefit Transfer system.</p>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-frame">
+            <iframe src="-" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Volunteer Guide</h3>
+            <p>Information for volunteers on how to support and earn credits through the DBT initiative.</p>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-frame">
+            <iframe src="-" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Success Stories</h3>
+            <p>Real-life success stories from beneficiaries of the Direct Benefit Transfer program.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Press Release Section -->
+    <div id="press-release" class="tab-content">
+      <h2 class="section-title">Press Releases</h2>
+      <div class="press-releases">
+        <div class="press-release-card">
+          <div class="press-release-date">November 20, 2025</div>
+          <div class="press-release-title">DBT Portal Launches Enhanced Features for Better User Experience</div>
+          <div class="press-release-excerpt">
+            The Direct Benefit Transfer Portal is excited to announce the launch of several new features designed to improve accessibility and user experience. The updates include simplified registration, real-time status tracking, and multilingual support.
+          </div>
+          <a href="#" class="read-more-btn">Read Full Release →</a>
+        </div>
+
+        <div class="press-release-card">
+          <div class="press-release-date">November 15, 2025</div>
+          <div class="press-release-title">Record Number of Citizens Benefit from Direct Transfer Initiative</div>
+          <div class="press-release-excerpt">
+            In a significant milestone, over 5 million citizens have successfully registered on the DBT portal in the current financial year. The initiative continues to expand its reach across all states and union territories.
+          </div>
+          <a href="#" class="read-more-btn">Read Full Release →</a>
+        </div>
+
+        <div class="press-release-card">
+          <div class="press-release-date">November 10, 2025</div>
+          <div class="press-release-title">DBT Partners with Banks to Strengthen Beneficiary Support</div>
+          <div class="press-release-excerpt">
+            The Direct Benefit Transfer mission has signed MoUs with major financial institutions to provide dedicated support centers in every district. This partnership aims to ensure easier account linkage and benefit disbursement.
+          </div>
+          <a href="#" class="read-more-btn">Read Full Release →</a>
+        </div>
+
+        <div class="press-release-card">
+          <div class="press-release-date">November 5, 2025</div>
+          <div class="press-release-title">Nationwide Awareness Campaign Kicks Off Successfully</div>
+          <div class="press-release-excerpt">
+            The "Know Your DBT" awareness campaign has been launched across all major cities and rural areas. Government officials, volunteers, and community leaders are working together to educate citizens about the benefits of Direct Benefit Transfer.
+          </div>
+          <a href="#" class="read-more-btn">Read Full Release →</a>
+        </div>
+
+        <div class="press-release-card">
+          <div class="press-release-date">October 28, 2025</div>
+          <div class="press-release-title">Mobile App for DBT Portal Now Available on All Platforms</div>
+          <div class="press-release-excerpt">
+            Citizens can now access DBT services on the go with the newly launched mobile application available on iOS and Android platforms. The app provides all key features including registration, status checking, and support services.
+          </div>
+          <a href="#" class="read-more-btn">Read Full Release →</a>
+        </div>
+
+        <div class="press-release-card">
+          <div class="press-release-date">October 20, 2025</div>
+          <div class="press-release-title">New Transparency Measures Implemented Across DBT System</div>
+          <div class="press-release-excerpt">
+            To enhance accountability and reduce fraud, the DBT system has implemented advanced verification protocols and real-time monitoring mechanisms. All transactions are now traceable and verifiable by authorized officials and beneficiaries.
+          </div>
+          <a href="#" class="read-more-btn">Read Full Release →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="gov-footer">
+    <p>DBT Portal — Government Services Demo</p>
+    <div class="footer-policy-strip">
+      <div class="footer-links">
+        <a href="#privacy">Privacy Policy</a>
+        <span class="separator">|</span>
+        <a href="#terms">Terms & Conditions</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Tab switching functionality
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const tabName = button.getAttribute('data-tab');
+
+        // Remove active class from all buttons and contents
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+        // Add active class to clicked button and corresponding content
+        button.classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

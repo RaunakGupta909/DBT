@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Report a Scam — DBT Awareness</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="gov-navbar">
+    <div class="navbar-left">
+      <!-- back link removed as requested -->
+    </div>
+    <div class="navbar-center"><h1 class="page-title" style="margin:0; font-size:1.25rem;">Report a Scam</h1></div>
+  </header>
+
+  <main class="container report-main" style="padding:24px; max-width:900px; margin:24px auto;">
+    <a href="index.html" class="back-button">← Back to Home</a>
+    <!-- Main heading is displayed in the header for consistency -->
+    <p>Please use this form to report suspicious messages, calls, or websites that claim to be from the DBT programme. Your report helps us investigate and protect beneficiaries.</p>
+
+    <div class="card comment-card" style="padding:16px;">
+      <form id="scamReportForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reporterName">Your Name (optional)</label>
+            <input type="text" id="reporterName" name="name" placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label for="reporterPhone">Phone (optional)</label>
+            <input type="text" id="reporterPhone" name="phone" placeholder="Mobile number">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reporterEmail">Email (optional)</label>
+            <input type="email" id="reporterEmail" name="email" placeholder="you@example.com">
+          </div>
+          <div class="form-group">
+            <label for="suspectInfo">Suspect info (phone, number, URL, account)</label>
+            <input type="text" id="suspectInfo" name="suspectInfo" placeholder="eg. +91 98xxxx..., http://fake-site.example">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="incidentDate">Date of incident</label>
+          <input type="date" id="incidentDate" name="date">
+        </div>
+
+        <div class="form-group">
+          <label for="reportDescription">Describe what happened</label>
+          <textarea id="reportDescription" name="description" rows="6" required placeholder="Provide as much detail as you can: message text, caller claims, links, screenshots (describe), timestamps."></textarea>
+        </div>
+
+        <div style="display:flex; gap:12px; align-items:center;">
+          <button type="submit" class="submit-btn">Submit Report</button>
+          <div id="scamSuccess" class="success-message" style="display:none; color:green;">Thank you — your report was submitted.</div>
+          <div id="scamError" class="error-message" style="display:none; color:red;">Failed to submit. Try again later.</div>
+        </div>
+      </form>
+    </div>
+
+    <section style="margin-top:18px;">
+      <h2>What to include</h2>
+      <ul>
+        <li>Full message text or a screenshot description</li>
+        <li>Phone number or URL used by the scammer</li>
+        <li>Date and time of the contact</li>
+        <li>Any names or organization claims</li>
+      </ul>
+      <p>If this is an urgent threat, also report to your local cybercrime helpline.</p>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('scamReportForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const name = document.getElementById('reporterName').value.trim();
+      const phone = document.getElementById('reporterPhone').value.trim();
+      const email = document.getElementById('reporterEmail').value.trim();
+      const suspectInfo = document.getElementById('suspectInfo').value.trim();
+      const date = document.getElementById('incidentDate').value;
+      const description = document.getElementById('reportDescription').value.trim();
+
+      const payload = { name, phone, email, suspectInfo, date, description };
+
+      // Show pending state
+      const successEl = document.getElementById('scamSuccess');
+      const errorEl = document.getElementById('scamError');
+      successEl.style.display = 'none';
+      errorEl.style.display = 'none';
+
+      try{
+        const res = await fetch('/api/scams/report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if(res.ok){
+          successEl.style.display = 'block';
+          this.reset();
+        } else {
+          const body = await res.json().catch(()=>({}));
+          errorEl.textContent = body.error || 'Failed to submit. Try again later.';
+          errorEl.style.display = 'block';
+        }
+      }catch(err){
+        console.error('Submit error', err);
+        errorEl.textContent = 'Network or server error.';
+        errorEl.style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>

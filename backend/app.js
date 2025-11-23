@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
+const { google } = require('googleapis');
 const VisitorCount = require('./models/VisitorCount');
 const app = express();
 const port = process.env.PORT || 4000;
@@ -26,6 +27,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/students', require('./routes/students'));
 app.use('/api/volunteers', require('./routes/volunteers'));
 app.use('/api/admin', require('./routes/admin'));
+// Scam reports route
+app.use('/api/scams', require('./routes/scams'));
 
 // Simple stats endpoint for frontend counters
 app.get('/api/stats', async (req,res)=>{
@@ -51,8 +54,57 @@ app.get('/api/visitor-count', async (req, res) => {
   }
 });
 
+// Chatbot endpoint using Google Custom Search API
+app.post('/api/chatbot', async (req, res) => {
+  const { question } = req.body;
+
+  if (!question) {
+    return res.status(400).json({ error: 'Question is required' });
+  }
+
+  try {
+    const { google } = require('googleapis');
+    const customsearch = google.customsearch('v1');
+
+    // Use environment variables for API key and CSE ID
+    const API_KEY = process.env.GOOGLE_API_KEY;
+    const CSE_ID = process.env.GOOGLE_CSE_ID;
+
+    if (!API_KEY || !CSE_ID) {
+      return res.status(500).json({ error: 'Google API configuration missing' });
+    }
+
+    const response = await customsearch.cse.list({
+      auth: API_KEY,
+      cx: CSE_ID,
+      q: question,
+      num: 1, // Get top result
+    });
+
+    const items = response.data.items;
+    if (items && items.length > 0) {
+      const topResult = items[0];
+      const answer = topResult.snippet || topResult.title;
+      const link = topResult.link;
+
+      res.json({
+        answer: answer,
+        link: link,
+      });
+    } else {
+      res.json({
+        answer: 'Sorry, I couldn\'t find relevant information for your question. Please try rephrasing or contact support.',
+        link: null,
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching from Google Custom Search:', error);
+    res.status(500).json({ error: 'Failed to fetch answer' });
+  }
+});
+
 // Fallback to serve index.html for client-side routes
-app.get('*', (req, res) => {
+app.use((req, res) => {
   // If request is for API route, skip
   if (req.path.startsWith('/api/')) return res.status(404).json({error:'Not found'});
   res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
