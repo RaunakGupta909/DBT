@@ -179,6 +179,7 @@ body {
   height: 200px;
   border: none;
   border-radius: 8px;
+  margin-top: auto;
 }
 
 /* Responsive for three cards */
