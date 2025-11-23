@@ -157,11 +157,37 @@ document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ mobileMenu.s
 //   showSlide(currentIndex);
 // },3000);
 
-// Dark mode toggle
+// Dark mode toggle with localStorage persistence
 const darkToggle = document.getElementById('dark-toggle');
+
+// Check localStorage and apply dark mode on page load
+function initDarkMode() {
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  if (isDarkMode) {
+    document.body.classList.add('dark');
+    updateDarkModeIcon(true);
+  } else {
+    updateDarkModeIcon(false);
+  }
+}
+
+// Update toggle button icon
+function updateDarkModeIcon(isDark) {
+  if (darkToggle) {
+    darkToggle.textContent = isDark ? '☀️' : '🌙';
+    darkToggle.title = isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+  }
+}
+
+// Toggle dark mode
 darkToggle.addEventListener('click', ()=>{
-  document.body.classList.toggle('dark');
+  const isDarkMode = document.body.classList.toggle('dark');
+  localStorage.setItem('darkMode', isDarkMode);
+  updateDarkModeIcon(isDarkMode);
 });
+
+// Initialize dark mode on page load
+initDarkMode();
 
 // Language switcher (floating)
 const lang = document.getElementById('lang-switcher');

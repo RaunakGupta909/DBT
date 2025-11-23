@@ -1224,7 +1224,7 @@ body.dark .faq-answer{color:#cbd5e1}
 }
 
 /* Dark mode */
-body.dark{background:#0b1220;color:#e6f0fb}
+body.dark{background:#0b1220;color:#e6f0fb;transition:background 0.3s ease,color 0.3s ease}
 body.dark .top-strap{background:#071426;border-bottom-color:#071426}
 body.dark .gov-navbar{background:linear-gradient(90deg,#071426,#081827);border-bottom-color:#071426}
 body.dark .navbar-center{color:#5ab8ff}
@@ -1234,6 +1234,129 @@ body.dark .card{background:#0f1724;box-shadow:0 1px 8px rgba(0,0,0,0.6)}
 body.dark .main-nav{background:linear-gradient(90deg,#0f5a9f,#0e4d87);border-bottom-color:#071426}
 body.dark .nav-links .nav-btn{border-right-color:rgba(255,255,255,0.1)}
 body.dark .nav-links .nav-btn:hover{background:rgba(255,255,255,0.1)}
+
+/* Dark mode for Comments Section */
+body.dark .comments-section{background:linear-gradient(135deg,#0b1220 0%,#1e293b 100%)}
+body.dark .comment-form input,
+body.dark .comment-form textarea{background:#0f172a;color:#e6f0fb;border-color:#334155}
+body.dark .comment-form input:focus,
+body.dark .comment-form textarea:focus{border-color:#3b82f6}
+body.dark .success-message{background:rgba(16,185,129,0.15);color:#34d399}
+body.dark .submit-btn{background:linear-gradient(90deg,#0f5a9f,#0e4d87)}
+body.dark .submit-btn:hover{background:linear-gradient(90deg,#0e4d87,#0b3b66)}
+
+/* Dark mode for Statistics Dashboard */
+body.dark .stats-dashboard{
+  background:linear-gradient(135deg,#0b1220 0%,#1e293b 100%);
+}
+
+body.dark .stats-dashboard::before{
+  background:radial-gradient(circle at 20% 80%,rgba(30,111,184,0.08) 0%,transparent 50%),
+             radial-gradient(circle at 80% 20%,rgba(22,163,74,0.08) 0%,transparent 50%);
+}
+
+body.dark .stats-dashboard .section-title{
+  color:#e6f0fb;
+  text-shadow:0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Year Selector Card Dark Mode */
+body.dark .year-selector-card{
+  background:linear-gradient(145deg,#1e293b 0%,#334155 100%);
+  border-color:rgba(255,255,255,0.1);
+  box-shadow:0 12px 32px rgba(0,0,0,0.3),0 4px 12px rgba(0,0,0,0.2);
+}
+
+body.dark .year-label{
+  color:#e6f0fb;
+}
+
+body.dark .year-select{
+  background:#0f172a;
+  color:#e6f0fb;
+  border-color:#334155;
+}
+
+body.dark .year-select:focus{
+  border-color:#3b82f6;
+  box-shadow:0 0 0 3px rgba(59,130,246,0.2);
+}
+
+/* Stat Cards Dark Mode */
+body.dark .stat-card{
+  background:linear-gradient(145deg,#1e293b 0%,#334155 100%);
+  border-color:rgba(255,255,255,0.1);
+  box-shadow:0 12px 32px rgba(0,0,0,0.3),0 4px 12px rgba(0,0,0,0.2);
+}
+
+body.dark .stat-card::before{
+  background:linear-gradient(90deg,#3b82f6,#10b981);
+}
+
+body.dark .stat-card:hover{
+  box-shadow:0 20px 48px rgba(0,0,0,0.4),0 8px 24px rgba(0,0,0,0.3);
+  transform:translateY(-8px);
+}
+
+body.dark .stat-card.primary{
+  border-left-color:#3b82f6;
+}
+
+body.dark .stat-card.success{
+  border-left-color:#10b981;
+}
+
+body.dark .stat-card.info{
+  border-left-color:#0ea5e9;
+}
+
+body.dark .stat-card.warning{
+  border-left-color:#f59e0b;
+}
+
+body.dark .stat-content h3{
+  color:#e6f0fb;
+}
+
+body.dark .stat-content p{
+  color:#94a3b8;
+}
+
+body.dark .stat-change.positive{
+  background:rgba(16,185,129,0.15);
+  color:#34d399;
+}
+
+body.dark .stat-change.negative{
+  background:rgba(239,68,68,0.15);
+  color:#f87171;
+}
+
+/* Student Breakdown Dark Mode */
+body.dark .student-breakdown{
+  background:#1e293b;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+}
+
+body.dark .student-breakdown h3{
+  color:#e6f0fb;
+}
+
+body.dark .breakdown-label{
+  color:#e6f0fb;
+}
+
+body.dark .breakdown-bar{
+  background:#334155;
+}
+
+body.dark .breakdown-fill{
+  background:linear-gradient(90deg,#3b82f6,#10b981);
+}
+
+body.dark .breakdown-value{
+  color:#3b82f6;
+}
 
 /* Dark mode for Select Role section */
 body.dark .select-role{background:linear-gradient(135deg,#0b1220 0%,#1e293b 100%)}
