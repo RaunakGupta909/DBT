@@ -8,23 +8,24 @@
 - [x] Updated student_dashboard.html to link Gamified Zone to the new page
 - [x] Included celebration effects for correct answers
 - [x] Made the page responsive for mobile devices
+- [x] Added Student Dashboard card to parent_dashboard.html linking to student_dashboard.html
+- [x] Created parent_action_tools.html with issue auto diagnosis engine, step-by-step guide wizard, document auto generation, upload evidence tool, and notify teacher
+- [x] Updated parent_dashboard.html to link Parent Action Tools card to the new page
+- [x] Updated TODO.md with new features
 
-## Features Added
-- 10 DBT knowledge quiz questions
-- Progress tracking during quiz
-- Points system (10 points per correct answer)
-- Local storage for persistent points
-- Reward badges section
-- Leaderboard with sample data
-- Confetti animation for correct answers
-- Mobile-responsive design
+## Features Added for Parent Action Tools
+- Monitor Child's DBT Status
+- Raise Issue on Behalf of Child
+- Share DBT Information via WhatsApp
+- View Detailed Reports
+- Access Learning Resources for Parents
+- Parent Ambassador Program
+- Issue Auto Diagnosis Engine
+- Step by Step Guide Wizard
+- Document Auto Generation
+- Upload Evidence Tool
+- Notify Teacher
 
 ## Files Modified
-- frontend/gamified_zone.html (new file)
-- frontend/student_dashboard.html (updated link)
-
-## Testing Notes
-- Quiz questions cover DBT basics, benefits, registration, and safety
-- Points are saved locally and persist across sessions
-- Leaderboard shows sample data with user's current score
-- All interactions are smooth with hover effects and animations
+- frontend/parent_dashboard.html (updated link)
+- frontend/parent_action_tools.html (new file)

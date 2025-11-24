@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Action Tools</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 40px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .tool-section {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 20px;
+            border: 1px solid #eaeaea;
+        }
+        .tool-section h3 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .tool-card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .tool-card h4 {
+            margin-top: 0;
+        }
+        button {
+            background: #005bbb;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #004a99;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        .wizard-step {
+            display: none;
+        }
+        .wizard-step.active {
+            display: block;
+        }
+        .diagnosis-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e8;
+            border-radius: 5px;
+        }
+        .back-btn {
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            padding: 10px 14px;
+            margin: 0;
+            font-size: 14px;
+            color: white;
+            background: #286ea7;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .back-btn:hover {
+            background: #214e88;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="parent_dashboard.html" class="back-btn">← Back to Parent Dashboard</a>
+
+        <h1>Parent Action Tools</h1>
+
+        <!-- Issue Auto Diagnosis Engine -->
+        <div class="tool-section">
+            <h3>Issue Auto Diagnosis Engine</h3>
+            <p>Describe the issue your child is facing with DBT:</p>
+            <textarea id="issue-description" rows="4" cols="50" placeholder="Enter issue details..."></textarea><br>
+            <button onclick="diagnoseIssue()">Diagnose Issue</button>
+            <div id="diagnosis-result" class="diagnosis-result" style="display: none;"></div>
+        </div>
+
+        <!-- Step by Step Guide Wizard -->
+        <div class="tool-section">
+            <h3>Step by Step Guide Wizard</h3>
+            <div id="wizard-container">
+                <div class="wizard-step active" id="step1">
+                    <h4>Step 1: Identify the Problem</h4>
+                    <p>What type of DBT issue are you facing?</p>
+                    <select id="problem-type">
+                        <option value="">Select...</option>
+                        <option value="payment">Payment Delay</option>
+                        <option value="eligibility">Eligibility Issue</option>
+                        <option value="account">Account Problem</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <br><button onclick="nextStep(1)">Next</button>
+                </div>
+                <div class="wizard-step" id="step2">
+                    <h4>Step 2: Gather Information</h4>
+                    <p>Please provide the following details:</p>
+                    <input type="text" id="child-name" placeholder="Child's Name"><br>
+                    <input type="text" id="aadhaar" placeholder="Aadhaar Number"><br>
+                    <button onclick="prevStep(2)">Previous</button>
+                    <button onclick="nextStep(2)">Next</button>
+                </div>
+                <div class="wizard-step" id="step3">
+                    <h4>Step 3: Recommended Actions</h4>
+                    <p>Based on your input, here are the recommended steps:</p>
+                    <ul id="actions-list"></ul>
+                    <button onclick="prevStep(3)">Previous</button>
+                    <button onclick="finishWizard()">Finish</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Document Auto Generation -->
+        <div class="tool-section">
+            <h3>Document Auto Generation</h3>
+            <p>Select the type of document to generate:</p>
+            <select id="doc-type">
+                <option value="">Select Document Type</option>
+                <option value="complaint">Complaint Letter</option>
+                <option value="appeal">Appeal Application</option>
+                <option value="info">Information Request</option>
+            </select><br>
+            <button onclick="generateDocument()">Generate Document</button>
+            <div id="generated-doc" style="margin-top: 10px; display: none;">
+                <h4>Generated Document:</h4>
+                <textarea id="doc-content" rows="10" cols="80" readonly></textarea><br>
+                <button onclick="downloadDoc()">Download PDF</button>
+            </div>
+        </div>
+
+        <!-- Upload Evidence Tool -->
+        <div class="tool-section">
+            <h3>Upload Evidence Tool</h3>
+            <p>Upload supporting documents or evidence:</p>
+            <input type="file" id="evidence-file" multiple><br>
+            <button onclick="uploadEvidence()">Upload Evidence</button>
+            <div id="upload-status" style="margin-top: 10px;"></div>
+        </div>
+
+        <!-- Notify Teacher -->
+        <div class="tool-section">
+            <h3>Notify Teacher</h3>
+            <p>Send a notification to your child's teacher about DBT issues:</p>
+            <input type="email" id="teacher-email" placeholder="Teacher's Email"><br>
+            <textarea id="notification-message" rows="4" cols="50" placeholder="Message to teacher..."></textarea><br>
+            <button onclick="notifyTeacher()">Send Notification</button>
+            <div id="notify-status" style="margin-top: 10px;"></div>
+        </div>
+    </div>
+
+    <script>
+        function diagnoseIssue() {
+            const description = document.getElementById('issue-description').value;
+            const resultDiv = document.getElementById('diagnosis-result');
+            // Simple mock diagnosis
+            let diagnosis = "Based on your description, this appears to be a ";
+            if (description.toLowerCase().includes('payment')) {
+                diagnosis += "payment processing issue. Recommended action: Check account status.";
+            } else if (description.toLowerCase().includes('eligibility')) {
+                diagnosis += "eligibility verification issue. Recommended action: Verify documents.";
+            } else {
+                diagnosis += "general inquiry. Recommended action: Contact support.";
+            }
+            resultDiv.textContent = diagnosis;
+            resultDiv.style.display = 'block';
+        }
+
+        function nextStep(currentStep) {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + (currentStep + 1)).classList.add('active');
+            if (currentStep === 2) {
+                generateActions();
+            }
+        }
+
+        function prevStep(currentStep) {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + (currentStep - 1)).classList.add('active');
+        }
+
+        function generateActions() {
+            const problemType = document.getElementById('problem-type').value;
+            const actionsList = document.getElementById('actions-list');
+            actionsList.innerHTML = '';
+            if (problemType === 'payment') {
+                actionsList.innerHTML = '<li>Check payment status online</li><li>Contact bank if needed</li><li>Follow up with DBT office</li>';
+            } else if (problemType === 'eligibility') {
+                actionsList.innerHTML = '<li>Verify eligibility criteria</li><li>Submit required documents</li><li>Schedule verification appointment</li>';
+            } else {
+                actionsList.innerHTML = '<li>Gather all relevant information</li><li>Contact DBT helpline</li><li>Visit local DBT office</li>';
+            }
+        }
+
+        function finishWizard() {
+            alert('Wizard completed! You can now proceed with the recommended actions.');
+        }
+
+        function generateDocument() {
+            const docType = document.getElementById('doc-type').value;
+            const docContent = document.getElementById('doc-content');
+            const generatedDiv = document.getElementById('generated-doc');
+            let content = '';
+            if (docType === 'complaint') {
+                content = 'Complaint Letter\n\nDear Sir/Madam,\n\nI am writing to complain about...\n\n[Details to be filled]\n\nRegards,\n[Parent Name]';
+            } else if (docType === 'appeal') {
+                content = 'Appeal Application\n\nTo Whom It May Concern,\n\nI hereby appeal against...\n\n[Details to be filled]\n\nSincerely,\n[Parent Name]';
+            } else if (docType === 'info') {
+                content = 'Information Request\n\nDear Sir/Madam,\n\nPlease provide information regarding...\n\n[Details to be filled]\n\nThank you,\n[Parent Name]';
+            }
+            docContent.value = content;
+            generatedDiv.style.display = 'block';
+        }
+
+        function downloadDoc() {
+            // Mock download - in real implementation, this would generate and download a PDF
+            alert('Document downloaded successfully!');
+        }
+
+        function uploadEvidence() {
+            const fileInput = document.getElementById('evidence-file');
+            const statusDiv = document.getElementById('upload-status');
+            if (fileInput.files.length > 0) {
+                statusDiv.textContent = 'Evidence uploaded successfully!';
+                statusDiv.style.color = 'green';
+            } else {
+                statusDiv.textContent = 'Please select files to upload.';
+                statusDiv.style.color = 'red';
+            }
+        }
+
+        function notifyTeacher() {
+            const email = document.getElementById('teacher-email').value;
+            const message = document.getElementById('notification-message').value;
+            const statusDiv = document.getElementById('notify-status');
+            if (email && message) {
+                // Mock notification - in real implementation, this would send an email
+                statusDiv.textContent = 'Notification sent to teacher successfully!';
+                statusDiv.style.color = 'green';
+            } else {
+                statusDiv.textContent = 'Please fill in all fields.';
+                statusDiv.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
