@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Overview</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 40px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .overview-section {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 20px;
+            border: 1px solid #eaeaea;
+        }
+        .overview-section h3 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .parent-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .detail-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .detail-item h4 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .children-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .child-card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .child-card h4 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .dbt-status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .dbt-status.enabled {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        .dbt-status.disabled {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 14px;
+            margin: 0;
+            font-size: 14px;
+            color: white;
+            background: #005bbb;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .back-btn:hover {
+            background: #004a99;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="parent_dashboard.html" class="back-btn">← Back to Parent Dashboard</a>
+
+        <h1>Family Overview</h1>
+
+        <!-- Parent Details Section -->
+        <div class="overview-section">
+            <h3>Parent Details</h3>
+            <div class="parent-details">
+                <div class="detail-item">
+                    <h4>Name</h4>
+                    <p>Rajesh Kumar</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Aadhaar Number</h4>
+                    <p>XXXX-XXXX-1234</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Mobile Number</h4>
+                    <p>+91-9876543210</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Children Details Section -->
+        <div class="overview-section">
+            <h3>Children Details</h3>
+            <div class="children-list">
+                <div class="child-card">
+                    <h4>Amit Kumar</h4>
+                    <p><strong>Aadhaar:</strong> XXXX-XXXX-5678</p>
+                    <p><strong>Grade:</strong> 10th</p>
+                    <p><strong>School:</strong> Government High School</p>
+                    <div class="dbt-status enabled">
+                        <strong>DBT Status:</strong> Enabled<br>
+                        <strong>Bank Linked:</strong> Yes<br>
+                        <strong>Last Updated:</strong> 2023-10-15<br>
+                        <strong>Amount Received:</strong> ₹5000
+                    </div>
+                </div>
+                <div class="child-card">
+                    <h4>Priya Kumar</h4>
+                    <p><strong>Aadhaar:</strong> XXXX-XXXX-9012</p>
+                    <p><strong>Grade:</strong> 8th</p>
+                    <p><strong>School:</strong> Government Middle School</p>
+                    <div class="dbt-status enabled">
+                        <strong>DBT Status:</strong> Enabled<br>
+                        <strong>Bank Linked:</strong> Yes<br>
+                        <strong>Last Updated:</strong> 2023-10-15<br>
+                        <strong>Amount Received:</strong> ₹4000
+                    </div>
+                </div>
+                <div class="child-card">
+                    <h4>Rohit Kumar</h4>
+                    <p><strong>Aadhaar:</strong> XXXX-XXXX-3456</p>
+                    <p><strong>Grade:</strong> 5th</p>
+                    <p><strong>School:</strong> Government Primary School</p>
+                    <div class="dbt-status disabled">
+                        <strong>DBT Status:</strong> Disabled<br>
+                        <strong>Bank Linked:</strong> No<br>
+                        <strong>Last Updated:</strong> 2023-09-20<br>
+                        <strong>Amount Received:</strong> ₹0
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
