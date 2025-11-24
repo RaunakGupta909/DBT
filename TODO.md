@@ -1,5 +1,15 @@
-# TODO List for Adding DBT Status and Toolkit Pages
+# TODO: Add Issue Resolution Board in District Education Officer
 
-- [x] Create frontend/dbt_status.html: Page displaying citizen's DBT status (eligibility, bank linking, payment history).
-- [x] Create frontend/toolkit.html: Page with DBT resources and tools for citizens.
-- [x] Update frontend/citizen_dashboard.html: Change href for DBT Status to "dbt_status.html" and Toolkit to "toolkit.html".
+## Backend Changes
+- [ ] Create Issue model in backend/models/Issue.js
+- [ ] Create issues route in backend/routes/issues.js with endpoints for CRUD operations
+- [ ] Update backend/app.js to include the issues route
+
+## Frontend Changes
+- [ ] Create frontend/issue_resolution_board.html for DEO to view and manage issues
+- [ ] Update frontend/deo_dashboard.html to link the Issue Resolution Board card to the new page
+- [ ] Update frontend/raise_issue.html to submit issues to the backend API
+
+## Testing
+- [ ] Test the issue submission from raise_issue.html
+- [ ] Test the issue resolution board functionality
