@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT Status</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 40px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .status-section {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 20px;
+            border: 1px solid #eaeaea;
+        }
+        .status-section h3 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .personal-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .detail-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .detail-item h4 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .dbt-status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .dbt-status.enabled {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        .dbt-status.disabled {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .payment-history {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .payment-card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .payment-card h4 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 14px;
+            margin: 0;
+            font-size: 14px;
+            color: white;
+            background: #005bbb;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .back-btn:hover {
+            background: #004a99;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="citizen_dashboard.html" class="back-btn">← Back to Citizen Dashboard</a>
+
+        <h1>DBT Status</h1>
+
+        <!-- Personal Details Section -->
+        <div class="status-section">
+            <h3>Personal Details</h3>
+            <div class="personal-details">
+                <div class="detail-item">
+                    <h4>Name</h4>
+                    <p>John Doe</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Aadhaar Number</h4>
+                    <p>XXXX-XXXX-1234</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Mobile Number</h4>
+                    <p>+91-9876543210</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Bank Account Linked</h4>
+                    <p>Yes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DBT Eligibility and Status Section -->
+        <div class="status-section">
+            <h3>DBT Eligibility and Status</h3>
+            <div class="dbt-status enabled">
+                <strong>DBT Status:</strong> Enabled<br>
+                <strong>Eligibility:</strong> Eligible for Education Benefits<br>
+                <strong>Last Updated:</strong> 2023-10-15<br>
+                <strong>Total Amount Received:</strong> ₹15000<br>
+                <strong>Next Payment Due:</strong> 2023-11-15
+            </div>
+        </div>
+
+        <!-- Payment History Section -->
+        <div class="status-section">
+            <h3>Payment History</h3>
+            <div class="payment-history">
+                <div class="payment-card">
+                    <h4>October 2023</h4>
+                    <p><strong>Amount:</strong> ₹5000</p>
+                    <p><strong>Status:</strong> Received</p>
+                    <p><strong>Date:</strong> 2023-10-15</p>
+                </div>
+                <div class="payment-card">
+                    <h4>September 2023</h4>
+                    <p><strong>Amount:</strong> ₹5000</p>
+                    <p><strong>Status:</strong> Received</p>
+                    <p><strong>Date:</strong> 2023-09-15</p>
+                </div>
+                <div class="payment-card">
+                    <h4>August 2023</h4>
+                    <p><strong>Amount:</strong> ₹5000</p>
+                    <p><strong>Status:</strong> Received</p>
+                    <p><strong>Date:</strong> 2023-08-15</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

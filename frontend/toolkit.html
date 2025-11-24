@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 40px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .toolkit-section {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 20px;
+            border: 1px solid #eaeaea;
+        }
+        .toolkit-section h3 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .resource-card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: transform 0.3s ease;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        .resource-card h4 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .resource-card p {
+            margin-bottom: 10px;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 8px 12px;
+            background: #005bbb;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .download-btn:hover {
+            background: #004a99;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .tool-card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .tool-card h4 {
+            margin-top: 0;
+        }
+        button {
+            background: #005bbb;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #004a99;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        .wizard-step {
+            display: none;
+        }
+        .wizard-step.active {
+            display: block;
+        }
+        .diagnosis-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e8;
+            border-radius: 5px;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 14px;
+            margin: 0;
+            font-size: 14px;
+            color: white;
+            background: #005bbb;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .back-btn:hover {
+            background: #004a99;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="citizen_dashboard.html" class="back-btn">← Back to Citizen Dashboard</a>
+
+        <h1>DBT Toolkit</h1>
+
+        <!-- Awareness Resources Section -->
+        <div class="toolkit-section">
+            <h3>Awareness Resources</h3>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h4>DBT Benefits Brochure</h4>
+                    <p>Learn about the benefits of Direct Benefit Transfer for education.</p>
+                    <a href="#" class="download-btn">Download PDF</a>
+                </div>
+                <div class="resource-card">
+                    <h4>How to Apply for DBT</h4>
+                    <p>Step-by-step guide to apply for DBT benefits.</p>
+                    <a href="#" class="download-btn">Download PDF</a>
+                </div>
+                <div class="resource-card">
+                    <h4>DBT Myths and Facts</h4>
+                    <p>Clearing common misconceptions about DBT.</p>
+                    <a href="#" class="download-btn">Download PDF</a>
+                </div>
+                <div class="resource-card">
+                    <h4>Bank Account Linking Guide</h4>
+                    <p>How to link your bank account for DBT payments.</p>
+                    <a href="#" class="download-btn">Download PDF</a>
+                </div>
+                <div class="resource-card">
+                    <h4>DBT Helpline Numbers</h4>
+                    <p>Contact information for DBT support.</p>
+                    <a href="#" class="download-btn">Download PDF</a>
+                </div>
+                <div class="resource-card">
+                    <h4>Success Stories</h4>
+                    <p>Real stories of families benefiting from DBT.</p>
+                    <a href="#" class="download-btn">Download PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Tutorials Section -->
+        <div class="toolkit-section">
+            <h3>Video Tutorials</h3>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h4>DBT Application Process</h4>
+                    <p>Video guide on how to apply for DBT benefits.</p>
+                    <a href="#" class="download-btn">Watch Video</a>
+                </div>
+                <div class="resource-card">
+                    <h4>Bank Account Linking</h4>
+                    <p>Step-by-step video on linking bank accounts.</p>
+                    <a href="#" class="download-btn">Watch Video</a>
+                </div>
+                <div class="resource-card">
+                    <h4>Tracking DBT Payments</h4>
+                    <p>How to track your DBT payments and status.</p>
+                    <a href="#" class="download-btn">Watch Video</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools Section -->
+        <div class="toolkit-section">
+            <h3>DBT Tools</h3>
+            <div class="tool-grid">
+                <!-- Issue Auto Diagnosis Engine -->
+                <div class="tool-card">
+                    <h4>Issue Auto Diagnosis Engine</h4>
+                    <p>Describe the issue you're facing with DBT:</p>
+                    <textarea id="issue-description" rows="4" cols="50" placeholder="Enter issue details..."></textarea><br>
+                    <button onclick="diagnoseIssue()">Diagnose Issue</button>
+                    <div id="diagnosis-result" class="diagnosis-result" style="display: none;"></div>
+                </div>
+
+                <!-- Step by Step Guide Wizard -->
+                <div class="tool-card">
+                    <h4>Step by Step Guide Wizard</h4>
+                    <div id="wizard-container">
+                        <div class="wizard-step active" id="step1">
+                            <p>What type of DBT issue are you facing?</p>
+                            <select id="problem-type">
+                                <option value="">Select...</option>
+                                <option value="payment">Payment Delay</option>
+                                <option value="eligibility">Eligibility Issue</option>
+                                <option value="account">Account Problem</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <br><button onclick="nextStep(1)">Next</button>
+                        </div>
+                        <div class="wizard-step" id="step2">
+                            <p>Please provide the following details:</p>
+                            <input type="text" id="user-name" placeholder="Your Name"><br>
+                            <input type="text" id="aadhaar" placeholder="Aadhaar Number"><br>
+                            <button onclick="prevStep(2)">Previous</button>
+                            <button onclick="nextStep(2)">Next</button>
+                        </div>
+                        <div class="wizard-step" id="step3">
+                            <p>Based on your input, here are the recommended steps:</p>
+                            <ul id="actions-list"></ul>
+                            <button onclick="prevStep(3)">Previous</button>
+                            <button onclick="finishWizard()">Finish</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Auto Generation -->
+                <div class="tool-card">
+                    <h4>Document Auto Generation</h4>
+                    <p>Select the type of document to generate:</p>
+                    <select id="doc-type">
+                        <option value="">Select Document Type</option>
+                        <option value="complaint">Complaint Letter</option>
+                        <option value="appeal">Appeal Application</option>
+                        <option value="info">Information Request</option>
+                    </select><br>
+                    <button onclick="generateDocument()">Generate Document</button>
+                    <div id="generated-doc" style="margin-top: 10px; display: none;">
+                        <h4>Generated Document:</h4>
+                        <textarea id="doc-content" rows="10" cols="80" readonly></textarea><br>
+                        <button onclick="downloadDoc()">Download PDF</button>
+                    </div>
+                </div>
+
+                <!-- Upload Evidence Tool -->
+                <div class="tool-card">
+                    <h4>Upload Evidence Tool</h4>
+                    <p>Upload supporting documents or evidence:</p>
+                    <input type="file" id="evidence-file" multiple><br>
+                    <button onclick="uploadEvidence()">Upload Evidence</button>
+                    <div id="upload-status" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function diagnoseIssue() {
+            const description = document.getElementById('issue-description').value;
+            const resultDiv = document.getElementById('diagnosis-result');
+            let diagnosis = "Based on your description, this appears to be a ";
+            if (description.toLowerCase().includes('payment')) {
+                diagnosis += "payment processing issue. Recommended action: Check account status.";
+            } else if (description.toLowerCase().includes('eligibility')) {
+                diagnosis += "eligibility verification issue. Recommended action: Verify documents.";
+            } else {
+                diagnosis += "general inquiry. Recommended action: Contact support.";
+            }
+            resultDiv.textContent = diagnosis;
+            resultDiv.style.display = 'block';
+        }
+
+        function nextStep(currentStep) {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + (currentStep + 1)).classList.add('active');
+            if (currentStep === 2) {
+                generateActions();
+            }
+        }
+
+        function prevStep(currentStep) {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + (currentStep - 1)).classList.add('active');
+        }
+
+        function generateActions() {
+            const problemType = document.getElementById('problem-type').value;
+            const actionsList = document.getElementById('actions-list');
+            actionsList.innerHTML = '';
+            if (problemType === 'payment') {
+                actionsList.innerHTML = '<li>Check payment status online</li><li>Contact bank if needed</li><li>Follow up with DBT office</li>';
+            } else if (problemType === 'eligibility') {
+                actionsList.innerHTML = '<li>Verify eligibility criteria</li><li>Submit required documents</li><li>Schedule verification appointment</li>';
+            } else {
+                actionsList.innerHTML = '<li>Gather all relevant information</li><li>Contact DBT helpline</li><li>Visit local DBT office</li>';
+            }
+        }
+
+        function finishWizard() {
+            alert('Wizard completed! You can now proceed with the recommended actions.');
+        }
+
+        function generateDocument() {
+            const docType = document.getElementById('doc-type').value;
+            const docContent = document.getElementById('doc-content');
+            const generatedDiv = document.getElementById('generated-doc');
+            let content = '';
+            if (docType === 'complaint') {
+                content = 'Complaint Letter\n\nDear Sir/Madam,\n\nI am writing to complain about...\n\n[Details to be filled]\n\nRegards,\n[Your Name]';
+            } else if (docType === 'appeal') {
+                content = 'Appeal Application\n\nTo Whom It May Concern,\n\nI hereby appeal against...\n\n[Details to be filled]\n\nSincerely,\n[Your Name]';
+            } else if (docType === 'info') {
+                content = 'Information Request\n\nDear Sir/Madam,\n\nPlease provide information regarding...\n\n[Details to be filled]\n\nThank you,\n[Your Name]';
+            }
+            docContent.value = content;
+            generatedDiv.style.display = 'block';
+        }
+
+        function downloadDoc() {
+            alert('Document downloaded successfully!');
+        }
+
+        function uploadEvidence() {
+            const fileInput = document.getElementById('evidence-file');
+            const statusDiv = document.getElementById('upload-status');
+            if (fileInput.files.length > 0) {
+                statusDiv.textContent = 'Evidence uploaded successfully!';
+                statusDiv.style.color = 'green';
+            } else {
+                statusDiv.textContent = 'Please select files to upload.';
+                statusDiv.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>

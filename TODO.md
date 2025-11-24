@@ -1,6 +1,5 @@
-# TODO: Add Family Overview Page under Parents Dashboard
+# TODO List for Adding DBT Status and Toolkit Pages
 
-## Tasks to Complete:
-- [ ] Create frontend/family_overview.html with family details and children's DBT status
-- [ ] Update frontend/parent_dashboard.html to link Family Overview card to family_overview.html
-- [ ] Test navigation and display of the new page
+- [x] Create frontend/dbt_status.html: Page displaying citizen's DBT status (eligibility, bank linking, payment history).
+- [x] Create frontend/toolkit.html: Page with DBT resources and tools for citizens.
+- [x] Update frontend/citizen_dashboard.html: Change href for DBT Status to "dbt_status.html" and Toolkit to "toolkit.html".
