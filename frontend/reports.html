@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reports - Campaign Wizard</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 40px;
+    }
+
+    .back-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 14px;
+        margin: 0;
+        font-size: 14px;
+        color: white;
+        background: #005bbb;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.3s;
+        z-index: 1000;
+    }
+
+    .back-btn:hover {
+        background: #004a99;
+    }
+
+    .reports-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        margin-top: 60px;
+    }
+
+    .reports-container h2 {
+        margin-top: 0;
+        color: #111;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .report-section {
+        margin-bottom: 40px;
+    }
+
+    .report-section h3 {
+        color: #005bbb;
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .report-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .report-table th, .report-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .report-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #111;
+    }
+
+    .report-table tr:hover {
+        background-color: #f1f3f4;
+    }
+
+    .generate-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: white;
+        background: #005bbb;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.3s;
+        margin-top: 20px;
+    }
+
+    .generate-btn:hover {
+        background: #004a99;
+    }
+</style>
+
+</head>
+<body>
+
+    <a href="campaign_wizard.html" class="back-btn">← Back to Campaign Wizard</a>
+
+    <div class="reports-container">
+        <h2>Campaign Reports</h2>
+
+        <div class="report-section">
+            <h3>Campaign Performance Overview</h3>
+            <p>View detailed reports on campaign performance, including reach, engagement, and outcomes.</p>
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>Campaign Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Reach</th>
+                        <th>Engagement</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DBT Awareness Drive 2024</td>
+                        <td>2024-01-01</td>
+                        <td>2024-01-31</td>
+                        <td>5000</td>
+                        <td>85%</td>
+                        <td>Completed</td>
+                    </tr>
+                    <tr>
+                        <td>School Outreach Program</td>
+                        <td>2024-02-01</td>
+                        <td>2024-02-28</td>
+                        <td>3200</td>
+                        <td>78%</td>
+                        <td>Completed</td>
+                    </tr>
+                    <tr>
+                        <td>Community Engagement Initiative</td>
+                        <td>2024-03-01</td>
+                        <td>2024-03-31</td>
+                        <td>4100</td>
+                        <td>92%</td>
+                        <td>Ongoing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="report-section">
+            <h3>Generate Custom Report</h3>
+            <p>Select parameters to generate a custom report on campaign activities.</p>
+            <button class="generate-btn" onclick="generateReport()">Generate Report</button>
+            <div id="generated-report" style="display: none; margin-top: 20px;">
+                <h4>Generated Report</h4>
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="report-body">
+                        <!-- Report data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateReport() {
+            // Simulate generating a report
+            const reportBody = document.getElementById('report-body');
+            const generatedReport = document.getElementById('generated-report');
+
+            // Clear previous report data
+            reportBody.innerHTML = '';
+
+            // Sample report data
+            const reportData = [
+                { parameter: 'Total Campaigns', value: '3' },
+                { parameter: 'Active Campaigns', value: '1' },
+                { parameter: 'Completed Campaigns', value: '2' },
+                { parameter: 'Total Reach', value: '12300' },
+                { parameter: 'Average Engagement', value: '85%' },
+                { parameter: 'Generated On', value: new Date().toLocaleString() }
+            ];
+
+            // Populate the table
+            reportData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.parameter}</td>
+                    <td>${item.value}</td>
+                `;
+                reportBody.appendChild(row);
+            });
+
+            // Show the generated report
+            generatedReport.style.display = 'block';
+
+            // Scroll to the generated report
+            generatedReport.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT BEO Campaign Wizard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #0d6efd; /* Blue color for BEO section */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        /* Wizard Progress Bar Styling */
+        .wizard-progress {
+            margin-bottom: 30px;
+        }
+        .progress-step {
+            text-align: center;
+            position: relative;
+            color: #6c757d;
+        }
+        .progress-step.active .step-icon {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+        .progress-step.active .step-label {
+            color: #0d6efd;
+            font-weight: bold;
+        }
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            border: 2px solid #ced4da;
+            background-color: #f8f9fa;
+            margin: 0 auto 10px;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+        .step-label {
+            font-size: 0.9em;
+        }
+        .step-line {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            right: -50%;
+            height: 2px;
+            background-color: #ced4da;
+            z-index: 1;
+        }
+        .progress-step:last-child .step-line {
+            display: none;
+        }
+        .step-content {
+            display: none;
+            padding: 20px 0;
+        }
+        .step-content.active {
+            display: block;
+        }
+        .review-item {
+            padding: 8px 0;
+            border-bottom: 1px dotted #eee;
+        }
+        .review-label {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>Campaign Wizard 🚀</h1>
+            <p class="lead">Create and launch targeted, block-level awareness drives</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section-container">
+            
+            <div class="row wizard-progress">
+                <div class="col progress-step active" id="stepIndicator1">
+                    <div class="step-icon"><i class="fas fa-info"></i></div>
+                    <div class="step-label">1. Details</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="col progress-step" id="stepIndicator2">
+                    <div class="step-icon"><i class="fas fa-users"></i></div>
+                    <div class="step-label">2. Targeting</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="col progress-step" id="stepIndicator3">
+                    <div class="step-icon"><i class="fas fa-bullseye"></i></div>
+                    <div class="step-label">3. Metrics</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="col progress-step" id="stepIndicator4">
+                    <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="step-label">4. Review</div>
+                </div>
+            </div>
+
+            <form id="campaignWizardForm">
+                
+                <div class="step-content active" id="step1">
+                    <h3>Step 1: Campaign Basic Details</h3>
+                    <div class="mb-3">
+                        <label for="campaignName" class="form-label">Campaign Name</label>
+                        <input type="text" class="form-control" id="campaignName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="campaignObjective" class="form-label">Main Objective</label>
+                        <textarea class="form-control" id="campaignObjective" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="campaignDuration" class="form-label">Duration (Days)</label>
+                        <input type="number" class="form-control" id="campaignDuration" min="1" required>
+                    </div>
+                    <button type="button" class="btn btn-primary float-end" onclick="nextStep(1)">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="step-content" id="step2">
+                    <h3>Step 2: Define Target Audience</h3>
+                    <div class="mb-3">
+                        <label for="targetArea" class="form-label">Target Area Type</label>
+                        <select class="form-select" id="targetArea" required>
+                            <option value="">Select Type</option>
+                            <option value="School">Specific Schools</option>
+                            <option value="Village">Group of Villages/Panchayats</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="targetUnits" class="form-label">Select Units (IDs/Names)</label>
+                        <textarea class="form-control" id="targetUnits" rows="4" placeholder="Enter comma-separated IDs or names (e.g., School ID 101, School B, Village X)" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="targetCount" class="form-label">Estimated Target Beneficiary Count</label>
+                        <input type="number" class="form-control" id="targetCount" min="10" required>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary float-end" onclick="nextStep(2)">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="step-content" id="step3">
+                    <h3>Step 3: Define Action and Key Metrics</h3>
+                    <div class="mb-3">
+                        <label for="campaignAction" class="form-label">Primary Action Required</label>
+                        <select class="form-select" id="campaignAction" required>
+                            <option value="">Select Action</option>
+                            <option value="Aadhaar Seeding">Aadhaar Seeding Completion</option>
+                            <option value="Bank Account Opening">New Bank Account Opening</option>
+                            <option value="Physical Verification">Physical Verification Compliance</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="targetKPI" class="form-label">Target KPI Value</label>
+                        <input type="text" class="form-control" id="targetKPI" placeholder="e.g., 98% Enrollment Rate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="responsibleOfficer" class="form-label">Responsible Field Officer (Optional)</label>
+                        <input type="text" class="form-control" id="responsibleOfficer" placeholder="Enter name or ID">
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(3)"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary float-end" onclick="nextStep(3)">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+                
+                <div class="step-content" id="step4">
+                    <h3>Step 4: Review and Launch</h3>
+                    <p class="lead">Please review the campaign details before launching.</p>
+                    
+                    <div class="card p-3 mb-4 bg-light">
+                        <div class="review-item"><span class="review-label">Campaign Name:</span> <span id="reviewName"></span></div>
+                        <div class="review-item"><span class="review-label">Objective:</span> <span id="reviewObjective"></span></div>
+                        <div class="review-item"><span class="review-label">Duration:</span> <span id="reviewDuration"></span> days</div>
+                        <div class="review-item"><span class="review-label">Target Area:</span> <span id="reviewArea"></span></div>
+                        <div class="review-item"><span class="review-label">Target Count:</span> <span id="reviewCount"></span> beneficiaries</div>
+                        <div class="review-item"><span class="review-label">Primary Action:</span> <span id="reviewAction"></span></div>
+                        <div class="review-item"><span class="review-label">Target KPI:</span> <span id="reviewKPI"></span></div>
+                        <div class="review-item"><span class="review-label">Units:</span> <span id="reviewUnits"></span></div>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="confirmLaunch" required>
+                        <label class="form-check-label" for="confirmLaunch">
+                            I confirm all details are correct and authorize the launch of this campaign.
+                        </label>
+                    </div>
+
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(4)"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button type="submit" class="btn btn-success float-end"><i class="fas fa-paper-plane"></i> Launch Campaign</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Wizard Control and Data Transfer ---
+
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        // Function to move to the next step
+        function nextStep(step) {
+            // Basic Form Validation for the current step
+            if (!validateStep(step)) {
+                alert("Please fill out all required fields.");
+                return;
+            }
+
+            // If moving to the review step (Step 4), populate the review data
+            if (step === 3) {
+                updateReviewStep();
+            }
+
+            if (currentStep < totalSteps) {
+                document.getElementById('step' + currentStep).classList.remove('active');
+                document.getElementById('stepIndicator' + currentStep).classList.remove('active');
+                
+                currentStep++;
+
+                document.getElementById('step' + currentStep).classList.add('active');
+                document.getElementById('stepIndicator' + currentStep).classList.add('active');
+            }
+        }
+
+        // Function to move to the previous step
+        function prevStep(step) {
+            if (currentStep > 1) {
+                document.getElementById('step' + currentStep).classList.remove('active');
+                document.getElementById('stepIndicator' + currentStep).classList.remove('active');
+                
+                currentStep--;
+                
+                document.getElementById('step' + currentStep).classList.add('active');
+                document.getElementById('stepIndicator' + currentStep).classList.add('active');
+            }
+        }
+
+        // Simple validation function
+        function validateStep(step) {
+            const currentContent = document.getElementById('step' + step);
+            const requiredFields = currentContent.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (field.value.trim() === '' || (field.type === 'checkbox' && !field.checked)) {
+                    isValid = false;
+                }
+            });
+            return isValid;
+        }
+
+        // Function to pull data from form inputs and update the review step
+        function updateReviewStep() {
+            document.getElementById('reviewName').innerText = document.getElementById('campaignName').value;
+            document.getElementById('reviewObjective').innerText = document.getElementById('campaignObjective').value;
+            document.getElementById('reviewDuration').innerText = document.getElementById('campaignDuration').value;
+            document.getElementById('reviewArea').innerText = document.getElementById('targetArea').value;
+            document.getElementById('reviewUnits').innerText = document.getElementById('targetUnits').value;
+            document.getElementById('reviewCount').innerText = document.getElementById('targetCount').value;
+            document.getElementById('reviewAction').innerText = document.getElementById('campaignAction').value;
+            document.getElementById('reviewKPI').innerText = document.getElementById('targetKPI').value;
+        }
+
+        // Handle form submission (Simulated launch)
+        document.getElementById('campaignWizardForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (document.getElementById('confirmLaunch').checked) {
+                // In a real application, this is where an AJAX request would be sent to the backend.
+                alert("Campaign Launched Successfully!\nName: " + document.getElementById('campaignName').value);
+                // Optionally reset the form here
+                this.reset();
+                currentStep = 1;
+                // Re-initialize the wizard display (Step 1 active)
+                document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.progress-step').forEach(el => el.classList.remove('active'));
+                document.getElementById('step1').classList.add('active');
+                document.getElementById('stepIndicator1').classList.add('active');
+
+            } else {
+                alert("Please confirm the details before launching the campaign.");
+            }
+        });
+
+    </script>
+</body>
+</html>
