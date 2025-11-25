@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT DEO Campaign Oversight</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #f44336; /* Red/Alert color for oversight/critical areas */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        /* KPI Cards Styling */
+        .kpi-card-oversight {
+            border-left: 5px solid #f44336; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #f44336;
+        }
+        .alert-critical { color: #dc3545; }
+        .alert-warning { color: #ffc107; }
+        .alert-success { color: #28a745; }
+        
+        /* Table Status Badges */
+        .status-complete { background-color: #28a745; color: white; }
+        .status-critical { background-color: #dc3545; color: white; }
+        .status-warning { background-color: #ffc107; color: #333; }
+        .status-on-track { background-color: #007bff; color: white; }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>Campaign Oversight Monitor 🚨</h1>
+            <p class="lead">Tracking all Active Campaign performance across the District</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row g-4 mb-4">
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="card kpi-card-oversight">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Total Active Campaigns</p>
+                        <h2 class="card-value" id="kpi-total-campaigns">12</h2>
+                        <small class="text-info">Currently running campaigns</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card kpi-card-oversight">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Avg. Campaign Success Rate</p>
+                        <h2 class="card-value alert-success" id="kpi-avg-success">85%</h2>
+                        <small class="text-success">Achievement against Target KPI</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card kpi-card-oversight">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Campaigns at Critical Risk</p>
+                        <h2 class="card-value alert-critical" id="kpi-critical-risk">3</h2>
+                        <small class="text-danger">Target < 50% achieved or Overdue</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card kpi-card-oversight">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">BEO-Led Campaigns</p>
+                        <h2 class="card-value" id="kpi-beo-led">9</h2>
+                        <small class="text-muted">Requires DEO supervision</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="section-container">
+                    <h3>Campaign Success Rate Distribution</h3>
+                    <canvas id="campaignDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>Active Campaign Details by Block</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="campaignOversightTable">
+                            <thead class="table-danger">
+                                <tr>
+                                    <th>Campaign Name</th>
+                                    <th>Responsible BEO Block</th>
+                                    <th>Target KPI</th>
+                                    <th>Achievement (%)</th>
+                                    <th>Days Left</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Charting ---
+
+        // Sample Data for Chart (Performance Buckets)
+        const distributionData = {
+            labels: ['0-50% (Critical)', '51-75% (Warning)', '76-90% (On Track)', '91-100% (High Success)'],
+            counts: [3, 2, 4, 3], // 12 total campaigns
+            colors: ['#dc3545', '#ffc107', '#007bff', '#28a745'] // Red, Yellow, Blue, Green
+        };
+        
+        // Sample Data for Oversight Table
+        const campaignTableData = [
+            { name: 'Aadhaar Seeding Sampark Abhiyan', block: 'Block B', kpi: '95% Seeding', achieved: 45, daysLeft: 5, status: 'Critical' },
+            { name: 'New Enrollment Drive - North', block: 'Block A', kpi: '500 Enrollments', achieved: 92, daysLeft: 10, status: 'On Track' },
+            { name: 'Physical Verification Sprint', block: 'Block D', kpi: '100% Verified', achieved: 70, daysLeft: 2, status: 'Warning' },
+            { name: 'Bank Linkage Drive - South', block: 'Block C', kpi: '98% Linkage', achieved: 85, daysLeft: 20, status: 'On Track' },
+            { name: 'Compliance Refresh', block: 'Block B', kpi: '100% Compliance', achieved: 25, daysLeft: 15, status: 'Critical' },
+            { name: 'Aadhaar Seeding Sampark Abhiyan', block: 'Block E', kpi: '95% Seeding', achieved: 98, daysLeft: 8, status: 'Complete' },
+        ];
+
+
+        // --- 1. Initialize Campaign Success Rate Bar Chart ---
+        const distCtx = document.getElementById('campaignDistributionChart').getContext('2d');
+        new Chart(distCtx, {
+            type: 'bar',
+            data: {
+                labels: distributionData.labels,
+                datasets: [{
+                    label: 'Number of Campaigns',
+                    data: distributionData.counts,
+                    backgroundColor: distributionData.colors,
+                    borderColor: distributionData.colors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Count of Campaigns'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // --- 2. Populate Campaign Oversight Table ---
+        function populateTable(data) {
+            const tbody = document.querySelector('#campaignOversightTable tbody');
+            tbody.innerHTML = ''; 
+            
+            // Sort data to show Critical and Warning status first
+            const statusOrder = { 'Critical': 1, 'Warning': 2, 'On Track': 3, 'Complete': 4 };
+            data.sort((a, b) => statusOrder[a.status] - statusOrder[b.status]);
+
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell().innerText = item.name;
+                row.insertCell().innerText = item.block;
+                row.insertCell().innerText = item.kpi;
+                
+                // Achievement Cell Styling
+                const achievedCell = row.insertCell();
+                const achievedColor = item.achieved < 50 ? 'text-danger fw-bold' : item.achieved < 75 ? 'text-warning fw-bold' : 'text-success';
+                achievedCell.innerHTML = `<span class="${achievedColor}">${item.achieved}%</span>`;
+
+                row.insertCell().innerText = item.daysLeft;
+
+                // Status Badge
+                const statusCell = row.insertCell();
+                let badgeClass = 'bg-secondary';
+                if (item.status === 'Complete') badgeClass = 'status-complete';
+                else if (item.status === 'Critical') badgeClass = 'status-critical';
+                else if (item.status === 'Warning') badgeClass = 'status-warning';
+                else if (item.status === 'On Track') badgeClass = 'status-on-track';
+
+                statusCell.innerHTML = `<span class="badge ${badgeClass}">${item.status}</span>`;
+                
+                // Action Button (Simulated)
+                row.insertCell().innerHTML = `<button class="btn btn-sm btn-outline-danger" onclick="viewDetails('${item.name}', '${item.block}')">Review</button>`;
+            });
+        }
+        populateTable(campaignTableData);
+        
+        function viewDetails(campaignName, blockName) {
+            alert(`DEO Action: Opening detailed review panel for Campaign '${campaignName}' managed by ${blockName}.`);
+        }
+    </script>
+</body>
+</html>

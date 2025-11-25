@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT DEO District Snapshot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #28a745; /* Green color suitable for high-level administration */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        /* KPI Cards Styling */
+        .kpi-card-district {
+            border-left: 5px solid #28a745; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #28a745;
+        }
+        .alert-low-rate { color: #dc3545; }
+        .alert-high-rate { color: #28a745; }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>District Snapshot: Performance Overview 📊</h1>
+            <p class="lead">Consolidated view of DBT Scheme Implementation Status</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row g-4 mb-4">
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="card kpi-card-district">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Total Eligible Beneficiaries</p>
+                        <h2 class="card-value" id="kpi-total-beneficiaries">98,500</h2>
+                        <small class="text-muted">Across all blocks in the District</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card kpi-card-district">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Avg. Aadhaar Seeding Rate</p>
+                        <h2 class="card-value alert-high-rate" id="kpi-seeding-rate">94.8%</h2>
+                        <small class="text-success">Consolidated District Score</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card kpi-card-district">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Transaction Failure Rate</p>
+                        <h2 class="card-value alert-low-rate" id="kpi-failure-rate">3.2%</h2>
+                        <small class="text-danger">Target: < 1.0%</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card kpi-card-district">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Total Disbursement (YTD)</p>
+                        <h2 class="card-value" id="kpi-disbursement-ytd">₹ 45.5 Cr</h2>
+                        <small class="text-info">Financial year-to-date</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="section-container">
+                    <h3>Monthly Disbursement vs. Failure Rate Trend</h3>
+                    <canvas id="disbursementTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>Block-wise Performance Comparison (Top/Bottom 3)</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="blockPerformanceTable">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Block Name</th>
+                                    <th>Beneficiary Count</th>
+                                    <th>Seeding Rate (%)</th>
+                                    <th>Failure Rate (%)</th>
+                                    <th>Status (DEO Focus)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Charting ---
+
+        // Sample Data for Trend Chart (Monthly)
+        const trendData = {
+            labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+            disbursement: [8.5, 9.2, 10.1, 8.9, 8.8], // Crores
+            failure: [4.5, 3.8, 3.5, 3.2, 3.0]        // Failure Rate %
+        };
+        
+        // Sample Data for Block Performance Table
+        const blockData = [
+            // Top Performers
+            { name: 'Block A (North)', count: 25000, seedingRate: 98.5, failureRate: 0.8, focus: 'Top Performer' },
+            { name: 'Block D (Central)', count: 18000, seedingRate: 95.1, failureRate: 1.5, focus: 'Monitor' },
+            // Bottom Performers
+            { name: 'Block B (South)', count: 20500, seedingRate: 88.0, failureRate: 6.2, focus: 'Critical' },
+            { name: 'Block C (East)', count: 15000, seedingRate: 92.5, failureRate: 4.5, focus: 'Warning' },
+            { name: 'Block E (West)', count: 19500, seedingRate: 93.8, failureRate: 2.5, focus: 'Monitor' },
+        ];
+
+
+        // --- 1. Initialize Disbursement Trend Chart (Line/Bar Combo) ---
+        const trendCtx = document.getElementById('disbursementTrendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'bar', // Disbursement as bars
+            data: {
+                labels: trendData.labels,
+                datasets: [
+                    {
+                        label: 'Disbursement (₹ Cr)',
+                        data: trendData.disbursement,
+                        backgroundColor: '#28a745', // Green
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Failure Rate (%)',
+                        data: trendData.failure,
+                        type: 'line', // Failure Rate as a line
+                        borderColor: '#dc3545', // Red
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        fill: false,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Disbursement Value (Cr)' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: 'Failure Rate (%)' },
+                        grid: { drawOnChartArea: false }, // Avoid clutter
+                        min: 0,
+                        max: 10
+                    }
+                }
+            }
+        });
+
+        // --- 2. Populate Block Performance Table ---
+        function populateTable(data) {
+            const tbody = document.querySelector('#blockPerformanceTable tbody');
+            tbody.innerHTML = ''; // Clear existing rows
+            
+            // Sort data to show critical/warning blocks first
+            data.sort((a, b) => {
+                if (a.failureRate > b.failureRate) return -1;
+                if (a.failureRate < b.failureRate) return 1;
+                return 0;
+            });
+
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell().innerText = item.name;
+                row.insertCell().innerText = item.count.toLocaleString();
+                
+                // Seeding Rate Alert (Low is bad)
+                const seedingCell = row.insertCell();
+                const seedingColor = item.seedingRate < 90 ? 'text-danger fw-bold' : 'text-success';
+                seedingCell.innerHTML = `<span class="${seedingColor}">${item.seedingRate.toFixed(1)}%</span>`;
+
+                // Failure Rate Alert (High is bad)
+                const failureCell = row.insertCell();
+                const failureColor = item.failureRate > 3.0 ? 'text-danger fw-bold' : 'text-success';
+                failureCell.innerHTML = `<span class="${failureColor}">${item.failureRate.toFixed(1)}%</span>`;
+                
+                // Status Badge
+                const statusCell = row.insertCell();
+                let statusBadgeClass = 'bg-secondary';
+                if (item.focus === 'Critical') statusBadgeClass = 'bg-danger';
+                else if (item.focus === 'Warning') statusBadgeClass = 'bg-warning text-dark';
+                else if (item.focus === 'Top Performer') statusBadgeClass = 'bg-success';
+                else statusBadgeClass = 'bg-info';
+
+                statusCell.innerHTML = `<span class="badge ${statusBadgeClass}">${item.focus}</span>`;
+            });
+        }
+        populateTable(blockData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT DEO Interactive Heatmap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #007bff; /* Blue for high-level administration */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        /* Map Placeholder/Container Styling */
+        #mapContainer {
+            height: 650px; /* Large height for a district map */
+            background-color: #e9ecef;
+            border: 1px solid #007bff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: #495057;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .color-box {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>Interactive District Heatmap 🗺️</h1>
+            <p class="lead">Block-wise Performance Visualization for DEO</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row mb-4 g-4">
+            
+            <div class="col-lg-9">
+                <div class="section-container">
+                    <h3>Block Performance Map View</h3>
+                    <div id="mapContainer">
+                        <p>
+                            **MAP PLACEHOLDER**<br>
+                            *Note: A real map requires Leaflet.js and GeoJSON data (boundary files) for the Blocks/Subdivisions.*<br>
+                            <small>The map would dynamically color Blocks based on the selected metric below.</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="section-container">
+                    <h3>Map Controls & Legend</h3>
+                    
+                    <label for="metricSelect" class="form-label fw-bold">Select Performance Metric:</label>
+                    <select class="form-select mb-4" id="metricSelect" onchange="applyHeatmap()">
+                        <option value="seedingRate" selected>Aadhaar Seeding Rate (%)</option>
+                        <option value="failureRate">Transaction Failure Rate (%)</option>
+                        <option value="verificationPending">Verification Pending (%)</option>
+                        <option value="disbursementEfficiency">Disbursement Efficiency Score</option>
+                    </select>
+                    
+                    <h5>Performance Scale (for Seeding Rate)</h5>
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #28a745;"></div> 
+                        <span>**Tier 1 (Green):** > 95% (Excellent)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #ffc107;"></div> 
+                        <span>**Tier 2 (Yellow):** 90% - 95% (Warning)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #dc3545;"></div> 
+                        <span>**Tier 3 (Red):** < 90% (Critical)</span>
+                    </div>
+
+                    <hr>
+                    <small class="text-muted">Clicking a Block on the map would show a detailed pop-up summary.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>Block Data Summary (Supporting Heatmap)</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="blockDataTable">
+                            <thead class="table-info">
+                                <tr>
+                                    <th>Block Name</th>
+                                    <th>Seeding Rate (%)</th>
+                                    <th>Failure Rate (%)</th>
+                                    <th>Action Tier</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // --- JavaScript for Data Handling and Simulated Heatmap Interaction ---
+
+        // Sample Data for Blocks (this data would be linked to GeoJSON IDs in a real map)
+        const blockPerformanceData = [
+            { id: 'BLA01', name: 'Block A (Urban)', seedingRate: 98.2, failureRate: 0.5, verificationPending: 5, disbursementEfficiency: 8.5 },
+            { id: 'BLB02', name: 'Block B (Rural)', seedingRate: 87.5, failureRate: 5.1, verificationPending: 22, disbursementEfficiency: 5.2 },
+            { id: 'BLC03', name: 'Block C (Hilly)', seedingRate: 92.1, failureRate: 2.8, verificationPending: 15, disbursementEfficiency: 7.0 },
+            { id: 'BLD04', name: 'Block D (Coastal)', seedingRate: 95.8, failureRate: 1.1, verificationPending: 8, disbursementEfficiency: 9.1 },
+            { id: 'BLE05', name: 'Block E (Industrial)', seedingRate: 89.9, failureRate: 4.2, verificationPending: 18, disbursementEfficiency: 6.5 },
+        ];
+
+        // --- Helper function to determine color based on metric and value (SIMULATION) ---
+        function getBlockColor(metric, value) {
+            if (metric === 'seedingRate') {
+                if (value > 95) return '#28a745'; // Green (Excellent)
+                if (value >= 90) return '#ffc107'; // Yellow (Warning)
+                return '#dc3545'; // Red (Critical)
+            }
+            if (metric === 'failureRate') {
+                if (value < 1.0) return '#28a745'; // Green (Excellent)
+                if (value < 3.0) return '#ffc107'; // Yellow (Warning)
+                return '#dc3545'; // Red (Critical)
+            }
+            // Add more logic for other metrics here
+            return '#6c757d'; // Default Gray
+        }
+
+        // --- Populate Data Table (Initial Load) ---
+        function populateTable(data) {
+            const tbody = document.querySelector('#blockDataTable tbody');
+            tbody.innerHTML = ''; 
+            
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell().innerText = item.name;
+                
+                // Seeding Rate Cell (with simulated coloring)
+                const seedingCell = row.insertCell();
+                seedingCell.innerText = item.seedingRate.toFixed(1) + '%';
+                seedingCell.style.fontWeight = 'bold';
+                seedingCell.style.color = getBlockColor('seedingRate', item.seedingRate);
+
+                // Failure Rate Cell (with simulated coloring)
+                const failureCell = row.insertCell();
+                failureCell.innerText = item.failureRate.toFixed(1) + '%';
+                failureCell.style.fontWeight = 'bold';
+                failureCell.style.color = getBlockColor('failureRate', item.failureRate);
+
+                // Action Tier Badge
+                const tier = item.seedingRate > 95 && item.failureRate < 1.0 ? 'Top' : 
+                             item.seedingRate < 90 || item.failureRate > 4.0 ? 'Critical' : 'Monitor';
+                
+                const tierCell = row.insertCell();
+                let badgeClass = 'bg-secondary';
+                if (tier === 'Top') badgeClass = 'bg-success';
+                else if (tier === 'Critical') badgeClass = 'bg-danger';
+                else if (tier === 'Monitor') badgeClass = 'bg-warning text-dark';
+                
+                tierCell.innerHTML = `<span class="badge ${badgeClass}">${tier}</span>`;
+            });
+        }
+        populateTable(blockPerformanceData);
+
+        // --- Function to Simulate Heatmap Update ---
+        function applyHeatmap() {
+            const selectedMetric = document.getElementById('metricSelect').value;
+            
+            // --- REAL MAP INTEGRATION POINT ---
+            // In a real application, you would:
+            // 1. Fetch the GeoJSON layer (if not loaded).
+            // 2. Write a Leaflet function (style function) that loops through blockPerformanceData.
+            // 3. For each GeoJSON feature (Block), call getBlockColor(selectedMetric, block_data[metric]).
+            // 4. Update the map layer's style using L.geoJson.setStyle().
+            
+            // --- SIMULATED ALERT ---
+            alert(`Map view switched to: ${selectedMetric}. In a live application, the map layers would now re-render with new colors.`);
+            
+            // Optionally, update the legend text dynamically based on the selected metric
+            const legendTitle = document.querySelector('.section-container:nth-child(2) h5');
+            let scaleDesc = '';
+
+            if (selectedMetric === 'seedingRate') {
+                scaleDesc = 'Performance Scale (for Seeding Rate)';
+            } else if (selectedMetric === 'failureRate') {
+                scaleDesc = 'Risk Scale (for Failure Rate)';
+            } else {
+                 scaleDesc = `Scale for ${selectedMetric.replace(/([A-Z])/g, ' $1').trim()} (Custom)`;
+            }
+
+            legendTitle.innerText = scaleDesc;
+        }
+
+        // --- Function to initialize the map (Placeholder only) ---
+        // function initMap() {
+        //     // const map = L.map('mapContainer').setView([23.5, 80.5], 7); // Example Lat/Lng for a State Center
+            
+        //     // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     //     maxZoom: 18,
+        //     // }).addTo(map);
+
+        //     // // Load GeoJSON data and attach performance data
+        //     // // L.geoJson(geoJsonData, {
+        //     // //     style: styleFunction, // Function to determine color based on data
+        //     // //     onEachFeature: onEachFeature // Function for popups/hovers
+        //     // // }).addTo(map);
+
+        //     // console.log("Leaflet map initialized (Requires Leaflet library to be uncommented)");
+        // }
+
+        // // initMap(); // Call the map initialization function on load
+    </script>
+</body>
+</html>
