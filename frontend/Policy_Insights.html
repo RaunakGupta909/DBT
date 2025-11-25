@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT Policy Insights</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #1c2a48; /* Deep blue for serious policy analysis */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .insight-card {
+            border-left: 5px solid #007bff; /* Primary color emphasis */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .insight-card h5 {
+            color: #007bff;
+            font-weight: 600;
+        }
+        .recommendation-row {
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>DBT Policy Insights</h1>
+            <p class="lead">Data-Driven Findings and Policy Recommendations</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row g-4 mb-4">
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card insight-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Leakage Reduction</h5>
+                        <p class="card-text">Direct transfer has reduced fund diversion in PDS by <strong>15%</strong> in priority states.</p>
+                        <small class="text-success">Metric: Savings/Total Fund Released</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card insight-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Success Rate Driver</h5>
+                        <p class="card-text">States with >95% Aadhaar seeding show an average <strong>2.5% higher</strong> transaction success rate.</p>
+                        <small class="text-warning">Metric: Seeding % vs. Success %</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card insight-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Disbursement Delay</h5>
+                        <p class="card-text">30% of funds pending disbursement are stuck at the **State Treasury level** for over 7 days.</p>
+                        <small class="text-danger">Metric: Fund Flow Latency</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="section-container">
+                    <h3>Correlation: Aadhaar Seeding vs. Transaction Success Rate</h3>
+                    <canvas id="correlationChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>Actionable Policy Recommendations</h3>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="recommendationTable">
+                            <thead class="table-info">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Insight Area</th>
+                                    <th>Recommendation</th>
+                                    <th>Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="recommendation-row">
+                                    <td>1</td>
+                                    <td>Fund Flow</td>
+                                    <td>Mandate automatic fund sweep from State Treasury to SNA accounts after 3 days.</td>
+                                    <td><span class="badge bg-danger">High</span></td>
+                                </tr>
+                                <tr class="recommendation-row">
+                                    <td>2</td>
+                                    <td>Integration</td>
+                                    <td>Launch a time-bound campaign to achieve 100% Aadhaar seeding in low-performing districts.</td>
+                                    <td><span class="badge bg-warning">Medium</span></td>
+                                </tr>
+                                <tr class="recommendation-row">
+                                    <td>3</td>
+                                    <td>Scheme Design</td>
+                                    <td>Pilot integrating beneficiary feedback loops for quarterly scheme adjustments.</td>
+                                    <td><span class="badge bg-success">Low</span></td>
+                                </tr>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Charting ---
+
+        // Sample Data for Correlation Chart
+        const policyData = {
+            labels: ['State A', 'State B', 'State C', 'State D', 'State E', 'State F'],
+            seeding: [99.5, 96.0, 88.5, 92.0, 97.0, 98.2], // Aadhaar Seeding %
+            success: [98.8, 97.1, 93.5, 95.0, 97.5, 98.0]   // Transaction Success %
+        };
+
+        // Initialize Correlation Scatter Chart
+        const correlationCtx = document.getElementById('correlationChart').getContext('2d');
+        new Chart(correlationCtx, {
+            type: 'scatter', // Scatter plot shows correlation well
+            data: {
+                datasets: [
+                    {
+                        label: 'State Data Points',
+                        data: policyData.labels.map((label, index) => ({
+                            x: policyData.seeding[index],
+                            y: policyData.success[index],
+                            label: label
+                        })),
+                        backgroundColor: 'rgba(0, 123, 255, 0.6)',
+                        pointRadius: 8
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Aadhaar Seeding Coverage (%)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Transaction Success Rate (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.raw.label}: Seeding ${context.raw.x}%, Success ${context.raw.y}%`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

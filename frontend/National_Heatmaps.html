@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT National Heatmaps Overview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #dc3545; /* Red/Heat color for emphasis */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        /* Heatmap Placeholder Styling */
+        .heatmap-placeholder {
+            min-height: 600px;
+            background-color: #e9ecef;
+            border: 2px solid #dc3545; /* Red border to mimic 'Heat' */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #495057;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .color-box {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>DBT National Heatmaps Monitor</h1>
+            <p class="lead">State-wise Visualization of Key Performance Indicators</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row mb-4 g-4">
+            
+            <div class="col-lg-9">
+                <div class="section-container">
+                    <h3>State-wise DBT Performance (Heatmap)</h3>
+                    <div class="heatmap-placeholder">
+                        <p>
+                            [Interactive Map Placeholder - India/State View]<br>
+                            ***Note: Real heatmap requires specialized libraries (Leaflet/D3.js) and GeoJSON data.***<br>
+                            <small>Hover to see data for a specific state.</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="section-container">
+                    <h3>Heatmap Legend</h3>
+                    
+                    <p class="text-muted">Metric Selected: **Total Amount Disbursed**</p>
+                    
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #dc3545;"></div> 
+                        <span>> ₹ 5 Lakh Cr (High)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #ffc107;"></div> 
+                        <span>₹ 2 - 5 Lakh Cr (Medium)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #28a745;"></div> 
+                        <span>< ₹ 2 Lakh Cr (Low)</span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <label for="metricSelect" class="form-label fw-bold">Select Metric:</label>
+                    <select class="form-select" id="metricSelect">
+                        <option value="disbursement" selected>Total Amount Disbursed</option>
+                        <option value="failure">Transaction Failure Rate</option>
+                        <option value="seeding">Aadhaar Seeding Coverage</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>State Data Table (Based on Heatmap Metric)</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="stateHeatmapTable">
+                            <thead class="table-danger">
+                                <tr>
+                                    <th>State/UT</th>
+                                    <th>Total Amount Disbursed (₹ Cr)</th>
+                                    <th>Rank (Based on Metric)</th>
+                                    <th>Status Color</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Table Population ---
+
+        // Sample Data for Heatmap visualization (Disbursement Metric)
+        const heatmapData = [
+            { state: 'Uttar Pradesh', amount: 550000, rank: 1, color: 'Red' },
+            { state: 'Maharashtra', amount: 480000, rank: 2, color: 'Red' },
+            { state: 'Bihar', amount: 320000, rank: 3, color: 'Yellow' },
+            { state: 'West Bengal', amount: 250000, rank: 4, color: 'Yellow' },
+            { state: 'Tamil Nadu', amount: 150000, rank: 5, color: 'Green' },
+            { state: 'Small States/UTs', amount: 50000, rank: 6, color: 'Green' },
+        ];
+
+        // --- Populate Data Table ---
+        function populateTable(data) {
+            const tbody = document.querySelector('#stateHeatmapTable tbody');
+            tbody.innerHTML = ''; // Clear existing rows
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell().innerText = item.state;
+                row.insertCell().innerText = item.amount.toLocaleString();
+                row.insertCell().innerText = item.rank;
+                
+                // Set color-coded badge for status
+                let badgeClass = '';
+                if (item.color === 'Red') {
+                    badgeClass = 'status-badge-danger';
+                } else if (item.color === 'Yellow') {
+                    badgeClass = 'status-badge-warning';
+                } else {
+                    badgeClass = 'status-badge-success';
+                }
+                row.insertCell().innerHTML = `<span class="badge ${badgeClass}">${item.color}</span>`;
+            });
+        }
+        populateTable(heatmapData);
+
+        // --- Dummy Event Listener for Filter ---
+        document.getElementById('metricSelect').addEventListener('change', function() {
+            alert(`Metric changed to: ${this.value}. In a real app, the map and table data would now reload.`);
+        });
+        
+    </script>
+</body>
+</html>

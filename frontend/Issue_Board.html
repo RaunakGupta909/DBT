@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT Issue Board</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #343a40; /* Dark color for utility section */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .issue-card {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .issue-card .card-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .card-open .card-value { color: #dc3545; } /* Red for Open */
+        .card-progress .card-value { color: #ffc107; } /* Yellow for In Progress */
+        .card-closed .card-value { color: #28a745; } /* Green for Closed */
+        
+        .priority-high { background-color: #dc3545; color: white; }
+        .priority-medium { background-color: #ffc107; color: #333; }
+        .priority-low { background-color: #28a745; color: white; }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>DBT Issue Board Monitoring</h1>
+            <p class="lead">Tracking Technical and Operational Issues</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row g-4 mb-4">
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="card issue-card card-open">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Total Open Issues</p>
+                        <h2 class="card-value" id="kpi-open">124</h2>
+                        <small class="text-danger">Awaiting Assignment</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card issue-card card-progress">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">In Progress</p>
+                        <h2 class="card-value" id="kpi-progress">58</h2>
+                        <small class="text-warning">Being Resolved</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card issue-card card-closed">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Closed This Month</p>
+                        <h2 class="card-value" id="kpi-closed">412</h2>
+                        <small class="text-success">Successfully Resolved</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card issue-card">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Avg. Resolution Time</p>
+                        <h2 class="card-value text-info" id="kpi-avg-time">1.8 Days</h2>
+                        <small class="text-info">Current Performance</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="section-container">
+                    <h3>Monthly Issue Trend: Logged vs. Resolved</h3>
+                    <canvas id="issueTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>Top Prioritized Issues (High/Critical)</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="issueTable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Summary</th>
+                                    <th>Assigned To</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Age</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Charting ---
+
+        // Sample Data for Issue Trend Chart
+        const trendData = {
+            labels: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+            logged: [500, 550, 610, 580, 650, 630],
+            resolved: [450, 500, 580, 550, 610, 600]
+        };
+        
+        // Sample Data for Prioritized Issue Table
+        const issueTableData = [
+            { id: 'DBT-001', summary: 'Server Down: Transaction Timeout (National)', assigned: 'Tech Team Alpha', priority: 'Critical', status: 'In Progress', age: '2 days' },
+            { id: 'DBT-002', summary: 'Aadhaar Seeding Failure (State X)', assigned: 'State Nodal Officer', priority: 'High', status: 'Open', age: '5 hours' },
+            { id: 'DBT-003', summary: 'Scheme Y Data Inconsistency', assigned: 'Data Analytics', priority: 'Medium', status: 'Open', age: '1 day' },
+            { id: 'DBT-004', summary: 'Minor UI Bug on Dashboard', assigned: 'Frontend Team', priority: 'Low', status: 'Closed', age: '3 days' },
+        ];
+
+
+        // --- 1. Initialize Issue Trend Line Chart ---
+        const trendCtx = document.getElementById('issueTrendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: trendData.labels,
+                datasets: [
+                    {
+                        label: 'Issues Logged',
+                        data: trendData.logged,
+                        borderColor: '#dc3545', // Red for Logged
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Issues Resolved',
+                        data: trendData.resolved,
+                        borderColor: '#28a745', // Green for Resolved
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Number of Issues'
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- 2. Populate Prioritized Issue Table ---
+        function populateTable(data) {
+            const tbody = document.querySelector('#issueTable tbody');
+            tbody.innerHTML = ''; // Clear existing rows
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell().innerText = item.id;
+                row.insertCell().innerText = item.summary;
+                row.insertCell().innerText = item.assigned;
+                
+                // Priority Badge
+                let priorityClass = '';
+                if (item.priority === 'Critical' || item.priority === 'High') {
+                    priorityClass = 'priority-high';
+                } else if (item.priority === 'Medium') {
+                    priorityClass = 'priority-medium';
+                } else {
+                    priorityClass = 'priority-low';
+                }
+                row.insertCell().innerHTML = `<span class="badge ${priorityClass}">${item.priority}</span>`;
+
+                // Status Badge
+                let statusClass = 'bg-secondary';
+                if (item.status === 'Open') {
+                    statusClass = 'bg-danger';
+                } else if (item.status === 'In Progress') {
+                    statusClass = 'bg-warning text-dark';
+                } else if (item.status === 'Closed') {
+                    statusClass = 'bg-success';
+                }
+                row.insertCell().innerHTML = `<span class="badge ${statusClass}">${item.status}</span>`;
+                
+                row.insertCell().innerText = item.age;
+            });
+        }
+        populateTable(issueTableData);
+    </script>
+</body>
+</html>
