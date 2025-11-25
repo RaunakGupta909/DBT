@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEO Dashboard: Issues & Policy Tools</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Tailwind utility classes for status badges and table header */
+        .status-resolved { @apply bg-green-100 text-green-800 border-green-200; }
+        .status-in-progress { @apply bg-yellow-100 text-yellow-800 border-yellow-200; }
+        .status-pending { @apply bg-red-100 text-red-800 border-red-200; }
+        .table-header { @apply bg-gray-800 text-white uppercase tracking-wider text-sm; }
+    </style>
+    <!-- Using Inter font for a professional look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    
+    <!-- Firebase Setup Script: This prepares the application for real-time data sync using Firestore. -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        setLogLevel('debug'); // Enable Firestore logs
+
+        // Global variables provided by the environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        let firebaseConfig = {};
+        if (typeof __firebase_config !== 'undefined') {
+            try {
+                firebaseConfig = JSON.parse(__firebase_config);
+            } catch (e) {
+                console.error("Failed to parse firebase config:", e);
+            }
+        }
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app, db, auth;
+        
+        async function initializeFirebase() {
+            try {
+                if (Object.keys(firebaseConfig).length === 0) {
+                    console.warn("Firebase config is empty. Firestore will not function.");
+                    return;
+                }
+
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                // Authentication using custom token or anonymously
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                    console.log("Firebase signed in with custom token.");
+                } else {
+                    await signInAnonymously(auth);
+                    console.log("Firebase signed in anonymously.");
+                }
+
+                const userId = auth.currentUser?.uid || 'anonymous';
+                document.getElementById('user-id-display').textContent = userId;
+                
+                // NOTE: Real-time data fetching using onSnapshot would be added here
+
+            } catch (error) {
+                console.error("Firebase Initialization or Auth Failed:", error);
+            }
+        }
+
+        initializeFirebase();
+    </script>
+
+    <!-- Main Content Container (Centered and fluid width) -->
+    <div class="max-w-7xl mx-auto p-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Header -->
+        <header class="mb-6 pb-4 border-b border-indigo-200">
+            <h1 class="text-4xl font-extrabold text-indigo-700">DEO Policy & DBT Dashboard</h1>
+            <p class="mt-2 text-lg text-gray-600">Unified platform for District Education Officers to track scheme issues and reference key policy tools.</p>
+            <div class="mt-2 text-sm text-gray-400">
+                Current User ID: <span id="user-id-display" class="font-mono text-gray-500">Initializing...</span>
+            </div>
+        </header>
+
+        <!-- 1. Key Performance Indicators (KPIs) -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Scheme Metrics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-indigo-100">
+                    <p class="text-sm font-medium text-gray-500">Total Open Issues</p>
+                    <p class="text-3xl font-bold text-red-600 mt-1">4</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-indigo-100">
+                    <p class="text-sm font-medium text-gray-500">Resolved (Last 7 Days)</p>
+                    <p class="text-3xl font-bold text-green-600 mt-1">12</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-indigo-100">
+                    <p class="text-sm font-medium text-gray-500">Avg. Resolution Time</p>
+                    <p class="text-3xl font-bold text-indigo-600 mt-1">3.5 Days</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. DEO Policy Tools & Guidelines (New Section) -->
+        <section class="mb-10">
+            <h2 class="text-3xl font-bold text-indigo-700 mb-6 border-l-4 border-indigo-500 pl-3">DEO Policy Tools & Guidelines</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Policy Documents Column -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-semibold text-gray-700 border-b pb-2">1. Core Policy Documents</h3>
+                    
+                    <a href="#" class="block p-4 bg-white rounded-lg shadow hover:shadow-md transition duration-200 border-l-4 border-blue-500">
+                        <p class="font-bold text-blue-600">DBT Scheme Operational Handbook (2024)</p>
+                        <p class="text-sm text-gray-500">Defines eligibility, payment modes (APB/AEC), and scheme specific conditions.</p>
+                    </a>
+                    
+                    <a href="#" class="block p-4 bg-white rounded-lg shadow hover:shadow-md transition duration-200 border-l-4 border-blue-500">
+                        <p class="font-bold text-blue-600">RTE Act Compliance Circular (Latest)</p>
+                        <p class="text-sm text-gray-500">Instructions on monitoring the 25% EWS/Disadvantaged Group reservation compliance.</p>
+                    </a>
+
+                    <a href="#" class="block p-4 bg-white rounded-lg shadow hover:shadow-md transition duration-200 border-l-4 border-blue-500">
+                        <p class="font-bold text-blue-600">Delegated Financial Powers Manual</p>
+                        <p class="text-sm text-gray-500">Reference for fund sanctioning and budget utilization limits at the District level.</p>
+                    </a>
+                </div>
+
+                <!-- Digital Implementation Tools Column -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-semibold text-gray-700 border-b pb-2">2. Digital Implementation Tools</h3>
+                    
+                    <a href="http://dbtapp.gov.in" target="_blank" class="block p-4 bg-white rounded-lg shadow hover:shadow-md transition duration-200 border-l-4 border-purple-500">
+                        <p class="font-bold text-purple-600 flex items-center">
+                            DBT Application Portal <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                        </p>
+                        <p class="text-sm text-gray-500">Primary tool for beneficiary verification, certification, and digital signing.</p>
+                    </a>
+
+                    <div class="p-4 bg-white rounded-lg shadow border-l-4 border-purple-500">
+                        <p class="font-bold text-purple-600">Aadhaar Seeding Status (Internal Tool)</p>
+                        <p class="text-sm text-gray-500">API/portal to check and confirm Aadhaar-Bank linkage status (NPCI Mapper).</p>
+                    </div>
+
+                    <div class="p-4 bg-white rounded-lg shadow border-l-4 border-purple-500">
+                        <p class="font-bold text-purple-600">School Inspection Checklist (e-Form)</p>
+                        <p class="text-sm text-gray-500">Digital form for DEO/BEO field monitoring and real-time report submission.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 3. Issue Resolution Board (Restructured) -->
+        <section class="mb-10">
+            <h2 class="text-3xl font-bold text-indigo-700 mb-6 border-l-4 border-indigo-500 pl-3">Issue Resolution Tracker</h2>
+            <div class="overflow-x-auto bg-white rounded-xl shadow-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="table-header">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left">Issue ID</th>
+                            <th scope="col" class="px-6 py-3 text-left">Date Reported</th>
+                            <th scope="col" class="px-6 py-3 text-left">Issue Category</th>
+                            <th scope="col" class="px-6 py-3 text-left">Title/Description</th>
+                            <th scope="col" class="px-6 py-3 text-left">Status</th>
+                            <th scope="col" class="px-6 py-3 text-left">Last Updated</th>
+                            <th scope="col" class="px-6 py-3 text-left">Responsible Team</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <!-- Example Issue 1: In Progress -->
+                        <tr class="hover:bg-gray-50 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><strong>DBT-25/11/045</strong></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2025-11-20</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Aadhaar/Bank Seeding</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 max-w-xs truncate">150 student accounts of Govt. HS, Sector-A, failing bank validation.</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-in-progress">In Progress</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2025-11-25</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">District DBT Cell</td>
+                        </tr>
+                        <!-- Example Issue 2: Resolved -->
+                        <tr class="hover:bg-gray-50 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">DBT-25/11/044</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2025-11-18</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Technical/Portal</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 max-w-xs truncate">DSC not accepting on renewal application for Block B.</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-resolved">Resolved</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2025-11-24</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">NIC Support Team</td>
+                        </tr>
+                        <!-- Example Issue 3: Pending Clarification -->
+                        <tr class="hover:bg-gray-50 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">DBT-25/11/043</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2025-11-15</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Beneficiary Data</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 max-w-xs truncate">Mismatch in DOB for student ID: 123456789.</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-pending">Pending</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2025-11-22</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Scheme Nodal Officer</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- Call to Action Footer -->
+        <section class="mt-8">
+            <div class="bg-indigo-50 p-6 rounded-xl shadow-inner flex flex-col sm:flex-row justify-between items-center border border-indigo-200">
+                <div>
+                    <h4 class="text-xl font-bold text-indigo-800">New Issue Submission</h4>
+                    <p class="text-indigo-600 mt-1">Submit new grievances through the official portal for formal tracking.</p>
+                </div>
+                <!-- Note: The '#' should be replaced with the actual submission portal URL -->
+                <a href="#" class="mt-4 sm:mt-0 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-200">
+                    Submit New Grievance
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

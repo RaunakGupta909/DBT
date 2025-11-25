@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Resolution Board - DEO DBT Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .status-resolved { background-color: #d1e7dd; color: #0f5132; }
+        .status-in-progress { background-color: #fff3cd; color: #664d03; }
+        .status-pending { background-color: #f8d7da; color: #842029; }
+        .container-main { padding-top: 20px; padding-bottom: 40px; }
+        .table-responsive { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container container-main">
+    
+    <header class="mb-4">
+        <h1 class="display-5 fw-bold text-primary">Issue Resolution Board (IRB)</h1>
+        <p class="lead">Tracking the status of Direct Benefit Transfer (DBT) related issues under the District Education Officer (DEO) dashboard.</p>
+    </header>
+
+    <hr>
+
+    <div class="row text-center mb-5">
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm border-0">
+                <h2 class="h4">Total Open Issues</h2>
+                <p class="display-6 text-danger">4</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm border-0">
+                <h2 class="h4">Issues Resolved (Last 7 Days)</h2>
+                <p class="display-6 text-success">12</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm border-0">
+                <h2 class="h4">Average Resolution Time</h2>
+                <p class="display-6 text-info">3.5 Days</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="mb-5">
+        <h3 class="mb-3 text-secondary">Live Issue Status Tracker</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Issue ID</th>
+                        <th scope="col">Date Reported</th>
+                        <th scope="col">Issue Category</th>
+                        <th scope="col">Title/Description</th>
+                        <th scope="col">Resolution Status</th>
+                        <th scope="col">Last Updated</th>
+                        <th scope="col">Responsible Team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DBT-2025/11/045</strong></td>
+                        <td>2025-11-20</td>
+                        <td>Aadhaar/Bank Seeding</td>
+                        <td>150 student accounts of Govt. HS, Sector-A, failing bank validation.</td>
+                        <td><span class="badge status-in-progress p-2">In Progress</span></td>
+                        <td>2025-11-25</td>
+                        <td>District DBT Cell</td>
+                    </tr>
+                    <tr>
+                        <td>DBT-2025/11/044</td>
+                        <td>2025-11-18</td>
+                        <td>Technical/Portal</td>
+                        <td>DSC not accepting on renewal application for Block B.</td>
+                        <td><span class="badge status-resolved p-2">Resolved</span></td>
+                        <td>2025-11-24</td>
+                        <td>NIC Support Team</td>
+                    </tr>
+                    <tr>
+                        <td>DBT-2025/11/043</td>
+                        <td>2025-11-15</td>
+                        <td>Beneficiary Data</td>
+                        <td>Mismatch in DOB for student ID: 123456789.</td>
+                        <td><span class="badge status-pending p-2">Pending Clarification</span></td>
+                        <td>2025-11-22</td>
+                        <td>Scheme Nodal Officer</td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <section class="alert alert-info border-0 shadow-sm p-4">
+        <h4 class="alert-heading">Need to Report a New Issue?</h4>
+        <p>Please use the official grievance channel for all new complaints or issues related to DBT transfers to ensure formal tracking and faster resolution.</p>
+        <hr>
+        <a href="[Insert Link to your Grievance Registration Form/Portal]" class="btn btn-primary btn-lg">Submit New Grievance Here</a>
+        <p class="mt-2 mb-0"><small>Contact Nodal Officer: [Name], [Phone] | [Email]</small></p>
+    </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
