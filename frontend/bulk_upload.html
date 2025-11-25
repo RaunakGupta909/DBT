@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Upload | True Benefit</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; padding: 0; }
+        header { background: #0033cc; color: white; padding: 15px; text-align: center; font-size: 22px; font-weight: bold; }
+        .container { width: 90%; margin: auto; margin-top: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        h2 { color: #0033cc; }
+        .upload-box { border: 2px dashed #0033cc; padding: 40px; text-align: center; border-radius: 8px; background: #e6f0ff; }
+        .upload-box:hover { background: #d9e6ff; }
+        input[type=file] { margin-top: 15px; }
+        .btn { background: #0033cc; color: white; padding: 10px 20px; border: none; border-radius: 6px; margin-top: 15px; cursor: pointer; font-size: 16px; }
+        .btn:hover { background: #002699; }
+        .note { margin-top: 15px; font-size: 14px; color: #555; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ccc; text-align: left; }
+        th { background: #0033cc; color: white; }
+    </style>
+</head>
+<body>
+<header>
+    True Benefit – Teacher Dashboard (Bulk Upload)
+</header>
+<div class="container">
+
+    <div class="card">
+        <h2>Bulk Upload Student Data</h2>
+        <div class="upload-box">
+            <p>Drag & Drop CSV File Here</p>
+            <p>OR</p>
+            <input type="file" accept=".csv">
+            <br>
+            <button class="btn">Upload File</button>
+            <p class="note">Only CSV files allowed. Ensure columns: Name, Aadhaar Status, DBT Status, Remarks</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Sample CSV Format</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Aadhaar Status</th>
+                <th>DBT Status</th>
+                <th>Remarks</th>
+            </tr>
+            <tr><td>Riya Sharma</td><td>Enabled</td><td>Eligible</td><td>—</td></tr>
+            <tr><td>Aman Verma</td><td>Pending</td><td>Not Eligible</td><td>Aadhaar mismatch</td></tr>
+            <tr><td>Kavita Patil</td><td>Enabled</td><td>Eligible</td><td>—</td></tr>
+                    <tr><td>Sneha Kulkarni</td><td>Enabled</td><td>Eligible</td><td>—</td></tr>
+            <tr><td>Rohan Singh</td><td>Pending</td><td>Not Eligible</td><td>Documents not submitted</td></tr>
+            <tr><td>Meera Joshi</td><td>Enabled</td><td>Eligible</td><td>—</td></tr>
+            <tr><td>Arjun Desai</td><td>Pending</td><td>Not Eligible</td><td>Aadhaar not linked</td></tr>
+            <tr><td>Priya Nair</td><td>Enabled</td><td>Eligible</td><td>—</td></tr>
+            <tr><td>Dev Malhotra</td><td>Enabled</td><td>Not Eligible</td><td>Bank account issue</td></tr>
+            <tr><td>Tanvi Chavan</td><td>Pending</td><td>Not Eligible</td><td>Incomplete KYC</td></tr>
+            <tr><td>Aditya Gupta</td><td>Enabled</td><td>Eligible</td><td>—</td></tr>
+            <tr><td>Neha Pawar</td><td>Enabled</td><td>Eligible</td><td>—</td></tr>
+            <tr><td>Karan Jadhav</td><td>Pending</td><td>Not Eligible</td><td>No Aadhaar submitted</td></tr>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

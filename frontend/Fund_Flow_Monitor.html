@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT Fund Flow Monitor Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #ffc107; /* Yellow/Warning color for attention */
+            color: #333;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .status-card {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Fund Flow Diagram Styling (Basic Visual Representation) */
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 10px;
+            position: relative;
+        }
+        .flow-node {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            width: 20%;
+            z-index: 10; /* Ensure text is above lines */
+        }
+        .flow-arrow {
+            position: absolute;
+            height: 4px;
+            background-color: #28a745; /* Green for flow */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 5;
+        }
+        /* Positioning the arrows */
+        #arrow1 { left: 23%; width: 24%; }
+        #arrow2 { left: 51%; width: 24%; }
+        
+        .pending-text { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>DBT Fund Flow Monitor</h1>
+            <p class="lead">Tracking Fund Movement from Source to Beneficiary</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row g-4 mb-4">
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card status-card border-primary">
+                    <div class="card-body">
+                        <p class="text-primary mb-1">Total Funds Released</p>
+                        <h2 class="card-value" id="kpi-released">₹ 5,100 Cr</h2>
+                        <small class="text-muted">Current Financial Year</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card status-card border-danger">
+                    <div class="card-body">
+                        <p class="text-danger mb-1">Funds Pending Disbursement</p>
+                        <h2 class="card-value pending-text" id="kpi-pending">₹ 150 Cr</h2>
+                        <small class="text-muted">Awaiting State/District Action</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card status-card border-success">
+                    <div class="card-body">
+                        <p class="text-success mb-1">Successfully Disbursed</p>
+                        <h2 class="card-value" id="kpi-disbursed">₹ 4,950 Cr</h2>
+                        <small class="text-muted">Amount Credited to Bank Accounts</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>Simplified Fund Flow Path</h3>
+                    <div class="flow-container">
+                        <div class="flow-arrow" id="arrow1"></div>
+                        <div class="flow-arrow" id="arrow2"></div>
+
+                        <div class="flow-node bg-primary">Ministry/Central Pool</div>
+                        <div class="flow-node bg-warning text-dark">State Nodal Agency (SNA)</div>
+                        <div class="flow-node bg-info">Implementing Agency/District</div>
+                        <div class="flow-node bg-success">Beneficiary Account</div>
+                    </div>
+                    <p class="text-center mt-3 text-muted">Flow represents fund release, utilization, and disbursement.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="section-container">
+                    <h3>Monthly Fund Release vs. Disbursement Trend</h3>
+                    <canvas id="fundTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Charting ---
+
+        // Sample Data for the Trend Chart (in Crores)
+        const monthlyData = {
+            labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            released: [850, 920, 1100, 1050, 1200, 1300],
+            disbursed: [800, 880, 1050, 980, 1150, 1280]
+        };
+
+        // Initialize Fund Trend Line Chart
+        const trendCtx = document.getElementById('fundTrendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: monthlyData.labels,
+                datasets: [
+                    {
+                        label: 'Funds Released (Cr ₹)',
+                        data: monthlyData.released,
+                        borderColor: '#ffc107', // Yellow
+                        backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'Funds Disbursed (Cr ₹)',
+                        data: monthlyData.disbursed,
+                        borderColor: '#28a745', // Green
+                        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Amount (in Crore ₹)'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

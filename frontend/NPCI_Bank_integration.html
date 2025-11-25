@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT NPCI/Bank Integration Status</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #343a40; /* Dark color for technical monitoring */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .status-card-icon {
+            font-size: 2rem;
+        }
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .status-badge-success { background-color: #28a745; color: white; }
+        .status-badge-warning { background-color: #ffc107; color: #333; }
+        .status-badge-danger { background-color: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>NPCI/Bank Integration Monitor</h1>
+            <p class="lead">Real-time Transaction Status and Performance</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row g-4 mb-4">
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="card status-card border-success">
+                    <div class="card-body text-center">
+                        <span class="status-card-icon text-success">👤</span>
+                        <p class="text-muted mb-1">Aadhaar Seeding Rate</p>
+                        <h2 class="card-value">98.5%</h2>
+                        <small class="text-muted">Active Beneficiaries</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card status-card border-success">
+                    <div class="card-body text-center">
+                        <span class="status-card-icon text-success">✅</span>
+                        <p class="text-muted mb-1">NPCI Server Status</p>
+                        <h2 class="card-value"><span class="badge status-badge-success">Operational</span></h2>
+                        <small class="text-muted">Last Updated: 1 min ago</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card status-card border-warning">
+                    <div class="card-body text-center">
+                        <span class="status-card-icon text-warning">⏱️</span>
+                        <p class="text-muted mb-1">Avg. Transaction Latency</p>
+                        <h2 class="card-value">1.2 Sec</h2>
+                        <small class="text-muted">Last 1 Hour Average</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card status-card border-danger">
+                    <div class="card-body text-center">
+                        <span class="status-card-icon text-danger">❌</span>
+                        <p class="text-muted mb-1">Transaction Failure Rate</p>
+                        <h2 class="card-value">0.8%</h2>
+                        <small class="text-muted">Due to Technical Reasons</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="section-container">
+                    <h3>Bank-wise Transaction Success Rate</h3>
+                    <canvas id="bankSuccessChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>Detailed Bank Integration Status</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="bankDataTable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Bank Name</th>
+                                    <th>Success Rate (%)</th>
+                                    <th>Avg. Latency (ms)</th>
+                                    <th>Server Availability</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Charting ---
+
+        // Sample Data for Bank Performance
+        const bankData = [
+            { name: 'SBI', successRate: 98.7, latency: 950, availability: 'UP' },
+            { name: 'PNB', successRate: 97.5, latency: 1300, availability: 'UP' },
+            { name: 'HDFC Bank', successRate: 99.2, latency: 800, availability: 'UP' },
+            { name: 'Bank of Baroda', successRate: 96.9, latency: 1550, availability: 'DEGRADED' },
+            { name: 'Canara Bank', successRate: 98.0, latency: 1100, availability: 'UP' },
+        ];
+
+        // --- 1. Populate Data Table ---
+        function populateTable(data) {
+            const tbody = document.querySelector('#bankDataTable tbody');
+            tbody.innerHTML = ''; // Clear existing rows
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell().innerText = item.name;
+                row.insertCell().innerText = item.successRate.toFixed(1);
+                row.insertCell().innerText = item.latency;
+                
+                // Add status badge based on availability
+                let badgeClass = '';
+                if (item.availability === 'UP') {
+                    badgeClass = 'status-badge-success';
+                } else if (item.availability === 'DEGRADED') {
+                    badgeClass = 'status-badge-warning';
+                } else {
+                    badgeClass = 'status-badge-danger';
+                }
+                row.insertCell().innerHTML = `<span class="badge ${badgeClass}">${item.availability}</span>`;
+            });
+        }
+        populateTable(bankData);
+
+
+        // --- 2. Initialize Bank Success Rate Bar Chart ---
+        const bankNames = bankData.map(d => d.name);
+        const successRates = bankData.map(d => d.successRate);
+
+        const successCtx = document.getElementById('bankSuccessChart').getContext('2d');
+        new Chart(successCtx, {
+            type: 'bar',
+            data: {
+                labels: bankNames,
+                datasets: [{
+                    label: 'Success Rate (%)',
+                    data: successRates,
+                    backgroundColor: [
+                        '#007bff', '#28a745', '#17a2b8', '#ffc107', '#dc3545'
+                    ], 
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        min: 95, // Set minimum Y-axis for better comparison
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Success Rate (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
