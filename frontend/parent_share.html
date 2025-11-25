@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parent Share – DBT Dashboard</title>
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #e8edf5;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(90deg, #0b3d91, #145cc9);
+    padding: 18px;
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    animation: fadeDown 0.6s ease;
+  }
+
+  @keyframes fadeDown {
+    from {opacity: 0; transform: translateY(-20px);}    
+    to {opacity: 1; transform: translateY(0);}    
+  }
+
+  /* CARD */
+  .parent-card {
+    background: white;
+    margin: 20px;
+    padding: 22px;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    animation: fadeUp 0.6s ease;
+  }
+
+  @keyframes fadeUp {
+    from {opacity: 0; transform: translateY(20px);}    
+    to {opacity: 1; transform: translateY(0);}    
+  }
+
+  .section-title {
+    font-size: 19px;
+    font-weight: bold;
+    color: #0b3d91;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title i {
+    color: #145cc9;
+  }
+
+  .info-box {
+    background: #f3f6ff;
+    padding: 12px;
+    border-left: 4px solid #145cc9;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 15px;
+  }
+
+  .profile-img {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .profile-img img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #145cc9;
+    animation: zoomIn 0.5s ease;
+  }
+
+  @keyframes zoomIn {
+    from {transform: scale(0.7); opacity: 0;} 
+    to {transform: scale(1); opacity: 1;} 
+  }
+
+  .btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .btn {
+    padding: 6px 10px;
+    background: #145cc9;
+    border-radius: 8px;
+    text-align: center;
+    width: 42%;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s;
+  }
+  .btn:hover {
+    background: #0b3d91;
+    transform: translateY(-3px);
+  }
+
+  /* GOV RIBBON */
+  .gov-tag {
+    background: #ffe28a;
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 12px;
+    color: #6b4b00;
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<div class="header">Parent Access – DBT Student Dashboard</div>
+
+<div class="parent-card" id="parentCard">
+  <div class="gov-tag">Government Verified • DBT Scheme</div>
+
+  <div class="profile-img">
+    <img src="https://via.placeholder.com/120" alt="Student Photo">
+  </div>
+
+  <div class="section-title"><i class="fa-solid fa-user"></i> Student Information</div>
+  <div class="info-box">
+    <strong>Name:</strong> Raunak Gupta <br>
+    <strong>Aadhaar:</strong> 9549 XXXX XXXX <br>
+    <strong>School/College:</strong> ABC Institute of Technology
+  </div>
+
+  <div class="section-title"><i class="fa-solid fa-id-card"></i> DBT Status</div>
+  <div class="info-box">
+    <strong>Scheme:</strong> Scholarship – Direct Benefit Transfer <br>
+    <strong>Status:</strong> <span style="color:green; font-weight:bold;">Approved</span> <br>
+    <strong>Amount:</strong> ₹12,000 <br>
+    <strong>Last Updated:</strong> 24 Nov 2025
+  </div>
+
+  <div class="section-title"><i class="fa-solid fa-building-columns"></i> Transaction Details</div>
+  <div class="info-box">
+    <strong>Bank Name:</strong> SBI <br>
+    <strong>Account No:</strong> XXXX 4521 <br>
+    <strong>UTR No:</strong> 58392BH278 <br>
+    <strong>Disbursed On:</strong> 20 Nov 2025
+  </div>
+
+  <div class="section-title"><i class="fa-solid fa-shield"></i> Verification</div>
+  <div class="info-box">
+    <strong>QR Status:</strong> Verified <br>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=DBT%20Verification" style="margin-top:10px; width:130px;">
+  </div>
+
+  <div class="btns">
+    <div class="btn" onclick="shareInfo()"><i class="fa-solid fa-share"></i> Share Info</div>
+    <div class="btn" onclick="downloadCard()"><i class="fa-solid fa-download"></i> Download</div>
+  </div>
+</div>
+
+<script>
+function shareInfo() {
+  if (navigator.share) {
+    navigator.share({
+      title: "DBT Student Status",
+      text: "Here is the updated DBT status of your ward.",
+      url: window.location.href
+    });
+  } else {
+    alert("Sharing not supported on this device.");
+  }
+}
+
+function downloadCard() {
+  const card = document.getElementById("parentCard");
+
+  html2canvas(card).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "Parent_DBT_Details.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+</script>
+</body>
+</html>

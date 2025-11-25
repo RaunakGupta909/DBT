@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DBT Status Card</title>
+
+  <!-- html2canvas for downloading card -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f8;
+      padding: 20px;
+    }
+
+    .dbt-card {
+      width: 100%;
+      max-width: 420px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .card-header {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #1b4c8c;
+    }
+
+    .share-btn, .download-btn {
+      position: absolute;
+      top: 16px;
+      background: #1b4c8c;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .share-btn {
+      right: 16px;
+    }
+
+    .download-btn {
+      right: 100px;   /* Left of Share button */
+    }
+
+    .status-box {
+      margin: 15px 0;
+      padding: 12px;
+      background: #e7f0ff;
+      border-left: 4px solid #1b4c8c;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .qr-box {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .qr-box img {
+      width: 140px;
+      height: auto;
+    }
+
+    .verify-text {
+      text-align: center;
+      margin-top: 8px;
+      color: #333;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dbt-card" id="dbtCard">
+  <button class="download-btn" onclick="downloadCard()">Download</button>
+  <button class="share-btn" onclick="shareCard()">Share</button>
+
+  <div class="card-header">DBT Status</div>
+
+  <!-- Student Profile Image -->
+  <div style="text-align:center; margin-bottom:15px;">
+    <img src="https://via.placeholder.com/100" alt="Student Profile" style="width:100px; height:100px; border-radius:50%; border:3px solid #1b4c8c;" />
+  </div>
+
+  <div class="status-box">
+    <strong>Beneficiary Name:</strong> Raunak Gupta<br>
+    <strong>Scheme:</strong> Direct Benefit Transfer (Scholarship)<br>
+    <strong>Status:</strong> Approved <br>
+    <strong>Last Updated:</strong> 24 Nov 2025 <br>
+    <strong>Aadhaar:</strong> 9549 XXXX XXXX
+  </div>
+
+  <div class="qr-box">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=DBT%20Status%20Verified" alt="QR Code">
+  </div>
+
+  <div class="verify-text">Scan this QR to verify authenticity</div>
+</div>
+
+<script>
+function shareCard() {
+  if (navigator.share) {
+    navigator.share({
+      title: "DBT Status",
+      text: "Check my DBT Status details.",
+      url: window.location.href
+    });
+  } else {
+    alert("Sharing not supported on this browser.");
+  }
+}
+
+function downloadCard() {
+  const card = document.getElementById("dbtCard");
+
+  html2canvas(card).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "DBT_Status_Card.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+</script>
+
+</body>
+</html>
