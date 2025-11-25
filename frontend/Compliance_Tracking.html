@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT Compliance Tracking Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #007bff; /* Primary blue color */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .compliance-score-card {
+            border: 1px solid #007bff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .score-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+        .alert-card {
+            border-left: 5px solid #ffc107;
+        }
+        .alert-card.danger {
+            border-left: 5px solid #dc3545;
+        }
+        .pending-action-item {
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>DBT Compliance Tracking</h1>
+            <p class="lead">Monitoring adherence to scheme rules and regulatory guidelines</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row g-4 mb-4">
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card compliance-score-card">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Overall Compliance Score</p>
+                        <h2 class="score-value" id="kpi-score">89%</h2>
+                        <small class="text-primary">Based on last quarterly audit</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card alert-card danger">
+                    <div class="card-body">
+                        <p class="text-danger mb-1 fw-bold">Critical Discrepancies</p>
+                        <h2 class="card-value text-danger" id="kpi-critical">7</h2>
+                        <small class="text-muted">High-priority compliance failures</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card alert-card">
+                    <div class="card-body">
+                        <p class="text-warning mb-1 fw-bold">Pending Audit Closures</p>
+                        <h2 class="card-value text-warning" id="kpi-pending">18</h2>
+                        <small class="text-muted">Action items older than 30 days</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-lg-6">
+                <div class="section-container">
+                    <h3>Process Adherence Rate (%)</h3>
+                    <canvas id="adherenceBarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="section-container">
+                    <h3>Top Violation Summary</h3>
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item pending-action-item d-flex justify-content-between align-items-center">
+                            Aadhaar Validation Check Bypass
+                            <span class="badge bg-danger rounded-pill">31 Cases</span>
+                        </div>
+                        <div class="list-group-item pending-action-item d-flex justify-content-between align-items-center">
+                            Delayed Fund Release (Beyond T+2)
+                            <span class="badge bg-warning rounded-pill">120 Cases</span>
+                        </div>
+                        <div class="list-group-item pending-action-item d-flex justify-content-between align-items-center">
+                            Missing Digital Signatures on Sanction Order
+                            <span class="badge bg-secondary rounded-pill">45 Cases</span>
+                        </div>
+                        <div class="list-group-item pending-action-item d-flex justify-content-between align-items-center">
+                            Non-upload of Utilization Certificates
+                            <span class="badge bg-warning rounded-pill">78 Cases</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>Pending Compliance Actions by State/Scheme</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="complianceTable">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Action ID</th>
+                                    <th>Non-Compliance Type</th>
+                                    <th>Scheme/State</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Charting ---
+
+        // Sample Data for Process Adherence Chart
+        const adherenceData = {
+            labels: ['Fund Flow Process', 'Beneficiary Onboarding', 'Audit Trail Maintenance', 'Data Security Norms'],
+            adherenceRates: [95, 88, 92, 85] 
+        };
+        
+        // Sample Data for Pending Actions Table
+        const pendingActionsData = [
+            { id: 'ACT001', type: 'Delayed Release', scope: 'State: Bihar (PDS)', due: '2025-12-10', status: 'Overdue (5 Days)' },
+            { id: 'ACT002', type: 'Data Mismatch', scope: 'Scheme: PM-KISAN', due: '2025-12-25', status: 'Pending Review' },
+            { id: 'ACT003', type: 'Invalid Signature', scope: 'State: UP (MGNREGS)', due: '2026-01-05', status: 'Open' },
+        ];
+
+
+        // --- 1. Initialize Adherence Bar Chart ---
+        const adherenceCtx = document.getElementById('adherenceBarChart').getContext('2d');
+        new Chart(adherenceCtx, {
+            type: 'bar',
+            data: {
+                labels: adherenceData.labels,
+                datasets: [{
+                    label: 'Adherence Rate (%)',
+                    data: adherenceData.adherenceRates,
+                    backgroundColor: [
+                        '#28a745', '#ffc107', '#17a2b8', '#dc3545'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        min: 70,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Adherence Percentage (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // --- 2. Populate Pending Actions Table ---
+        function populateTable(data) {
+            const tbody = document.querySelector('#complianceTable tbody');
+            tbody.innerHTML = ''; // Clear existing rows
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell().innerText = item.id;
+                row.insertCell().innerText = item.type;
+                row.insertCell().innerText = item.scope;
+                row.insertCell().innerText = item.due;
+                
+                // Set status color
+                let badgeClass = 'bg-primary';
+                if (item.status.includes('Overdue')) {
+                    badgeClass = 'bg-danger';
+                } else if (item.status.includes('Pending Review')) {
+                    badgeClass = 'bg-warning text-dark';
+                }
+                row.insertCell().innerHTML = `<span class="badge ${badgeClass}">${item.status}</span>`;
+            });
+        }
+        populateTable(pendingActionsData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT Document Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #20c997; /* Teal/success color for documentation */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .filter-control {
+            margin-bottom: 20px;
+        }
+        .document-type-badge {
+            font-size: 0.75rem;
+        }
+        .document-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            color: #20c997;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>DBT Document Hub</h1>
+            <p class="lead">Central Repository for Circulars, Guidelines, and Reports</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="section-container filter-control">
+            <h3 class="mb-3">Find Documents</h3>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="searchQuery" class="form-label">Search by Keyword</label>
+                    <input type="text" class="form-control" id="searchQuery" placeholder="Enter file name or keyword...">
+                </div>
+                <div class="col-md-3">
+                    <label for="documentType" class="form-label">Document Type</label>
+                    <select class="form-select" id="documentType">
+                        <option value="">All Types</option>
+                        <option value="Circular">Circulars</option>
+                        <option value="Report">Reports/MIS</option>
+                        <option value="Guideline">Guidelines/Policy</option>
+                        <option value="Form">Forms/Templates</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" onclick="applyFilters()">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-container">
+            <h3>Available Documents</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="documentTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Document Title</th>
+                            <th>Type</th>
+                            <th>Date Uploaded</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+            <p id="noResults" class="text-center text-muted mt-3" style="display:none;">No documents match your search criteria.</p>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Filtering ---
+
+        // Sample Data for Documents
+        const allDocuments = [
+            { id: 1, title: 'DBT Quarterly Performance Report Q3 2025', type: 'Report', date: '2025-10-15', link: '#' },
+            { id: 2, title: 'Guidelines for Aadhaar Seeding Version 3.0', type: 'Guideline', date: '2025-09-01', link: '#' },
+            { id: 3, title: 'Circular on Fund Release Policy Update', type: 'Circular', date: '2025-11-20', link: '#' },
+            { id: 4, title: 'Standard Operating Procedure (SOP) Template', type: 'Form', date: '2025-08-05', link: '#' },
+            { id: 5, title: 'State-wise Beneficiary Count Analysis H1', type: 'Report', date: '2025-09-30', link: '#' },
+            { id: 6, title: 'Annual Policy Review Circular 2025-26', type: 'Circular', date: '2025-07-01', link: '#' },
+        ];
+
+        // Function to get the appropriate icon based on document type
+        function getDocumentIcon(type) {
+            switch (type) {
+                case 'Circular': return 'fa-solid fa-file-circle-check';
+                case 'Report': return 'fa-solid fa-chart-line';
+                case 'Guideline': return 'fa-solid fa-clipboard-list';
+                case 'Form': return 'fa-solid fa-file-alt';
+                default: return 'fa-solid fa-file';
+            }
+        }
+
+        // --- Populate Document Table (Initial Load) ---
+        function populateTable(data) {
+            const tbody = document.querySelector('#documentTable tbody');
+            tbody.innerHTML = ''; 
+            const noResults = document.getElementById('noResults');
+
+            if (data.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            }
+            noResults.style.display = 'none';
+
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell().innerText = item.id;
+                
+                // Document Title with Icon
+                const titleCell = row.insertCell();
+                titleCell.innerHTML = `<i class="${getDocumentIcon(item.type)} document-icon"></i> ${item.title}`;
+                
+                // Type Badge
+                const typeCell = row.insertCell();
+                let badgeClass = 'bg-secondary';
+                if (item.type === 'Circular') badgeClass = 'bg-primary';
+                else if (item.type === 'Report') badgeClass = 'bg-info';
+                else if (item.type === 'Guideline') badgeClass = 'bg-success';
+                else if (item.type === 'Form') badgeClass = 'bg-warning text-dark';
+                typeCell.innerHTML = `<span class="badge ${badgeClass} document-type-badge">${item.type}</span>`;
+                
+                row.insertCell().innerText = item.date;
+                
+                // Download Action Button
+                const actionCell = row.insertCell();
+                actionCell.innerHTML = `<a href="${item.link}" class="btn btn-sm btn-outline-success" target="_blank"><i class="fas fa-download"></i> Download</a>`;
+            });
+        }
+        populateTable(allDocuments); // Load all documents initially
+
+        // --- Function to Apply Filters ---
+        function applyFilters() {
+            const query = document.getElementById('searchQuery').value.toLowerCase();
+            const type = document.getElementById('documentType').value;
+
+            const filteredDocs = allDocuments.filter(doc => {
+                const matchesQuery = doc.title.toLowerCase().includes(query);
+                const matchesType = !type || doc.type === type;
+                return matchesQuery && matchesType;
+            });
+
+            populateTable(filteredDocs);
+        }
+    </script>
+</body>
+</html>
