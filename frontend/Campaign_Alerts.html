@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT Campaign Alerts & Monitoring</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            background-color: #fd7e14; /* Orange color for Alerts/Warnings */
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        /* Alert Cards Styling */
+        .alert-card {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .card-critical .card-value { color: #dc3545; }
+        .card-warning .card-value { color: #ffc107; }
+        .card-active .card-value { color: #17a2b8; }
+
+        /* Status Badge Styling for Table */
+        .status-danger { background-color: #dc3545; color: white; }
+        .status-warning { background-color: #ffc107; color: #333; }
+        .status-success { background-color: #28a745; color: white; }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header text-center">
+        <div class="container">
+            <h1>Campaign Alerts & Monitoring 🔔</h1>
+            <p class="lead">Real-time Performance and Compliance Tracking of Campaigns</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="row g-4 mb-4">
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="card alert-card card-active">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Total Active Campaigns</p>
+                        <h2 class="card-value" id="kpi-active">9</h2>
+                        <small class="text-info">Currently running campaigns</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card alert-card card-critical">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Critical Alerts</p>
+                        <h2 class="card-value" id="kpi-critical">2</h2>
+                        <small class="text-danger">Target achievement < 50%</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card alert-card card-warning">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Warning Alerts</p>
+                        <h2 class="card-value" id="kpi-warning">3</h2>
+                        <small class="text-warning">Target achievement < 75%</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card alert-card">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Avg. Compliance Rate</p>
+                        <h2 class="card-value text-success" id="kpi-compliance">88%</h2>
+                        <small class="text-muted">Campaign process adherence</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="section-container">
+                    <h3>Overall Campaign Target vs. Achievement</h3>
+                    <canvas id="campaignProgressChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-container">
+                    <h3>Active Campaigns: Detailed Status</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="campaignTable">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Campaign Name</th>
+                                    <th>Target Metric</th>
+                                    <th>Achievement (%)</th>
+                                    <th>Days Left</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- JavaScript for Data Handling and Charting ---
+
+        // Sample Data for Campaign Progress Chart
+        const progressData = {
+            labels: ['Campaign A', 'Campaign B', 'Campaign C', 'Campaign D', 'Campaign E'],
+            targets: [100000, 50000, 25000, 80000, 40000],
+            achieved: [95000, 35000, 26000, 38000, 38000] // Note C is > 100%
+        };
+        
+        // Sample Data for Active Campaign Table
+        const campaignTableData = [
+            { id: 'CPA001', name: 'Aadhaar Seeding Drive (Phase 2)', metric: 'Accounts Seeded', target: 100000, achieved: 95, daysLeft: 15, status: 'On Track' },
+            { id: 'CPA002', name: 'New Beneficiary Enrollment', metric: 'Enrollments', target: 50000, achieved: 70, daysLeft: 5, status: 'Warning' },
+            { id: 'CPA003', name: 'Scheme Awareness Push (Rural)', metric: 'Impressions', target: 25000, achieved: 104, daysLeft: 30, status: 'Complete' },
+            { id: 'CPA004', name: 'Bank Linkage Compliance', metric: 'Bank Links', target: 80000, achieved: 48, daysLeft: 10, status: 'Critical' },
+            { id: 'CPA005', name: 'Digital Payment Adoption', metric: 'Transactions', target: 40000, achieved: 95, daysLeft: 45, status: 'On Track' },
+        ];
+
+
+        // --- 1. Initialize Campaign Progress Bar Chart ---
+        const progressCtx = document.getElementById('campaignProgressChart').getContext('2d');
+        new Chart(progressCtx, {
+            type: 'bar',
+            data: {
+                labels: progressData.labels,
+                datasets: [
+                    {
+                        label: 'Target Value',
+                        data: progressData.targets,
+                        backgroundColor: 'rgba(23, 162, 184, 0.7)', // Info color
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Achieved Value',
+                        data: progressData.achieved,
+                        backgroundColor: 'rgba(40, 167, 69, 0.9)', // Success color
+                        stack: 'stack1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                indexAxis: 'y', // Horizontal bars for better visualization
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Value (Units as per Target Metric)'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // --- 2. Populate Active Campaigns Table ---
+        function populateTable(data) {
+            const tbody = document.querySelector('#campaignTable tbody');
+            tbody.innerHTML = ''; // Clear existing rows
+            
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                const achievementPercent = item.achieved; 
+
+                row.insertCell().innerText = item.id;
+                row.insertCell().innerText = item.name;
+                row.insertCell().innerText = item.metric;
+                row.insertCell().innerText = achievementPercent.toFixed(0) + '%';
+                row.insertCell().innerText = item.daysLeft;
+
+                // Status Badge based on Achievement % and Days Left
+                let statusBadge = item.status;
+                let badgeClass = 'bg-secondary';
+                
+                if (achievementPercent >= 90) {
+                    badgeClass = 'status-success';
+                    statusBadge = 'On Track';
+                } else if (achievementPercent >= 75) {
+                    badgeClass = 'status-warning';
+                    statusBadge = 'Warning';
+                } else {
+                    badgeClass = 'status-danger';
+                    statusBadge = 'Critical';
+                }
+                
+                // Override for 'Complete' status
+                if (item.status === 'Complete') {
+                    badgeClass = 'bg-primary'; 
+                    statusBadge = 'Complete';
+                }
+
+                row.insertCell().innerHTML = `<span class="badge ${badgeClass}">${statusBadge}</span>`;
+            });
+        }
+        populateTable(campaignTableData);
+    </script>
+</body>
+</html>
