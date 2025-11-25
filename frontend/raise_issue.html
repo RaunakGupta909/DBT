@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raise Issue - Direct Benefit Transfer</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f6f9;
+        }
+        header {
+            background: #0a3c6b;
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 70px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #0a3c6b;
+            font-weight: bold;
+        }
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        button {
+            background: #0a3c6b;
+            color: #fff;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #08406b;
+        }
+        .note {
+            background: #e8f4ff;
+            padding: 15px;
+            border-left: 4px solid #0a3c6b;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 14px;
+            margin: 0;
+            font-size: 14px;
+            color: white;
+            background: #005bbb;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .back-btn:hover {
+            background: #004a99;
+        }
+    </style>
+</head>
+<body>
+    <a href="student_dashboard.html" class="back-btn">← Back to Dashboard</a>
+
+    <header>
+        Raise an Issue - Student DBT Support
+    </header>
+
+    <div class="container">
+        <div class="note">
+            <strong>Note:</strong> Please provide accurate information so that your issue can be resolved quickly.
+        </div>
+
+        <div class="section-title">Personal Details</div>
+
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter your full name" required>
+
+        <label>Aadhaar Number</label>
+        <input type="text" placeholder="Enter 12-digit Aadhaar number" maxlength="12" required>
+
+        <label>Mobile Number</label>
+        <input type="text" placeholder="Enter your mobile number" maxlength="10" required>
+
+        <label>Email Address</label>
+        <input type="email" placeholder="Enter your email" required>
+
+        <label>College / School Name</label>
+        <input type="text" placeholder="Enter your college or school name" required>
+
+
+        <div class="section-title">Issue Details</div>
+
+        <label>Select Scheme</label>
+        <select required>
+            <option value="">-- Select Scheme --</option>
+            <option>Post Matric Scholarship</option>
+            <option>Pre Matric Scholarship</option>
+            <option>Merit-cum-Means Scholarship</option>
+            <option>Hostel Subsidy</option>
+            <option>Other Student Scheme</option>
+        </select>
+
+        <label>Type of Issue</label>
+        <select required>
+            <option value="">-- Select Issue Type --</option>
+            <option>Scholarship Not Received</option>
+            <option>Application Pending for Long Time</option>
+            <option>Document Verification Issue</option>
+            <option>Bank / Aadhaar Not Linking</option>
+            <option>Other Issue</option>
+        </select>
+
+        <label>Describe Your Issue</label>
+        <textarea placeholder="Write your issue in detail..." required></textarea>
+
+        <button type="submit">Submit Issue</button>
+    </div>
+</body>
+</html>

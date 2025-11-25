@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student DBT Status Card</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 40px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .slide-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 500px;
+        }
+        .slide {
+            display: none;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            border: 1px solid #eaeaea;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        .slide.active {
+            display: block;
+        }
+        .slide h3 {
+            margin-top: 0;
+            color: #005bbb;
+        }
+        .status-indicator {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .status-enabled {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        .status-disabled {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .detail-item {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .detail-item h4 {
+            margin: 0 0 5px 0;
+            color: #005bbb;
+            font-size: 14px;
+        }
+        .detail-item p {
+            margin: 0;
+            font-size: 14px;
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .nav-btn {
+            background: #005bbb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+        .nav-btn:hover {
+            background: #004a99;
+        }
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 14px;
+            margin: 0;
+            font-size: 14px;
+            color: white;
+            background: #005bbb;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .back-btn:hover {
+            background: #004a99;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="student_dashboard.html" class="back-btn">← Back to Student Dashboard</a>
+
+        <h1>Student DBT Status Card</h1>
+
+        <div class="slide-container">
+            <!-- Slide 1: Personal Details -->
+            <div class="slide active" id="slide1">
+                <h3>Personal Details</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <h4>Name</h4>
+                        <p>John Doe</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Student ID</h4>
+                        <p>STU2023001</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Aadhaar Number</h4>
+                        <p>XXXX-XXXX-1234</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Mobile Number</h4>
+                        <p>+91-9876543210</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>School/College</h4>
+                        <p>ABC School</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Class/Year</h4>
+                        <p>10th Grade</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: DBT Eligibility -->
+            <div class="slide" id="slide2">
+                <h3>DBT Eligibility Status</h3>
+                <div class="status-indicator status-enabled">
+                    Eligible for Education Benefits
+                </div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <h4>Eligibility Criteria</h4>
+                        <p>✓ Age 6-18 years<br>✓ Enrolled in school<br>✓ Family income below threshold</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Benefits Available</h4>
+                        <p>• Scholarship amount<br>• Book allowance<br>• Uniform assistance</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Last Verification</h4>
+                        <p>2023-10-01</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Next Verification Due</h4>
+                        <p>2024-04-01</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Payment History -->
+            <div class="slide" id="slide3">
+                <h3>Payment History</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <h4>October 2023</h4>
+                        <p><strong>Amount:</strong> ₹2000<br><strong>Status:</strong> Received<br><strong>Date:</strong> 2023-10-15</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>September 2023</h4>
+                        <p><strong>Amount:</strong> ₹2000<br><strong>Status:</strong> Received<br><strong>Date:</strong> 2023-09-15</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>August 2023</h4>
+                        <p><strong>Amount:</strong> ₹2000<br><strong>Status:</strong> Received<br><strong>Date:</strong> 2023-08-15</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Total Received</h4>
+                        <p><strong>₹6000</strong><br>This Academic Year</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Bank Details -->
+            <div class="slide" id="slide4">
+                <h3>Bank Account Details</h3>
+                <div class="status-indicator status-enabled">
+                    Bank Account Linked Successfully
+                </div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <h4>Bank Name</h4>
+                        <p>State Bank of India</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Account Number</h4>
+                        <p>XXXXXXX1234</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>IFSC Code</h4>
+                        <p>SBIN0001234</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Account Holder</h4>
+                        <p>John Doe</p>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 12px; color: #666;">
+                    Note: Direct Benefit Transfer ensures payments reach your account securely.
+                </p>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>Previous</button>
+            <span id="slideIndicator">1 / 4</span>
+            <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 4;
+
+        function showSlide(slideNumber) {
+            // Hide all slides
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+
+            // Show current slide
+            document.getElementById('slide' + slideNumber).classList.add('active');
+
+            // Update navigation
+            document.getElementById('slideIndicator').textContent = slideNumber + ' / ' + totalSlides;
+            document.getElementById('prevBtn').disabled = slideNumber === 1;
+            document.getElementById('nextBtn').disabled = slideNumber === totalSlides;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Initialize
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>

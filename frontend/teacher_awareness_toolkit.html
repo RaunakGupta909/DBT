@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awareness Toolkit - Teacher Dashboard</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    h1 {
+        color: #005bbb;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        color: #333;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #005bbb;
+        padding-bottom: 10px;
+    }
+
+    p {
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .resource-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .resource-card {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .resource-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .resource-card img {
+        max-width: 100%;
+        height: 150px;
+        object-fit: contain;
+        margin-bottom: 15px;
+    }
+
+    .resource-card h3 {
+        color: #005bbb;
+        margin-bottom: 10px;
+    }
+
+    .download-btn {
+        display: inline-block;
+        padding: 8px 12px;
+        background: #005bbb;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .download-btn:hover {
+        background: #004a99;
+    }
+
+    .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .tool-card {
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+
+    .tool-card h4 {
+        margin-top: 0;
+        color: #005bbb;
+    }
+
+    button {
+        background: #005bbb;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    button:hover {
+        background: #004a99;
+    }
+
+    .back-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 14px;
+        font-size: 14px;
+        color: white;
+        background: #005bbb;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.3s;
+        z-index: 1000;
+    }
+
+    .back-btn:hover {
+        background: #004a99;
+    }
+
+    .benefits-list {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+    .benefits-list li {
+        margin-bottom: 10px;
+    }
+</style>
+
+</head>
+<body>
+
+    <a href="teacher_dashboard.html" class="back-btn">← Back to Teacher Dashboard</a>
+
+    <div class="container">
+        <h1>DBT Awareness Toolkit for Teachers</h1>
+
+        <p>Welcome to the DBT Awareness Toolkit for Teachers. This page provides resources, teaching materials, and tools to help you educate students and parents about Direct Benefit Transfers (DBT) schemes. Use these materials to promote financial literacy and awareness in your classroom.</p>
+
+        <h2>What is DBT?</h2>
+        <p>Direct Benefit Transfer (DBT) is a revolutionary initiative by the Government of India to transfer benefits directly to the beneficiaries' bank accounts. This ensures transparency, reduces leakages, and empowers citizens by providing financial inclusion and timely disbursements.</p>
+
+
+
+        <h2>Teaching Materials and Resources</h2>
+        <div class="resource-grid">
+            <div class="resource-card">
+                <h3>DBT Lesson Plans</h3>
+                <p>Ready-to-use lesson plans for teaching DBT concepts in class.</p>
+                <a href="#" class="download-btn">Download PDF</a>
+            </div>
+            <div class="resource-card">
+                <h3>Student Worksheets</h3>
+                <p>Interactive worksheets to engage students in DBT awareness activities.</p>
+                <a href="#" class="download-btn">Download PDF</a>
+            </div>
+            <div class="resource-card">
+                <h3>Parent Awareness Posters</h3>
+                <p>Printable posters to share DBT information with parents.</p>
+                <a href="#" class="download-btn">Download PDF</a>
+            </div>
+            <div class="resource-card">
+                <h3>Video Tutorials for Teachers</h3>
+                <p>Training videos on how to effectively teach DBT topics.</p>
+                <a href="#" class="download-btn">Watch Videos</a>
+            </div>
+            <div class="resource-card">
+                <h3>Case Study Materials</h3>
+                <p>Real-life examples and case studies for classroom discussions.</p>
+                <a href="#" class="download-btn">Download PDF</a>
+            </div>
+            <div class="resource-card">
+                <h3>Quiz and Assessment Tools</h3>
+                <p>Quizzes to test student understanding of DBT concepts.</p>
+                <a href="#" class="download-btn">Download PDF</a>
+            </div>
+        </div>
+
+        <h2>Benefits of DBT for Education</h2>
+        <ul class="benefits-list">
+            <li><strong>Financial Literacy:</strong> Helps students understand government schemes and financial management.</li>
+            <li><strong>Timely Support:</strong> Ensures educational benefits reach students without delays.</li>
+            <li><strong>Parental Involvement:</strong> Encourages parents to engage with school activities related to benefits.</li>
+            <li><strong>Transparency:</strong> Teaches the importance of direct transfers in reducing corruption.</li>
+            <li><strong>Empowerment:</strong> Prepares students for financial independence and informed citizenship.</li>
+        </ul>
+
+        <h2>Tools for Teachers</h2>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <h4>Student Progress Tracker</h4>
+                <p>Track student understanding of DBT topics and identify areas for improvement.</p>
+                <button onclick="openTracker()">Open Tracker</button>
+            </div>
+            <div class="tool-card">
+                <h4>Parent Engagement Survey</h4>
+                <p>Create and send surveys to parents about DBT awareness and participation.</p>
+                <button onclick="createSurvey()">Create Survey</button>
+            </div>
+            <div class="tool-card">
+                <h4>Resource Sharing Portal</h4>
+                <p>Share teaching materials and best practices with other teachers.</p>
+                <button onclick="openPortal()">Access Portal</button>
+            </div>
+            <div class="tool-card">
+                <h4>DBT Awareness Campaign Planner</h4>
+                <p>Plan and organize school-wide DBT awareness campaigns.</p>
+                <button onclick="planCampaign()">Plan Campaign</button>
+            </div>
+        </div>
+
+        <h2>Additional Resources</h2>
+        <p>For more information on DBT schemes, visit the official government websites or contact your local authorities. Encourage students and parents to stay informed and make the most of these initiatives for educational and financial well-being.</p>
+    </div>
+
+    <script>
+        function openTracker() {
+            alert('Student Progress Tracker opened. (This would integrate with a backend system in a real application.)');
+        }
+
+        function createSurvey() {
+            alert('Parent Engagement Survey Creator opened. (This would integrate with a survey tool in a real application.)');
+        }
+
+        function openPortal() {
+            alert('Resource Sharing Portal opened. (This would link to a collaborative platform in a real application.)');
+        }
+
+        function planCampaign() {
+            alert('DBT Awareness Campaign Planner opened. (This would provide a planning interface in a real application.)');
+        }
+    </script>
+
+</body>
+</html>
