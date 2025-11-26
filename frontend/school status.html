@@ -1,147 +1,234 @@
-<!DOCTYPE html> html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BEO Dashboard - Notices & Overview</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/c ss2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
-        }
-        .main-blue {
-            background-color: #1a5a90; /* Darker blue, main theme */
-        }
-        .accent-blue {
-            background-color: #366fa8; /* A slightly lighter, vibrant blue */
-        }
-        .text-main-blue {
-            color: #1a5a90;
-        }
-        .border-accent-blue {
-            border-color: #366fa8;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Status - BEO Dashboard</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 40px;
+    }
+
+    .back-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 14px;
+        margin: 0;
+        font-size: 14px;
+        color: white;
+        background: #005bbb;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.3s;
+        z-index: 1000;
+    }
+
+    .back-btn:hover {
+        background: #004a99;
+    }
+
+    .status-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        margin-top: 60px;
+    }
+
+    .status-container h2 {
+        margin-top: 0;
+        color: #111;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .status-section {
+        margin-bottom: 40px;
+    }
+
+    .status-section h3 {
+        color: #005bbb;
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .status-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .status-table th, .status-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .status-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #111;
+    }
+
+    .status-table tr:hover {
+        background-color: #f1f3f4;
+    }
+
+    .update-status-form {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
+    .update-status-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #111;
+    }
+
+    .update-status-form input, .update-status-form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .update-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: white;
+        background: #005bbb;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .update-btn:hover {
+        background: #004a99;
+    }
+</style>
+
 </head>
-<body class="flex flex-col min-h-screen">
+<body>
 
-    <!-- Header/Navbar --><header class="main-blue text-white p-4 shadow-md">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">BEO School Status</h1>
-            <nav>
-                <a href="[Insert Your Homepage URL Here]" class="px-4 py-2 rounded-lg hover:bg-white hover:text-main-blue transition-colors duration-200">Home</a>
-                <a href="#notices" class="px-4 py-2 rounded-lg hover:bg-white hover:text-main-blue transition-colors duration-200">Notices</a>
-                <a href="school_status.html" class="px-4 py-2 rounded-lg hover:bg-white hover:text-main-blue transition-colors duration-200">School Status</a>
-                <a href="#" class="px-4 py-2 rounded-lg hover:bg-white hover:text-main-blue transition-colors duration-200">Reports</a>
-                <a href="#" class="px-4 py-2 rounded-lg hover:bg-white hover:text-main-blue transition-colors duration-200">Settings</a>
-            </nav>
+    <a href="beo_dashboard.html" class="back-btn">← Back to BEO Dashboard</a>
+
+    <div class="status-container">
+        <h2>School Status Overview</h2>
+
+        <div class="status-section">
+            <h3>Current School Statuses</h3>
+            <p>View and monitor the status and engagement of schools in DBT awareness campaigns.</p>
+            <table class="status-table">
+                <thead>
+                    <tr>
+                        <th>School Name</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Engagement Level</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody id="status-body">
+                    <tr>
+                        <td>Government High School A</td>
+                        <td>Block 1</td>
+                        <td>Active</td>
+                        <td>High</td>
+                        <td>2024-10-01</td>
+                    </tr>
+                    <tr>
+                        <td>Government High School B</td>
+                        <td>Block 2</td>
+                        <td>Active</td>
+                        <td>Medium</td>
+                        <td>2024-09-28</td>
+                    </tr>
+                    <tr>
+                        <td>Government High School C</td>
+                        <td>Block 3</td>
+                        <td>Inactive</td>
+                        <td>Low</td>
+                        <td>2024-09-15</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </header>
 
-    <!-- Main Content Area --><main class="flex-grow p-4 md:p-8">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="status-section">
+            <h3>Update School Status</h3>
+            <p>Update the status and engagement level of a school.</p>
+            <form class="update-status-form" id="update-status-form">
+                <label for="school-name">School Name:</label>
+                <input type="text" id="school-name" required>
 
-            <!-- Left Column: Overview/Widgets (Example) --><div class="lg:col-span-2 space-y-8">
-                <!-- Welcome Card --><div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                    <h2 class="text-2xl font-bold text-main-blue mb-4">Welcome, Block Education Officer!</h2>
-                    <p class="text-gray-700">Here's a quick overview of key metrics and updates for your block. Stay informed and manage your tasks efficiently.</p>
-                </div>
+                <label for="school-location">Location:</label>
+                <input type="text" id="school-location" required>
 
-                <!-- Metric Cards --><div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-white p-5 rounded-lg shadow-md border border-gray-200 text-center">
-                        <p class="text-3xl font-bold text-main-blue">92%</p>
-                        <p class="text-gray-600 mt-1">Aadhaar Seeding</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-lg shadow-md border border-gray-200 text-center">
-                        <p class="text-3xl font-bold text-green-600">88%</p>
-                        <p class="text-gray-600 mt-1">DBT Enabled Students</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-lg shadow-md border border-gray-200 text-center">
-                        <p class="text-3xl font-bold text-orange-500">7</p>
-                        <p class="text-gray-600 mt-1">Pending Action Items</p>
-                    </div>
-                </div>
+                <label for="school-status">Status:</label>
+                <select id="school-status" required>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
 
-                <!-- Placeholder for Charts/More Data --><div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 min-h-[200px] flex items-center justify-center">
-                    <p class="text-gray-400 text-lg">Detailed Reports and Charts will go here.</p>
-                </div>
+                <label for="engagement-level">Engagement Level:</label>
+                <select id="engagement-level" required>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
 
-            </div>
-
-            <!-- Right Column: Notice Board --><div id="notices" class="lg:col-span-1 bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                <h2 class="text-2xl font-bold text-main-blue mb-5 pb-3 border-b-2 border-accent-blue">Official Notices</h2>
-                <div class="space-y-4">
-                    <!-- Notice 1: URGENT --><div class="notice-item border-l-4 border-red-500 bg-red-50 p-3 rounded-md">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="text-lg font-semibold text-red-700">URGENT: Biometric Update Deadline</h3>
-                            <span class="text-xs font-medium text-red-600 bg-red-100 px-2 py-0.5 rounded-full">DEADLINE</span>
-                        </div>
-                        <p class="text-gray-700 text-sm">
-                            Mandatory compliance report for 100% Aadhaar biometric updates due by **30th Nov 2025**. All schools must adhere.
-                        </p>
-                        <div class="flex justify-between items-center text-xs text-gray-500 mt-2 pt-2 border-t border-red-100">
-                            <span>Issued: 25 Nov 2025</span>
-                            <a href="#" class="text-blue-600 hover:underline">View Circular</a>
-                        </div>
-                    </div>
-
-                    <!-- Notice 2: Meeting --><div class="notice-item border-l-4 border-orange-500 bg-orange-50 p-3 rounded-md">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="text-lg font-semibold text-orange-700">DBT Reconciliation Meeting</h3>
-                            <span class="text-xs font-medium text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full">MEETING</span>
-                        </div>
-                        <p class="text-gray-700 text-sm">
-                            Mandatory meeting for all cluster heads on **[Date]** at BEO Office Conference Hall.
-                        </p>
-                        <div class="flex justify-between items-center text-xs text-gray-500 mt-2 pt-2 border-t border-orange-100">
-                            <span>Issued: 20 Nov 2025</span>
-                            <a href="#" class="text-blue-600 hover:underline">View Agenda</a>
-                        </div>
-                    </div>
-
-                    <!-- Notice 3: New Guidelines --><div class="notice-item border-l-4 border-blue-500 bg-blue-50 p-3 rounded-md">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="text-lg font-semibold text-blue-700">New Aadhaar Seeding Guidelines V2.1</h3>
-                            <span class="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">GUIDELINE</span>
-                        </div>
-                        <p class="text-gray-700 text-sm">
-                            Updated protocol for linking new student bank accounts to Aadhaar. Effective immediately.
-                        </p>
-                        <div class="flex justify-between items-center text-xs text-gray-500 mt-2 pt-2 border-t border-blue-100">
-                            <span>Issued: 15 Nov 2025</span>
-                            <a href="#" class="text-blue-600 hover:underline">Read More</a>
-                        </div>
-                    </div>
-
-                    <!-- Notice 4: General Announcement --><div class="notice-item border-l-4 border-green-500 bg-green-50 p-3 rounded-md">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="text-lg font-semibold text-green-700">Upcoming Training Session</h3>
-                            <span class="text-xs font-medium text-green-600 bg-green-100 px-2 py-0.5 rounded-full">ANNOUNCEMENT</span>
-                        </div>
-                        <p class="text-gray-700 text-sm">
-                            A training session on effective data management will be held next month. Details soon.
-                        </p>
-                        <div class="flex justify-between items-center text-xs text-gray-500 mt-2 pt-2 border-t border-green-100">
-                            <span>Issued: 10 Nov 2025</span>
-                            <a href="#" class="text-blue-600 hover:underline">Register Interest</a>
-                        </div>
-                    </div>
-
-                    <!-- "View All Notices" button --><div class="text-center mt-6">
-                        <a href="[Link to a dedicated 'All Notices' page if you create one]" class="inline-block accent-blue text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#2a5a8f] transition-colors duration-200">
-                            View All Notices
-                        </a>
-                    </div>
-                </div>
-            </div>
-
+                <button type="submit" class="update-btn">Update Status</button>
+            </form>
         </div>
-    </main>
+    </div>
 
-    <!-- Footer --><footer class="main-blue text-white p-4 text-center mt-8 shadow-inner">
-        <p>&copy; 2025 Block Education Office, [Your District/State]. All rights reserved.</p>
-    </footer>
+    <script>
+        document.getElementById('update-status-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('school-name').value;
+            const location = document.getElementById('school-location').value;
+            const status = document.getElementById('school-status').value;
+            const engagement = document.getElementById('engagement-level').value;
+            const date = new Date().toISOString().split('T')[0];
+
+            const statusBody = document.getElementById('status-body');
+
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${name}</td>
+                <td>${location}</td>
+                <td>${status}</td>
+                <td>${engagement}</td>
+                <td>${date}</td>
+            `;
+
+            statusBody.insertBefore(newRow, statusBody.firstChild);
+
+            // Clear the form
+            document.getElementById('school-name').value = '';
+            document.getElementById('school-location').value = '';
+            document.getElementById('school-status').value = 'Active';
+            document.getElementById('engagement-level').value = 'High';
+
+            // Scroll to the new entry
+            newRow.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+
 </body>
 </html>
