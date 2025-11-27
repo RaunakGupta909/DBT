@@ -14,7 +14,7 @@
             background-color: #f8f9fa;
         }
         .dashboard-header {
-            background-color: #6c757d; /* Gray color for system/tech monitoring */
+            background-color: #4e617d; /* blue color for system/tech monitoring */
             color: white;
             padding: 15px 0;
             margin-bottom: 20px;
@@ -35,21 +35,21 @@
             font-size: 2.5rem;
             font-weight: 700;
         }
-        .card-down .card-value { color: #dc3545; }
-        .card-degraded .card-value { color: #ffc107; }
-        .card-operational .card-value { color: #28a745; }
+        .card-down .card-value { color: #4e617d; }
+        .card-degraded .card-value { color: #4e617d; }
+        .card-operational .card-value { color: #4e617d; }
 
         /* Status Badge Styling for Table */
-        .status-down { background-color: #dc3545; color: white; }
-        .status-degraded { background-color: #ffc107; color: #333; }
-        .status-operational { background-color: #28a745; color: white; }
+        .status-down { background-color: #4e617d; color: white; }
+        .status-degraded { background-color: #4e617d; color: white; }
+        .status-operational { background-color: #4e617d; color: white; }
     </style>
 </head>
 <body>
 
     <header class="dashboard-header text-center">
         <div class="container">
-            <h1>Integration Alerts & Health Monitor ⚙️</h1>
+            <h1>Integration Alerts & Health Monitor </h1>
             <p class="lead">Monitoring status and performance of critical external systems</p>
         </div>
     </header>
@@ -165,7 +165,7 @@
                     {
                         label: 'Avg. Latency (sec)',
                         data: trendData.latency,
-                        borderColor: '#007bff', // Blue
+                        borderColor: '#4e617d', // Blue
                         backgroundColor: 'rgba(0, 123, 255, 0.1)',
                         tension: 0.3,
                         yAxisID: 'y'
