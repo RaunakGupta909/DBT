@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reports - Campaign Wizard</title>
+<link rel="stylesheet" href="styles.css">
 
 <style>
     body {
         font-family: Arial, sans-serif;
-        background: #f5f7fa;
+        background: var(--bg);
+        color: var(--text);
         margin: 0;
         padding: 40px;
     }
@@ -21,7 +23,7 @@
         margin: 0;
         font-size: 14px;
         color: white;
-        background: #005bbb;
+        background: var(--accent);
         border-radius: 8px;
         text-decoration: none;
         transition: 0.3s;
@@ -35,7 +37,7 @@
     .reports-container {
         max-width: 1200px;
         margin: 0 auto;
-        background: #ffffff;
+        background: var(--card);
         padding: 30px;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.12);
@@ -44,7 +46,7 @@
 
     .reports-container h2 {
         margin-top: 0;
-        color: #111;
+        color: var(--text);
         font-size: 28px;
         font-weight: 700;
     }
@@ -54,7 +56,7 @@
     }
 
     .report-section h3 {
-        color: #005bbb;
+        color: var(--accent);
         font-size: 22px;
         margin-bottom: 15px;
     }
@@ -74,7 +76,7 @@
     .report-table th {
         background-color: #f8f9fa;
         font-weight: 600;
-        color: #111;
+        color: var(--text);
     }
 
     .report-table tr:hover {
@@ -86,7 +88,7 @@
         padding: 10px 20px;
         font-size: 14px;
         color: white;
-        background: #005bbb;
+        background: var(--accent);
         border-radius: 8px;
         text-decoration: none;
         transition: 0.3s;
@@ -96,12 +98,27 @@
     .generate-btn:hover {
         background: #004a99;
     }
+
+    /* Dark mode overrides */
+    body.dark .reports-container {
+        background: #1e293b;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    body.dark .report-table th {
+        background-color: #334155;
+        color: #e6f0fb;
+    }
+
+    body.dark .report-table tr:hover {
+        background-color: #475569;
+    }
 </style>
 
 </head>
 <body>
 
-    <a href="beo_dashboard.html" class="back-btn">← Back to Campaign Wizard</a>
+    <a href="beo_dashboard.html" class="back-btn">← Back to Dashboard</a>
 
     <div class="reports-container">
         <h2>Campaign Reports</h2>
@@ -206,6 +223,6 @@
             generatedReport.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
-
+  <script src="script.js"></script>
 </body>
 </html>

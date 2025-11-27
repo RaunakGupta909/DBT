@@ -8,7 +8,8 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        background: #f5f7fa;
+        background: var(--bg);
+        color: var(--text);
         margin: 0;
         padding: 40px;
     }
@@ -21,7 +22,7 @@
         margin: 0;
         font-size: 14px;
         color: white;
-        background: #005bbb;
+        background: var(--accent);
         border-radius: 8px;
         text-decoration: none;
         transition: 0.3s;
@@ -35,7 +36,7 @@
     .notices-container {
         max-width: 1200px;
         margin: 0 auto;
-        background: #ffffff;
+        background: var(--card);
         padding: 30px;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.12);
@@ -44,7 +45,7 @@
 
     .notices-container h2 {
         margin-top: 0;
-        color: #111;
+        color: var(--text);
         font-size: 28px;
         font-weight: 700;
     }
@@ -54,7 +55,7 @@
     }
 
     .notice-section h3 {
-        color: #005bbb;
+        color: var(--accent);
         font-size: 22px;
         margin-bottom: 15px;
     }
@@ -74,7 +75,7 @@
     .notice-table th {
         background-color: #f8f9fa;
         font-weight: 600;
-        color: #111;
+        color: var(--text);
     }
 
     .notice-table tr:hover {
@@ -92,7 +93,7 @@
         display: block;
         margin-bottom: 5px;
         font-weight: 600;
-        color: #111;
+        color: var(--text);
     }
 
     .post-notice-form input, .post-notice-form textarea {
@@ -102,6 +103,8 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         font-size: 14px;
+        background: var(--bg);
+        color: var(--text);
     }
 
     .post-notice-form textarea {
@@ -114,7 +117,7 @@
         padding: 10px 20px;
         font-size: 14px;
         color: white;
-        background: #005bbb;
+        background: var(--accent);
         border-radius: 8px;
         border: none;
         cursor: pointer;
@@ -124,10 +127,35 @@
     .post-btn:hover {
         background: #004a99;
     }
+
+    /* Dark mode overrides */
+    body.dark .notices-container {
+        background: #1e293b;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    body.dark .notice-table th {
+        background-color: #334155;
+        color: #e6f0fb;
+    }
+
+    body.dark .notice-table tr:hover {
+        background-color: #475569;
+    }
+
+    body.dark .post-notice-form {
+        background: #334155;
+    }
 </style>
 
 </head>
 <body>
+  <!-- Top utility strap -->
+  <div class="top-strap">
+    <div class="strap-controls">
+      <button id="dark-toggle" title="Toggle Dark Mode">🌙</button>
+    </div>
+  </div>
 
     <a href="beo_dashboard.html" class="back-btn">← Back to BEO Dashboard</a>
 
@@ -187,8 +215,13 @@
         </div>
     </div>
 
+
+    <script src="script.js"></script>
+
     <script>
+
         document.getElementById('post-notice-form').addEventListener('submit', function(event) {
+
             event.preventDefault();
 
             const title = document.getElementById('notice-title').value;

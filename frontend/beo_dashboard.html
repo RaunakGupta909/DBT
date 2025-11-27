@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campaign Wizard - BEO Dashboard</title>
+<link rel="stylesheet" href="styles.css">
 
 <style>
     body {
         font-family: Arial, sans-serif;
-        background: #f5f7fa;
+        background: var(--bg);
+        color: var(--text);
         margin: 0;
         padding: 40px;
     }
@@ -23,7 +25,7 @@
 
     /* #### CARD #### */
     .role-card {
-        background: #ffffff;
+        background: var(--card);
         padding: 20px;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.12);
@@ -37,7 +39,7 @@
     .role-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 10px 20px rgba(0,0,0,0.18);
-        border-top: 5px solid #005bbb;
+        border-top: 5px solid var(--accent);
     }
 
     /* ICON STYLE LIKE IMAGE */
@@ -58,14 +60,14 @@
         margin: 0;
         font-size: 20px;
         font-weight: 700;
-        color: #111;
+        color: var(--text);
         animation: fadeSlide 1.2s ease;
     }
 
     /* DESCRIPTION */
     .role-card p {
         margin-top: 8px;
-        color: #444;
+        color: var(--muted);
         font-size: 14px;
         line-height: 1.4;
         animation: fadeSlide 1.4s ease;
@@ -78,7 +80,7 @@
         padding: 10px 14px;
         font-size: 14px;
         color: white;
-        background: #005bbb;
+        background: var(--accent);
         border-radius: 8px;
         text-decoration: none;
         transition: 0.3s;
@@ -92,12 +94,36 @@
         from { opacity: 0; transform: translateY(6px); }
         to   { opacity: 1; transform: translateY(0px); }
     }
+
+    /* Dark mode overrides */
+    body.dark .role-card {
+        background: #1e293b;
+        border-color: rgba(255,255,255,0.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    body.dark .role-card:hover {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
 </style>
 
+
 </head>
+
 <body>
 
+    <div class="top-strap">
+
+        <div class="strap-controls">
+
+            <button id="dark-toggle" title="Toggle Dark Mode">🌙</button>
+
+        </div>
+
+    </div>
+
     <a href="index.html" class="back-btn">← Back to Home</a>
+
 
 <style>
 .back-btn {
@@ -156,5 +182,6 @@
 
 </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
